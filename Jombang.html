@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jombang Heritage — Cultural Excellence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;1,6..96,400;1,6..96,500&family=DM+Sans:wght@200;300;400;500&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --obsidian:  #0c0a08;
+      --obsidian2: #110e0a;
+      --obsidian3: #18140f;
+      --mahogany:  #1e1610;
+      --gold:      #c9923a;
+      --gold2:     #e6b55a;
+      --gold3:     #f0cc80;
+      --gold-dim:  rgba(201,146,58,0.18);
+      --gold-glow: rgba(230,181,90,0.08);
+      --text:      #e8dfd0;
+      --text2:     #c4b49a;
+      --muted:     #7a6a52;
+      --line:      rgba(201,146,58,0.2);
+      --line2:     rgba(201,146,58,0.08);
+    }
+
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0 }
+    html { scroll-behavior:smooth }
+    body {
+      background: var(--obsidian);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width:3px }
+    ::-webkit-scrollbar-track { background: var(--obsidian2) }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(var(--gold), var(--gold2)) }
+
+    /* ── GRAIN OVERLAY ── */
+    body::after {
+      content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      opacity:0.5;
+    }
+
+    /* ── CURSOR ── */
+    .cur,.cur-r {
+      position:fixed; pointer-events:none; z-index:9999;
+      border-radius:50%; transform:translate(-50%,-50%);
+    }
+    .cur { width:7px; height:7px; background:var(--gold2); transition:transform .12s }
+    .cur-r {
+      width:28px; height:28px;
+      border:1px solid rgba(230,181,90,0.6);
+      transition:left .1s, top .1s, width .3s, height .3s, opacity .3s;
+    }
+
+    /* ── CREATOR RIBBON ── */
+    .creator-ribbon {
+      background: linear-gradient(90deg, var(--obsidian2), var(--mahogany), var(--obsidian2));
+      border-bottom: 1px solid var(--line);
+      padding: .6rem 5vw;
+      display: flex; align-items: center; justify-content: center; gap: 2rem;
+      position: relative; z-index: 600;
+    }
+    .creator-photo {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1.5px solid var(--gold);
+      object-fit: cover; flex-shrink: 0;
+      box-shadow: 0 0 14px rgba(201,146,58,.35);
+    }
+    .creator-photo-placeholder {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1.5px solid var(--gold);
+      background: var(--mahogany);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; color: var(--gold2); flex-shrink: 0;
+      box-shadow: 0 0 14px rgba(201,146,58,.3);
+    }
+    .creator-info { display:flex; flex-direction:column; gap:1px }
+    .creator-name {
+      font-family: 'Cinzel', serif; font-size: .72rem;
+      letter-spacing: .18em; color: var(--gold2);
+    }
+    .creator-title {
+      font-size: .58rem; letter-spacing: .25em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .creator-divider {
+      width: 1px; height: 24px; background: var(--line);
+    }
+    .creator-label {
+      font-size: .55rem; letter-spacing: .45em; text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── HEADER ── */
+    .hdr {
+      position: fixed; top: 37px; left: 0; right: 0; z-index: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 5vw;
+      transition: background .4s, box-shadow .4s, padding .3s, top .3s;
+    }
+    .hdr.stuck {
+      top: 0;
+      background: rgba(12,10,8,.94);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 var(--line);
+      padding: 1rem 5vw;
+    }
+    .logo { display:flex; align-items:center; gap:1rem }
+    .logo img { width:38px; height:38px; object-fit:contain; opacity:.9 }
+    .logo-name {
+      font-family: 'Cinzel', serif; font-size: .9rem;
+      letter-spacing: .18em; color: var(--gold2);
+    }
+    .logo-sub {
+      font-size: .52rem; letter-spacing: .45em; text-transform: uppercase;
+      color: var(--muted); margin-top:2px;
+    }
+    .nav { display:flex; gap:2.5rem }
+    .nav a {
+      font-size: .6rem; letter-spacing: .25em; text-transform: uppercase;
+      color: var(--text2); text-decoration: none;
+      position: relative; padding-bottom: 3px; transition: color .25s;
+    }
+    .nav a::after {
+      content:''; position:absolute; bottom:0; left:0;
+      width:0; height:1px;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      transition: width .3s ease;
+    }
+    .nav a:hover { color: var(--gold2) }
+    .nav a:hover::after { width:100% }
+    .hdr-cta {
+      font-family: 'Cinzel', serif;
+      font-size: .58rem; letter-spacing: .2em;
+      padding: .55rem 1.8rem;
+      border: 1px solid var(--gold);
+      color: var(--gold2); background: transparent;
+      text-decoration: none; display:inline-block;
+      transition: all .3s; position:relative; overflow:hidden;
+    }
+    .hdr-cta::before {
+      content:''; position:absolute; inset:0;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      transform: scaleX(0); transform-origin:left;
+      transition: transform .3s ease;
+    }
+    .hdr-cta:hover { color: var(--obsidian) }
+    .hdr-cta:hover::before { transform:scaleX(1) }
+    .hdr-cta span { position:relative; z-index:1 }
+    .burger {
+      display:none; flex-direction:column; gap:5px;
+      cursor:pointer; background:none; border:none;
+    }
+    .burger span {
+      width:24px; height:1px;
+      background:linear-gradient(90deg, var(--gold), var(--gold2));
+      display:block; transition:.3s;
+    }
+
+    /* ── MOBILE NAV ── */
+    .mnav {
+      position:fixed; inset:0; background:var(--obsidian); z-index:700;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:2.5rem; opacity:0; visibility:hidden; transition:.35s ease;
+    }
+    .mnav.on { opacity:1; visibility:visible }
+    .mnav a {
+      font-family:'Bodoni Moda',serif; font-size:2.5rem; font-style:italic;
+      color:var(--text); text-decoration:none; transition:color .25s;
+    }
+    .mnav a:hover { color:var(--gold2) }
+    .mnav-close {
+      position:absolute; top:1.8rem; right:5vw;
+      background:none; border:none; font-size:1.4rem;
+      color:var(--muted); cursor:pointer; transition:color .2s;
+    }
+    .mnav-close:hover { color:var(--gold2) }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      padding: calc(8rem + 37px) 5vw 6rem;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      background: radial-gradient(ellipse 70% 60% at 75% 50%, rgba(201,146,58,.05) 0%, transparent 65%), var(--obsidian);
+    }
+    .hero-ghost {
+      position:absolute; right:-3vw; top:50%;
+      transform: translateY(-50%);
+      font-family:'Bodoni Moda',serif; font-size:21vw; font-weight:700;
+      color:transparent; -webkit-text-stroke:1px rgba(201,146,58,.045);
+      line-height:1; pointer-events:none; user-select:none; white-space:nowrap;
+    }
+    .hero-vline {
+      position:absolute; left:5vw; top:0; bottom:0;
+      width:1px;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+      opacity:.2;
+    }
+    .hero-hline {
+      position:absolute; bottom:8rem; left:5vw; right:5vw;
+      height:1px; background:linear-gradient(to right, var(--gold-dim), transparent);
+    }
+    .hero-inner {
+      max-width:1200px; margin:0 auto; width:100%;
+      display:grid; grid-template-columns:1.15fr 1fr;
+      gap:5rem; align-items:center; position:relative; z-index:1;
+    }
+    .hero-kicker {
+      display:inline-flex; align-items:center; gap:.9rem;
+      font-size:.56rem; letter-spacing:.55em; text-transform:uppercase;
+      color:var(--gold); margin-bottom:2.2rem;
+      animation: fadeUp .8s .1s both;
+    }
+    .hero-kicker::before {
+      content:''; width:28px; height:1px;
+      background:linear-gradient(90deg, var(--gold), var(--gold2));
+    }
+    .hero-h1 {
+      font-family:'Bodoni Moda',serif;
+      font-size:clamp(3.2rem,6.5vw,7rem); line-height:1.02;
+      font-weight:500; color:var(--text); margin-bottom:1.2rem;
+      animation: fadeUp .9s .2s both;
+    }
+    .hero-h1 em { font-style:italic; color:var(--gold2); display:block }
+    .hero-orn {
+      display:flex; align-items:center; gap:1rem;
+      margin:2rem 0; animation:fadeUp .8s .35s both;
+    }
+    .hero-orn::before {
+      content:''; width:45px; height:1px;
+      background:linear-gradient(90deg, var(--gold), transparent);
+    }
+    .hero-gem {
+      width:6px; height:6px;
+      border:1px solid var(--gold2); transform:rotate(45deg);
+      background:rgba(201,146,58,.2);
+    }
+    .hero-p {
+      font-size:.95rem; line-height:2; color:var(--text2);
+      max-width:480px; margin-bottom:2.8rem;
+      animation:fadeUp .8s .45s both;
+    }
+    .hero-btns { display:flex; gap:1.2rem; flex-wrap:wrap; animation:fadeUp .8s .55s both }
+    .btn-gold {
+      font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.22em;
+      padding:.9rem 2.6rem;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--obsidian); text-decoration:none;
+      display:inline-block; transition:all .3s;
+      box-shadow: 0 4px 20px rgba(201,146,58,.3);
+    }
+    .btn-gold:hover {
+      background:linear-gradient(135deg, var(--gold2), var(--gold3));
+      box-shadow:0 6px 28px rgba(201,146,58,.45);
+      transform:translateY(-1px);
+    }
+    .btn-ghost {
+      font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.22em;
+      padding:.9rem 2.6rem;
+      border:1px solid rgba(201,146,58,.45); color:var(--gold2);
+      text-decoration:none; display:inline-block; transition:all .3s;
+    }
+    .btn-ghost:hover {
+      border-color:var(--gold2);
+      background:rgba(201,146,58,.07);
+    }
+
+    /* HERO RIGHT */
+    .hero-right { position:relative; animation:fadeUp .9s .3s both }
+    .hero-frame {
+      aspect-ratio:4/5; overflow:hidden;
+      background:var(--obsidian3);
+      position:relative;
+    }
+    .hero-frame::before {
+      content:''; position:absolute;
+      top:-1px; right:-1px; bottom:-1px; left:-1px;
+      border:1px solid var(--gold-dim); z-index:2; pointer-events:none;
+    }
+    .hero-frame::after {
+      content:''; position:absolute; inset:0; z-index:1;
+      background:linear-gradient(to bottom, transparent 50%, rgba(12,10,8,.7));
+    }
+    .hero-frame img {
+      width:100%; height:100%; object-fit:cover;
+      filter:sepia(20%) brightness(.85);
+      transition:transform .9s ease;
+    }
+    .hero-frame:hover img { transform:scale(1.06) }
+    .hero-tag {
+      position:absolute; bottom:-1.8rem; left:-1.8rem; z-index:3;
+      background:var(--obsidian2);
+      border:1px solid var(--line);
+      padding:1.2rem 1.6rem;
+      box-shadow:0 8px 32px rgba(0,0,0,.4);
+    }
+    .hero-tag-num {
+      font-family:'Bodoni Moda',serif; font-size:2.2rem; font-weight:500;
+      color:var(--gold2); display:block; line-height:1;
+    }
+    .hero-tag-txt {
+      font-size:.54rem; letter-spacing:.35em; text-transform:uppercase;
+      color:var(--muted); margin-top:3px;
+    }
+    .hero-side-stats {
+      position:absolute; right:-2.5rem; top:50%;
+      transform:translateY(-50%);
+      display:flex; flex-direction:column; gap:2rem;
+    }
+    .hss { text-align:right }
+    .hss strong {
+      font-family:'Bodoni Moda',serif; font-size:2rem; font-weight:500;
+      color:var(--gold2); display:block; line-height:1;
+    }
+    .hss span {
+      font-size:.52rem; letter-spacing:.3em; text-transform:uppercase;
+      color:var(--muted);
+    }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ── TICKER ── */
+    .ticker {
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+      padding:.9rem 0; overflow:hidden;
+      background:linear-gradient(90deg, var(--obsidian2), var(--mahogany), var(--obsidian2));
+    }
+    .ticker-track {
+      display:flex; gap:3rem; white-space:nowrap;
+      animation:tickRun 28s linear infinite;
+    }
+    .t-item {
+      display:flex; align-items:center; gap:.9rem; flex-shrink:0;
+      font-family:'Cinzel',serif;
+      font-size:.56rem; letter-spacing:.4em; text-transform:uppercase;
+      color:var(--muted);
+    }
+    .t-gem {
+      width:4px; height:4px;
+      background:linear-gradient(135deg, var(--gold), var(--gold2));
+      transform:rotate(45deg); flex-shrink:0;
+    }
+    @keyframes tickRun { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ── SECTIONS ── */
+    section { position:relative; z-index:1 }
+    .section { padding:8rem 5vw }
+    .section.alt { background:var(--obsidian2) }
+    .sw { max-width:1200px; margin:0 auto }
+
+    .s-kicker {
+      font-family:'Cinzel',serif;
+      font-size:.56rem; letter-spacing:.5em; text-transform:uppercase;
+      color:var(--gold); display:block; margin-bottom:1rem;
+    }
+    .s-title {
+      font-family:'Bodoni Moda',serif;
+      font-size:clamp(2rem,4vw,3.5rem); font-weight:500;
+      color:var(--text); line-height:1.12; margin-bottom:1.5rem;
+    }
+    .s-title em { font-style:italic; color:var(--gold2) }
+    .s-desc {
+      font-size:.9rem; line-height:1.95; color:var(--text2);
+      max-width:600px;
+    }
+    .s-orn {
+      display:flex; align-items:center; gap:.8rem; margin:1.8rem 0;
+    }
+    .s-orn::before,.s-orn::after {
+      content:''; flex:0 0 55px; height:1px;
+    }
+    .s-orn::before { background:linear-gradient(to right, transparent, var(--gold)) }
+    .s-orn::after  { background:linear-gradient(to left,  transparent, var(--gold)) }
+    .s-orn-d {
+      width:6px; height:6px;
+      border:1px solid var(--gold2); transform:rotate(45deg);
+      background:rgba(201,146,58,.15);
+    }
+    .s-head {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:4rem; align-items:end; margin-bottom:4rem;
+    }
+    .s-num {
+      font-family:'Bodoni Moda',serif; font-size:6rem; font-weight:500;
+      color:transparent; -webkit-text-stroke:1px rgba(201,146,58,.2);
+      line-height:1; margin-bottom:-.6rem;
+    }
+
+    /* ── CARDS ── */
+    .cgrid {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:1px; background:var(--line2);
+    }
+    .ccard {
+      background:var(--obsidian); overflow:hidden;
+      transition:background .3s;
+      position:relative;
+    }
+    .ccard::before {
+      content:''; position:absolute; inset:0; z-index:0;
+      background:linear-gradient(135deg, rgba(201,146,58,.04) 0%, transparent 60%);
+      opacity:0; transition:opacity .4s;
+    }
+    .ccard:hover { background:var(--obsidian3) }
+    .ccard:hover::before { opacity:1 }
+    .cc-img {
+      aspect-ratio:4/3; overflow:hidden;
+      background:var(--mahogany); position:relative;
+    }
+    .cc-img::after {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(to bottom, transparent 60%, rgba(12,10,8,.5));
+    }
+    .cc-img img {
+      width:100%; height:100%; object-fit:cover;
+      filter:sepia(15%) brightness(.75);
+      transition:transform .7s ease, filter .5s;
+    }
+    .ccard:hover .cc-img img {
+      transform:scale(1.07); filter:sepia(5%) brightness(.85);
+    }
+    .cc-body {
+      padding:2rem; position:relative; z-index:1;
+      border-top:1px solid var(--line2);
+    }
+    .cc-tag {
+      font-family:'Cinzel',serif;
+      font-size:.52rem; letter-spacing:.45em; text-transform:uppercase;
+      color:var(--gold); display:block; margin-bottom:.7rem;
+    }
+    .cc-h {
+      font-family:'Bodoni Moda',serif; font-size:1.25rem; font-weight:500;
+      color:var(--text); margin-bottom:.7rem; line-height:1.2;
+    }
+    .cc-p { font-size:.8rem; line-height:1.8; color:var(--text2) }
+    .cc-more {
+      display:inline-flex; align-items:center; gap:.5rem;
+      margin-top:1.3rem;
+      font-family:'Cinzel',serif;
+      font-size:.52rem; letter-spacing:.35em; color:var(--gold);
+      transition:gap .3s, color .2s;
+    }
+    .ccard:hover .cc-more { gap:.85rem; color:var(--gold2) }
+    .cc-more::after { content:'→' }
+
+    /* ── DARK BANNER ── */
+    .band {
+      padding:7rem 5vw;
+      background:
+        radial-gradient(ellipse 80% 60% at 80% 50%, rgba(201,146,58,.06) 0%, transparent 60%),
+        var(--mahogany);
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+      position:relative; overflow:hidden;
+    }
+    .band::before {
+      content:'JOMBANG'; position:absolute;
+      font-family:'Cinzel',serif; font-size:16vw; font-weight:600;
+      color:transparent; -webkit-text-stroke:1px rgba(201,146,58,.04);
+      right:-2vw; top:50%; transform:translateY(-50%);
+      pointer-events:none; line-height:1; white-space:nowrap;
+    }
+    .band-inner {
+      max-width:1200px; margin:0 auto;
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:6rem; align-items:center; position:relative; z-index:1;
+    }
+    .band h2 {
+      font-family:'Bodoni Moda',serif;
+      font-size:clamp(2rem,4vw,3.5rem); font-weight:500;
+      color:var(--text); line-height:1.12;
+    }
+    .band h2 em { font-style:italic; color:var(--gold2) }
+    .band-p { font-size:.9rem; line-height:1.95; color:var(--text2) }
+    .pillars {
+      display:flex; flex-direction:column;
+      gap:1px; background:var(--line); margin-top:2rem;
+    }
+    .pillar {
+      background:var(--mahogany); padding:1.5rem 1.8rem;
+      display:flex; align-items:flex-start; gap:1.2rem;
+      transition:background .3s;
+    }
+    .pillar:hover { background:rgba(201,146,58,.05) }
+    .p-ico {
+      width:30px; height:30px; flex-shrink:0; margin-top:2px;
+      border:1px solid rgba(201,146,58,.3);
+      display:flex; align-items:center; justify-content:center;
+      color:var(--gold2); font-size:.85rem;
+    }
+    .p-body strong {
+      font-family:'Cinzel',serif;
+      font-size:.75rem; letter-spacing:.08em; color:var(--text);
+      display:block; margin-bottom:.35rem;
+    }
+    .p-body span { font-size:.78rem; line-height:1.6; color:var(--text2) }
+
+    /* ── FOOD ── */
+    .fgrid {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:1px; background:var(--line2); margin-top:4rem;
+    }
+    .fcard {
+      background:var(--obsidian); padding:2.8rem 2.2rem;
+      transition:background .3s; position:relative; overflow:hidden;
+    }
+    .fcard::after {
+      content:''; position:absolute; bottom:0; left:0; right:0;
+      height:1px; background:linear-gradient(to right, var(--gold-dim), transparent);
+    }
+    .fcard:hover { background:var(--obsidian3) }
+    .fc-img {
+      aspect-ratio:3/2; overflow:hidden;
+      background:var(--mahogany); margin-bottom:1.8rem;
+      position:relative;
+    }
+    .fc-img::after {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(to bottom, transparent 50%, rgba(12,10,8,.4));
+    }
+    .fc-img img {
+      width:100%; height:100%; object-fit:cover;
+      filter:sepia(15%) brightness(.75);
+      transition:transform .6s;
+    }
+    .fcard:hover .fc-img img { transform:scale(1.06) }
+    .fc-num {
+      font-family:'Bodoni Moda',serif; font-size:3.5rem; font-weight:500;
+      color:transparent; -webkit-text-stroke:1px rgba(201,146,58,.25);
+      line-height:1; margin-bottom:.5rem;
+    }
+    .fc-h {
+      font-family:'Bodoni Moda',serif; font-size:1.2rem; font-weight:500;
+      color:var(--text); margin-bottom:.7rem; line-height:1.2;
+    }
+    .fc-p { font-size:.8rem; line-height:1.8; color:var(--text2) }
+
+    /* ── FOOTER ── */
+    .footer {
+      background:var(--obsidian);
+      border-top:1px solid var(--line);
+      padding:5rem 5vw 2.5rem;
+    }
+    .fg {
+      max-width:1200px; margin:0 auto;
+      display:grid; grid-template-columns:2fr 1fr 1fr 1fr;
+      gap:4rem; padding-bottom:3rem;
+      border-bottom:1px solid var(--line2); margin-bottom:2.5rem;
+    }
+    .fb .logo-name { color:var(--gold2) }
+    .fb .logo-sub { color:var(--muted) }
+    .fb p {
+      font-size:.78rem; line-height:1.85; color:var(--text2);
+      margin-top:1.2rem; max-width:260px;
+    }
+    .fc h4 {
+      font-family:'Cinzel',serif;
+      font-size:.52rem; letter-spacing:.4em; text-transform:uppercase;
+      color:var(--gold); margin-bottom:1.3rem;
+    }
+    .fc a {
+      display:block; font-size:.78rem; color:var(--text2);
+      text-decoration:none; margin-bottom:.6rem; transition:color .2s;
+    }
+    .fc a:hover { color:var(--gold2) }
+    .fbot {
+      max-width:1200px; margin:0 auto;
+      display:flex; justify-content:space-between; align-items:center;
+      font-size:.62rem; letter-spacing:.15em; color:var(--muted);
+    }
+    .fbot-gem {
+      display:flex; align-items:center; gap:.6rem;
+    }
+    .fbot-gem::before,.fbot-gem::after {
+      content:''; width:20px; height:1px; background:var(--line);
+    }
+    .fbot-d { width:4px; height:4px; background:var(--gold); transform:rotate(45deg) }
+
+    /* ── MUSIC ── */
+    .mplayer {
+      position:fixed; bottom:2rem; right:2rem; z-index:900;
+      display:flex; align-items:center; gap:1rem;
+      background:rgba(12,10,8,.92);
+      border:1px solid var(--line);
+      backdrop-filter:blur(20px);
+      padding:.9rem 1.4rem;
+      box-shadow:0 4px 30px rgba(0,0,0,.4), 0 0 0 1px rgba(201,146,58,.04);
+      transition:box-shadow .3s;
+    }
+    .mplayer:hover { box-shadow:0 8px 40px rgba(201,146,58,.15), 0 0 0 1px var(--line) }
+    .mp-btn {
+      width:34px; height:34px; border-radius:50%;
+      border:1px solid var(--gold); background:transparent;
+      color:var(--gold2); font-size:.8rem; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition:all .25s; flex-shrink:0;
+    }
+    .mp-btn:hover {
+      background:linear-gradient(135deg, var(--gold), var(--gold2));
+      color:var(--obsidian);
+    }
+    .mp-info { display:flex; flex-direction:column; gap:2px; min-width:0 }
+    .mp-title {
+      font-family:'Cinzel',serif;
+      font-size:.58rem; letter-spacing:.15em; color:var(--text);
+      max-width:130px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .mp-sub { font-size:.52rem; letter-spacing:.15em; color:var(--muted) }
+    .mwave { display:flex; align-items:center; gap:2px; height:14px }
+    .mwave span {
+      display:block; width:2px; border-radius:2px;
+      background:linear-gradient(to top, var(--gold), var(--gold2));
+      animation:mwv 1.1s ease-in-out infinite;
+    }
+    .mwave span:nth-child(1){height:5px;animation-delay:0s}
+    .mwave span:nth-child(2){height:11px;animation-delay:.1s}
+    .mwave span:nth-child(3){height:14px;animation-delay:.2s}
+    .mwave span:nth-child(4){height:9px;animation-delay:.3s}
+    .mwave span:nth-child(5){height:5px;animation-delay:.4s}
+    .mwave.off span { animation-play-state:paused; opacity:.2 }
+    @keyframes mwv {0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+    .mvol {
+      -webkit-appearance:none; appearance:none;
+      width:52px; height:2px;
+      background:rgba(201,146,58,.2);
+      outline:none; cursor:pointer; border-radius:2px;
+    }
+    .mvol::-webkit-slider-thumb {
+      -webkit-appearance:none; width:10px; height:10px;
+      border-radius:50%;
+      background:linear-gradient(135deg, var(--gold), var(--gold2));
+      cursor:pointer;
+    }
+
+    /* ── REVEAL ── */
+    .rv { opacity:0; transform:translateY(30px); transition:opacity .85s ease, transform .85s ease }
+    .rv.in { opacity:1; transform:translateY(0) }
+    .rv.d1 { transition-delay:.13s }
+    .rv.d2 { transition-delay:.26s }
+    .rv.d3 { transition-delay:.39s }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1080px){
+      .hero-inner { grid-template-columns:1fr; gap:3rem }
+      .hero-side-stats { display:none }
+      .hero-frame { max-width:500px; margin:0 auto }
+      .s-head { grid-template-columns:1fr; gap:1.5rem }
+      .band-inner { grid-template-columns:1fr; gap:3rem }
+      .fg { grid-template-columns:1fr 1fr; gap:2.5rem }
+    }
+    @media(max-width:768px){
+      .creator-ribbon { gap:1rem; flex-wrap:wrap }
+      .creator-divider { display:none }
+      .nav,.hdr-cta { display:none }
+      .burger { display:flex }
+      .hdr { top:55px }
+      .hdr.stuck { top:0 }
+      .hero { padding-top:calc(8rem + 55px) }
+      .cgrid { grid-template-columns:1fr; gap:0 }
+      .fgrid { grid-template-columns:1fr }
+      .fg { grid-template-columns:1fr }
+      .fbot { flex-direction:column; gap:.8rem; text-align:center }
+      .mp-info,.mwave { display:none }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<div class="cur-r" id="curR"></div>
+
+<!-- CREATOR RIBBON -->
+<div class="creator-ribbon">
+ <img src="foto.jpg" alt="Ringga Budi Utama" class="creator-photo">
+  <div class="creator-info">
+    <span class="creator-name">Ringga Budi Utama</span>
+    <span class="creator-title">Mahasiswa Politeknik Negeri Malang · International Class</span>
+  </div>
+  <div class="creator-divider"></div>
+  <span class="creator-label">Website Creator</span>
+</div>
+
+<!-- MOBILE NAV -->
+<div class="mnav" id="mnav">
+  <button class="mnav-close" id="mnavClose">✕</button>
+  <a href="#budaya"  onclick="closeMnav()">Culture</a>
+  <a href="#batik"   onclick="closeMnav()">Batik</a>
+  <a href="#pakaian" onclick="closeMnav()">Attire</a>
+  <a href="#rumah"   onclick="closeMnav()">Architecture</a>
+  <a href="#lagu"    onclick="closeMnav()">Music</a>
+  <a href="#makanan" onclick="closeMnav()">Cuisine</a>
+</div>
+
+<!-- HEADER -->
+<header class="hdr" id="hdr">
+  <div class="logo">
+    <img src="logojombang.png" alt="Logo" onerror="this.style.display='none'">
+    <div>
+      <div class="logo-name">Jombang Heritage</div>
+      <div class="logo-sub">Cultural Showcase</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <a href="#budaya">Culture</a>
+    <a href="#batik">Batik</a>
+    <a href="#pakaian">Attire</a>
+    <a href="#rumah">Architecture</a>
+    <a href="#lagu">Music</a>
+    <a href="#makanan">Cuisine</a>
+  </nav>
+  <a href="#budaya" class="hdr-cta"><span>Explore</span></a>
+  <button class="burger" id="burger">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-ghost">Heritage</div>
+  <div class="hero-vline"></div>
+  <div class="hero-hline"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-kicker">Jombang Regency · East Java · Indonesia</div>
+      <h1 class="hero-h1">The Art of<br><em>Cultural Identity</em></h1>
+      <div class="hero-orn"><div class="hero-gem"></div></div>
+      <p class="hero-p">Jombang Regency carries a rich cultural heritage reflecting ancestral values, community creativity, and the enduring identity of East Java — presented here with world-class elegance for international audiences.</p>
+      <div class="hero-btns">
+        <a href="#budaya" class="btn-gold">Explore Culture</a>
+        <a href="#makanan" class="btn-ghost">View Cuisine</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-frame">
+        <img src="ikon.png" alt="Jombang Culture" onerror="this.style.opacity='.1'">
+      </div>
+    
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <div class="t-item"><div class="t-gem"></div>Local Culture</div>
+    <div class="t-item"><div class="t-gem"></div>Traditional Batik</div>
+    <div class="t-item"><div class="t-gem"></div>Javanese Attire</div>
+    <div class="t-item"><div class="t-gem"></div>Heritage Architecture</div>
+    <div class="t-item"><div class="t-gem"></div>Traditional Music</div>
+    <div class="t-item"><div class="t-gem"></div>Authentic Cuisine</div>
+    <div class="t-item"><div class="t-gem"></div>East Java Pride</div>
+    <div class="t-item"><div class="t-gem"></div>Jombang Heritage</div>
+    <div class="t-item"><div class="t-gem"></div>Local Culture</div>
+    <div class="t-item"><div class="t-gem"></div>Traditional Batik</div>
+    <div class="t-item"><div class="t-gem"></div>Javanese Attire</div>
+    <div class="t-item"><div class="t-gem"></div>Heritage Architecture</div>
+    <div class="t-item"><div class="t-gem"></div>Traditional Music</div>
+    <div class="t-item"><div class="t-gem"></div>Authentic Cuisine</div>
+    <div class="t-item"><div class="t-gem"></div>East Java Pride</div>
+    <div class="t-item"><div class="t-gem"></div>Jombang Heritage</div>
+  </div>
+</div>
+
+<!-- CULTURE -->
+<section class="section" id="budaya">
+  <div class="sw">
+    <div class="s-head rv">
+      <div>
+        <div class="s-num">01</div>
+        <span class="s-kicker">Jombang</span>
+        <h2 class="s-title">Living <em>Culture</em></h2>
+      </div>
+      <p class="s-desc">The culture of Jombang reflects religious values, local traditions, agrarian community life, and a strong spirit of togetherness that continues to endure through generations.</p>
+    </div>
+    <div class="cgrid">
+      <div class="ccard rv">
+        <div class="cc-img"><img src="budaya1.jpg" alt="Local Traditions" onerror="this.style.opacity='.08'"></div>
+        <div class="cc-body">
+          <span class="cc-tag">Culture · 01</span>
+          <h3 class="cc-h">Local Traditions</h3>
+          <p class="cc-p">The people of Jombang preserve a variety of local traditions passed down through generations as an essential part of regional identity.</p>
+          <div class="cc-more">Discover more</div>
+        </div>
+      </div>
+      <div class="ccard rv d1">
+        <div class="cc-img"><img src="budaya2.jpg" alt="Performing Arts" onerror="this.style.opacity='.08'"></div>
+        <div class="cc-body">
+          <span class="cc-tag">Culture · 02</span>
+          <h3 class="cc-h">Performing Arts</h3>
+          <p class="cc-p">Regional arts serve as cultural expression, showcasing aesthetic value, social harmony, and the richness of local traditions.</p>
+          <div class="cc-more">Discover more</div>
+        </div>
+      </div>
+      <div class="ccard rv d2">
+        <div class="cc-img"><img src="budaya3.jpg" alt="Cultural Life" onerror="this.style.opacity='.08'"></div>
+        <div class="cc-body">
+          <span class="cc-tag">Culture · 03</span>
+          <h3 class="cc-h">Cultural Life</h3>
+          <p class="cc-p">Cultural life is visible in everyday customs, traditional ceremonies, and the enduring spirit of mutual cooperation.</p>
+          <div class="cc-more">Discover more</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BATIK -->
+<section class="section alt" id="batik">
+  <div class="sw">
+    <div class="s-head rv">
+      <div>
+        <div class="s-num">02</div>
+        <span class="s-kicker">Textile Art</span>
+        <h2 class="s-title">Traditional <em>Batik</em></h2>
+      </div>
+      <p class="s-desc">Jombang's batik reflects local creativity in transforming motifs, colors, and philosophy into textile art with profound cultural significance.</p>
+    </div>
+    <div class="cgrid">
+      <div class="ccard rv">
+        <div class="cc-img"><img src="batik1.webp" alt="Batik Motifs" onerror="this.style.opacity='.08'"></div>
+        <div class="cc-body">
+          <span class="cc-tag">Batik · 01</span>
+          <h3 class="cc-h">Local Batik Motifs</h3>
+          <p class="cc-p">Motifs inspired by nature, regional history, and cultural elements that define the local community's unique identity.</p>
+          <div class="cc-more">Discover more</div>
+        </div>
+      </div>
+      <div class="ccard rv d1">
+        <div class="cc-img"><img src="batik2.jpg" alt="Patterns" onerror="this.style.opacity='.08'"></div>
+        <div class="cc-body">
+          <span class="cc-tag">Batik · 02</span>
+          <h3 class="cc-h">Beauty of Patterns</h3>
+          <p class="cc-p">A combination of shapes, patterns, and colors presenting regional character in an elegant artistic form.</p>
+          <div class="cc-more">Discover more</div>
+        </div>
+      </div>
+      <div class="ccard rv d2">
+        <div class="cc-img"><img src="batik3" alt="Textile Heritage" onerror="this.style.opacity='.08'"></div>
+        <div class="cc-body">
+          <span class="cc-tag">Batik · 03</span>
+          <h3 class="cc-h">Textile Heritage</h3>
+          <p class="cc-p">A cultural product and symbol of local creativity, ready to be introduced on the global stage.</p>
+          <div class="cc-more">Discover more</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ATTIRE -->
+<section class="section" id="pakaian">
+  <div class="sw">
+    <div class="s-head rv">
+      <div>
+        <div class="s-num">03</div>
+        <span class="s-kicker">Dress & Identity</span>
+        <h2 class="s-title">Traditional <em>Attire</em></h2>
+      </div>
+      <p class="s-desc">Traditional attire reflects beauty, moral values, and symbolic dignity in communities that continue to honor ancestral heritage.</p>
+    </div>
+    <div class="cgrid">
+      <div class="ccard rv">
+        <div class="cc-img"><img src="busana1.jpg" alt="Clothing" onerror="this.style.opacity='.08'"></div>
+        <div class="cc-body">
+          <span class="cc-tag">Attire · 01</span>
+          <h3 class="cc-h">Traditional Clothing</h3>
+          <p class="cc-p">Representing Javanese cultural identity, emphasizing modesty, elegance, and customary values.</p>
+          <div class="cc-more">Discover more</div>
+        </div>
+      </div>
+      <div class="ccard rv d1">
+        <div class="cc-img"><img src="busana2.jpeg" alt="Accessories" onerror="this.style.opacity='.08'"></div>
+        <div class="cc-body">
+          <span class="cc-tag">Attire · 02</span>
+          <h3 class="cc-h">Traditional Accessories</h3>
+          <p class="cc-p">Accessories complementing ceremonial dress, carrying symbolic meanings related to role and cultural significance.</p>
+          <div class="cc-more">Discover more</div>
+        </div>
+      </div>
+      <div class="ccard rv d2">
+        <div class="cc-img"><img src="busana3.jpg" alt="Cultural Appearance" onerror="this.style.opacity='.08'"></div>
+        <div class="cc-body">
+          <span class="cc-tag">Attire · 03</span>
+          <h3 class="cc-h">Cultural Appearance</h3>
+          <p class="cc-p">Attire presented in cultural events, artistic performances, and ceremonies as part of cultural preservation.</p>
+          <div class="cc-more">Discover more</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BAND -->
+<div class="band">
+  <div class="band-inner">
+    <div class="rv">
+      <h2>Preserving Identity,<br><em>Inspiring the World</em></h2>
+      <div class="s-orn" style="margin-top:2rem"><div class="s-orn-d"></div></div>
+    </div>
+    <div class="rv d1">
+      <p class="band-p">Jombang is not only renowned as a religious center, but as a region with remarkable cultural wealth — through art, batik, traditions, architecture, music, and culinary heritage.</p>
+      <div class="pillars">
+        <div class="pillar">
+          <div class="p-ico">◆</div>
+          <div class="p-body"><strong>Traditional Values</strong><span>Preserving ancestral heritage and cultural identity for future generations.</span></div>
+        </div>
+        <div class="pillar">
+          <div class="p-ico">✦</div>
+          <div class="p-body"><strong>Premium Presentation</strong><span>A world-class visual standard for international audiences.</span></div>
+        </div>
+        <div class="pillar">
+          <div class="p-ico">◈</div>
+          <div class="p-body"><strong>Global Reach</strong><span>Introducing Jombang's culture to the world.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ARCHITECTURE -->
+<section class="section alt" id="rumah">
+  <div class="sw">
+    <div class="s-head rv">
+      <div>
+        <div class="s-num">04</div>
+        <span class="s-kicker">Built Heritage</span>
+        <h2 class="s-title">Traditional <em>Architecture</em></h2>
+      </div>
+      <p class="s-desc">Traditional houses reflect ways of life, communal values, and architectural philosophies connected to the environment and cultural wisdom.</p>
+    </div>
+    <div class="cgrid">
+      <div class="ccard rv">
+        <div class="cc-img"><img src="bangunan1.jpg" alt="Architecture" onerror="this.style.opacity='.08'"></div>
+        <div class="cc-body">
+          <span class="cc-tag">Architecture · 01</span>
+          <h3 class="cc-h">Traditional Architecture</h3>
+          <p class="cc-p">Distinctive building forms reflecting function, aesthetics, and cultural values of Javanese society.</p>
+          <div class="cc-more">Discover more</div>
+        </div>
+      </div>
+      <div class="ccard rv d1">
+        <div class="cc-img"><img src="bangunan3.jpg" alt="Space Philosophy" onerror="this.style.opacity='.08'"></div>
+        <div class="cc-body">
+          <span class="cc-tag">Architecture · 02</span>
+          <h3 class="cc-h">Space & Philosophy</h3>
+          <p class="cc-p">Spatial arrangement carrying philosophical meaning related to family life and social harmony.</p>
+          <div class="cc-more">Discover more</div>
+        </div>
+      </div>
+      <div class="ccard rv d2">
+        <div class="cc-img"><img src="bangunan2.webp" alt="Architectural Heritage" onerror="this.style.opacity='.08'"></div>
+        <div class="cc-body">
+          <span class="cc-tag">Architecture · 03</span>
+          <h3 class="cc-h">Architectural Heritage</h3>
+          <p class="cc-p">A legacy demonstrating local communities' ability to create culturally meaningful dwellings.</p>
+          <div class="cc-more">Discover more</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MUSIC -->
+<section class="section" id="lagu">
+  <div class="sw">
+    <div class="s-head rv">
+      <div>
+        <div class="s-num">05</div>
+        <span class="s-kicker">Sound & Soul</span>
+        <h2 class="s-title">Traditional <em>Music</em></h2>
+      </div>
+      <p class="s-desc">Traditional songs serve as a medium for expressing life values and the sense of togetherness that grows within a community across generations.</p>
+    </div>
+    <div class="cgrid">
+      <div class="ccard rv">
+        <div class="cc-img"><img src="music1.webp" alt="Songs" onerror="this.style.opacity='.08'"></div>
+        <div class="cc-body">
+          <span class="cc-tag">Music · 01</span>
+          <h3 class="cc-h">Traditional Songs</h3>
+          <p class="cc-p">Cultural expression passed down orally, used in social, educational, and ceremonial activities.</p>
+          <div class="cc-more">Discover more</div>
+        </div>
+      </div>
+      <div class="ccard rv d1">
+        <div class="cc-img"><img src="music2.webp" alt="Music Identity" onerror="this.style.opacity='.08'"></div>
+        <div class="cc-body">
+          <span class="cc-tag">Music · 02</span>
+          <h3 class="cc-h">Music & Identity</h3>
+          <p class="cc-p">Traditional music reflects community identity and preserves local cultural values across generations.</p>
+          <div class="cc-more">Discover more</div>
+        </div>
+      </div>
+      <div class="ccard rv d2">
+        <div class="cc-img"><img src="music3.webp" alt="Performing Arts" onerror="this.style.opacity='.08'"></div>
+        <div class="cc-body">
+          <span class="cc-tag">Music · 03</span>
+          <h3 class="cc-h">Performing Arts</h3>
+          <p class="cc-p">Songs and music forming part of performing arts, strengthening the cultural appeal of the region.</p>
+          <div class="cc-more">Discover more</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CUISINE -->
+<section class="section alt" id="makanan">
+  <div class="sw">
+    <div class="rv" style="text-align:center; margin-bottom:.5rem">
+      <span class="s-kicker">Gastronomy</span>
+      <h2 class="s-title">Traditional <em>Cuisine</em> of Jombang</h2>
+      <div class="s-orn" style="justify-content:center"><div class="s-orn-d"></div></div>
+      <p class="s-desc" style="margin:0 auto; text-align:center">Jombang's traditional cuisine reflects local flavors, community habits, and the uniqueness of regional gastronomy.</p>
+    </div>
+    <div class="fgrid">
+      <div class="fcard rv">
+        <div class="fc-img"><img src="makan1.jpeg" alt="Culinary Heritage" onerror="this.style.opacity='.08'"></div>
+        <div class="fc-num">01</div>
+        <h3 class="fc-h">Traditional Culinary Heritage</h3>
+        <p class="fc-p">A blend of taste, local ingredients, and eating habits developed over time within the community.</p>
+      </div>
+      <div class="fcard rv d1">
+        <div class="fc-img"><img src="makan2.jpeg" alt="Local Taste" onerror="this.style.opacity='.08'"></div>
+        <div class="fc-num">02</div>
+        <h3 class="fc-h">Local Taste Identity</h3>
+        <p class="fc-p">Local taste is the main attraction of Jombang's cuisine, offering an authentic experience rooted in regional tradition.</p>
+      </div>
+      <div class="fcard rv d2">
+        <div class="fc-img"><img src="makan3.png" alt="Gastronomic Heritage" onerror="this.style.opacity='.08'"></div>
+        <div class="fc-num">03</div>
+        <h3 class="fc-h">Gastronomic Heritage</h3>
+        <p class="fc-p">Traditional food promoted as gastronomic heritage, supporting tourism and strengthening cultural pride.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="fg">
+    <div class="fb">
+      <div class="logo-name">Jombang Heritage</div>
+      <div class="logo-sub">Cultural Showcase</div>
+      <p>Presenting the cultural richness of Jombang Regency in a modern, elegant manner for national and international audiences.</p>
+    </div>
+    <div class="fc">
+      <h4>Explore</h4>
+      <a href="#budaya">Culture</a>
+      <a href="#batik">Batik</a>
+      <a href="#pakaian">Traditional Attire</a>
+    </div>
+    <div class="fc">
+      <h4>Heritage</h4>
+      <a href="#rumah">Architecture</a>
+      <a href="#lagu">Music</a>
+      <a href="#makanan">Cuisine</a>
+    </div>
+    <div class="fc">
+      <h4>Creator</h4>
+      <a href="#">Ringga Budi Utama</a>
+      <a href="#">Politeknik Negeri Malang</a>
+      <a href="#">International Class</a>
+    </div>
+  </div>
+  <div class="fbot">
+    <span>© 2025 Jombang Heritage · All Rights Reserved</span>
+    <div class="fbot-gem"><div class="fbot-d"></div></div>
+    <span>Made by Ringga Budi Utama · Polinema</span>
+  </div>
+</footer>
+
+<!-- AUDIO -->
+<audio id="bgAudio" loop>
+  <source src="lagu.mp3" type="audio/mpeg">
+  <source src="music.ogg" type="audio/ogg">
+</audio>
+
+<!-- MUSIC PLAYER -->
+<div class="mplayer">
+  <button class="mp-btn" id="mpBtn">▶</button>
+  <div class="mp-info">
+    <span class="mp-title">Traditional Music</span>
+    <span class="mp-sub">Jombang Heritage</span>
+  </div>
+  <div class="mwave off" id="mwave">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <input type="range" class="mvol" id="mvol" min="0" max="1" step="0.05" value="0.4">
+</div>
+
+<script>
+  // CURSOR
+  const cur  = document.getElementById('cur');
+  const curR = document.getElementById('curR');
+  document.addEventListener('mousemove', e => {
+    cur.style.left = e.clientX + 'px';
+    cur.style.top  = e.clientY + 'px';
+    setTimeout(() => {
+      curR.style.left = e.clientX + 'px';
+      curR.style.top  = e.clientY + 'px';
+    }, 80);
+  });
+  document.querySelectorAll('a,button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      curR.style.width = '44px'; curR.style.height = '44px';
+      cur.style.transform = 'translate(-50%,-50%) scale(1.5)';
+    });
+    el.addEventListener('mouseleave', () => {
+      curR.style.width = '28px'; curR.style.height = '28px';
+      cur.style.transform = 'translate(-50%,-50%) scale(1)';
+    });
+  });
+
+  // STICKY HEADER — account for ribbon height
+  const hdr = document.getElementById('hdr');
+  window.addEventListener('scroll', () => {
+    hdr.classList.toggle('stuck', window.scrollY > 50);
+  });
+
+  // MOBILE NAV
+  const mnav = document.getElementById('mnav');
+  document.getElementById('burger').addEventListener('click', () => mnav.classList.add('on'));
+  document.getElementById('mnavClose').addEventListener('click', () => mnav.classList.remove('on'));
+  function closeMnav(){ mnav.classList.remove('on'); }
+
+  // SCROLL REVEAL
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+  // MUSIC PLAYER
+  const audio = document.getElementById('bgAudio');
+  const btn   = document.getElementById('mpBtn');
+  const wave  = document.getElementById('mwave');
+  const vol   = document.getElementById('mvol');
+  audio.volume = 0.4;
+
+  function setPlay(playing) {
+    btn.textContent = playing ? '⏸' : '▶';
+    wave.classList.toggle('off', !playing);
+  }
+
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    if (audio.paused) { audio.play().then(() => setPlay(true)).catch(()=>{}); }
+    else { audio.pause(); setPlay(false); }
+  });
+
+  vol.addEventListener('input', () => { audio.volume = parseFloat(vol.value); });
+
+  // Autoplay — try immediately, fallback on first interaction
+  function tryPlay() {
+    audio.play().then(() => setPlay(true)).catch(() => {});
+    document.removeEventListener('click',  tryPlay);
+    document.removeEventListener('scroll', tryPlay);
+    document.removeEventListener('keydown',tryPlay);
+  }
+  audio.play()
+    .then(() => setPlay(true))
+    .catch(() => {
+      document.addEventListener('click',  tryPlay);
+      document.addEventListener('scroll', tryPlay);
+      document.addEventListener('keydown',tryPlay);
+    });
+</script>
+</body>
+</html>
