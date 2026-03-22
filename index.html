@@ -1,572 +1,896 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en" data-theme="kencono">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jombang Heritage — Cultural Excellence</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Jombang Heritage — Living Culture of East Java</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#F0F5FF;--bg2:#E4EEFF;--white:#FFFFFF;--ink:#060E2B;--ink2:#2D3B6E;--ink3:#7E8EC0;--blue:#1A4FD6;--blue2:#3B6EF5;--blue3:#6B95FF;--blt:#EBF0FF;--gold:#C9981A;--gold2:#F0C040;--green:#10B981;--bdr:rgba(26,79,214,.13);--bdr2:rgba(26,79,214,.06);--sh:0 2px 24px rgba(26,79,214,.09);--sh2:0 12px 48px rgba(26,79,214,.16);--grad:linear-gradient(135deg,#1A4FD6,#3B6EF5,#6B95FF)}
+/* ═══════════════ THEME TOKENS ═══════════════ */
+[data-theme="kencono"]{
+  --bg:#0A0203;--bg2:#160508;--sec:rgba(16,4,4,.97);--sec2:rgba(22,7,7,.97);
+  --ink:#FDF6EC;--ink2:#D4B896;--ink3:#7A6050;
+  --acc:#C9841A;--acc2:#E8B84B;--acc3:#F5D8A0;
+  --bdr:rgba(200,132,26,.2);--bdr2:rgba(200,132,26,.07);
+  --card:rgba(28,7,4,.95);--card2:rgba(36,10,6,.98);
+  --sh:0 8px 48px rgba(200,132,26,.16);--sh2:0 24px 80px rgba(200,132,26,.26);
+  --grad:linear-gradient(135deg,#7A2020,#C9841A,#F0D070);
+  --tag:rgba(200,132,26,.1);--nav:rgba(10,2,3,.94);
+}
+[data-theme="samudra"]{
+  --bg:#010612;--bg2:#040B1E;--sec:rgba(2,8,24,.97);--sec2:rgba(4,12,32,.97);
+  --ink:#EBF0FF;--ink2:#A0B4E0;--ink3:#485880;
+  --acc:#3B6EF5;--acc2:#7AA0FF;--acc3:#B8D0FF;
+  --bdr:rgba(59,110,245,.2);--bdr2:rgba(59,110,245,.07);
+  --card:rgba(3,8,30,.95);--card2:rgba(5,13,42,.98);
+  --sh:0 8px 48px rgba(59,110,245,.16);--sh2:0 24px 80px rgba(59,110,245,.26);
+  --grad:linear-gradient(135deg,#0A1A6A,#3B6EF5,#B0CCFF);
+  --tag:rgba(59,110,245,.1);--nav:rgba(1,6,18,.94);
+}
+[data-theme="rimba"]{
+  --bg:#020702;--bg2:#060E05;--sec:rgba(3,10,3,.97);--sec2:rgba(5,14,5,.97);
+  --ink:#F0EFE0;--ink2:#B0C098;--ink3:#566048;
+  --acc:#9B7420;--acc2:#C8A040;--acc3:#E0C870;
+  --bdr:rgba(155,116,32,.2);--bdr2:rgba(155,116,32,.07);
+  --card:rgba(4,10,4,.95);--card2:rgba(6,16,5,.98);
+  --sh:0 8px 48px rgba(155,116,32,.16);--sh2:0 24px 80px rgba(155,116,32,.26);
+  --grad:linear-gradient(135deg,#1A4010,#9B7420,#E0C870);
+  --tag:rgba(155,116,32,.1);--nav:rgba(2,7,2,.94);
+}
+
+/* ═══════════════ RESET ═══════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--white);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-weight:400;line-height:1.65;overflow-x:hidden;cursor:none}
+body{background:var(--bg);color:var(--ink);font-family:'Cormorant Garamond',serif;line-height:1.7;overflow-x:hidden;cursor:none;transition:background .6s,color .4s}
 img{display:block;width:100%;height:100%;object-fit:cover}
-a{text-decoration:none;color:inherit}
-::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--blue);border-radius:2px}
+::-webkit-scrollbar{width:2px}::-webkit-scrollbar-thumb{background:var(--acc)}
 @media(hover:none){#cur,#curR{display:none}body{cursor:auto}}
 
-/* ══ WAYANG BACKGROUND ══ */
-#wbg{position:fixed;inset:0;z-index:0;pointer-events:none}
-#wbg canvas{width:100%;height:100%}
-main,header,footer,.theme-toggle,#loader,#prog,.drawer,.sdots{position:relative;z-index:1}
+/* ═══════════════ FIXED LAYERS ═══════════════ */
+#bgcv{position:fixed;inset:0;z-index:0;pointer-events:none;width:100%;height:100%}
+main,header,footer,.tt-wrap,#loader,#prog,.drawer,.sdots{position:relative;z-index:1}
 
-/* ══ LOADER ══ */
-#loader{position:fixed;inset:0;z-index:9999;background:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.6rem}
-#loader.gone{display:none!important}
-.ld-spin{width:52px;height:52px;border-radius:50%;border:2.5px solid var(--bdr2);border-top-color:var(--blue);animation:spin .85s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.ld-name{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;letter-spacing:.25em;color:var(--blue)}
-.ld-sub{font-size:.44rem;letter-spacing:.5em;text-transform:uppercase;color:var(--ink3)}
-.ld-bar{width:150px;height:2px;background:var(--bdr2);border-radius:2px;overflow:hidden}
-.ld-bar-fill{height:100%;background:var(--grad);width:0;animation:lbar 1.5s .2s cubic-bezier(.4,0,.2,1) forwards}
-@keyframes lbar{to{width:100%}}
-#prog{position:fixed;top:0;left:0;height:3px;z-index:8000;width:0%;background:var(--grad);transition:width .06s linear}
-#cur,#curR{position:fixed;border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%)}
-#cur{width:6px;height:6px;background:var(--blue)}
-#curR{width:26px;height:26px;border:1.5px solid rgba(26,79,214,.45);transition:left .07s,top .07s,width .22s,height .22s}
+/* ═══════════════ CURSOR ═══════════════ */
+#cur{position:fixed;width:5px;height:5px;background:var(--acc);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%)}
+#curR{position:fixed;width:24px;height:24px;border:1.5px solid rgba(200,132,26,.4);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:width .18s,height .18s,border-color .2s}
 
-/* ══ NAV ══ */
-.nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 5vw;transition:background .3s,box-shadow .3s,padding .28s}
-.nav.stuck{background:rgba(255,255,255,.96);backdrop-filter:blur(20px);box-shadow:0 1px 0 var(--bdr);padding:.78rem 5vw}
-.nav-brand{display:flex;align-items:center;gap:.7rem;cursor:pointer}
-.nav-mark{width:36px;height:36px;border-radius:10px;border:1px solid var(--bdr);background:var(--blt);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.nav-mark img{width:24px;height:24px;object-fit:contain}
-.nav-mark .fb{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;font-style:italic;color:var(--blue)}
-.nav-name{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;letter-spacing:.12em;color:var(--ink)}
-.nav-sub{font-size:.4rem;letter-spacing:.4em;text-transform:uppercase;color:var(--ink3)}
-.nav-links{display:flex;align-items:center;gap:.05rem}
-.nl{font-family:'Plus Jakarta Sans',sans-serif;font-size:.52rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.44rem .8rem;border-radius:8px;border:none;background:none;cursor:pointer;color:var(--ink3);transition:all .2s}
-.nl:hover,.nl.on{color:var(--blue);background:var(--blt)}
+/* ═══════════════ LOADER ═══════════════ */
+#loader{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;transition:opacity .5s}
+#loader.gone{opacity:0;pointer-events:none}
+.ld-ring{width:60px;height:60px;border:1px solid var(--bdr);border-radius:50%;display:flex;align-items:center;justify-content:center;animation:rot 2s linear infinite;position:relative}
+.ld-ring::after{content:'✦';font-size:1.1rem;color:var(--acc2);animation:rot-r 2s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}@keyframes rot-r{to{transform:rotate(-360deg)}}
+.ld-t{font-family:'Cinzel',serif;font-size:clamp(.9rem,3vw,1.3rem);font-weight:700;letter-spacing:.45em;color:var(--acc2)}
+.ld-s{font-family:'Cinzel',serif;font-size:.4rem;letter-spacing:.45em;text-transform:uppercase;color:var(--ink3)}
+.ld-bar{width:110px;height:1px;background:var(--bdr2)}
+.ld-fill{height:1px;background:var(--grad);width:0;animation:fill 1.4s .2s ease forwards}
+@keyframes fill{to{width:100%}}
+
+/* ═══════════════ PROGRESS ═══════════════ */
+#prog{position:fixed;top:0;left:0;height:2px;z-index:8000;width:0;background:var(--grad);transition:width .06s}
+
+/* ═══════════════ NAV ═══════════════ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 5vw;transition:all .3s}
+.nav.stuck{background:var(--nav);backdrop-filter:blur(24px);border-bottom:1px solid var(--bdr);padding:.8rem 5vw}
+.nav-brand{display:flex;align-items:center;gap:.75rem;cursor:pointer}
+.nav-logo{width:38px;height:38px;border:1px solid var(--bdr);border-radius:6px;background:var(--tag);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.nav-logo img{width:26px;height:26px;object-fit:contain}
+.nav-logo .fb{font-family:'Cinzel',serif;font-size:1rem;font-weight:700;color:var(--acc2)}
+.brand-n{font-family:'Cinzel',serif;font-size:.82rem;font-weight:700;letter-spacing:.14em;color:var(--ink)}
+.brand-s{font-size:.37rem;letter-spacing:.4em;text-transform:uppercase;color:var(--ink3)}
+.nav-links{display:flex;gap:.05rem}
+.nl{font-family:'Cinzel',serif;font-size:.46rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.38rem .72rem;border:none;background:none;cursor:pointer;color:var(--ink3);transition:all .2s;border-radius:4px}
+.nl:hover,.nl.on{color:var(--acc2);background:var(--tag)}
 .nav-r{display:flex;align-items:center;gap:.6rem}
-.mpill{display:flex;align-items:center;gap:.5rem;padding:.35rem .75rem .35rem .4rem;border:1px solid var(--bdr);border-radius:99px;background:var(--white);cursor:pointer;transition:all .22s}
-.mpill:hover{border-color:var(--blue);background:var(--blt)}
-.mp{width:24px;height:24px;border-radius:50%;border:1px solid var(--bdr);background:none;color:var(--blue);font-size:.56rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
-.mp:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
-.mp-lbl{font-size:.46rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.mpill{display:flex;align-items:center;gap:.45rem;padding:.33rem .75rem .33rem .4rem;border:1px solid var(--bdr);border-radius:99px;background:var(--tag);cursor:pointer;transition:all .2s}
+.mpill:hover{border-color:var(--acc)}
+.mp{width:22px;height:22px;border-radius:50%;border:1px solid var(--bdr);background:none;color:var(--acc2);font-size:.52rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+.mp:hover{background:var(--acc);color:#000;border-color:var(--acc)}
+.mp-lbl{font-family:'Cinzel',serif;font-size:.42rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
 .mwav{display:flex;align-items:center;gap:1.5px;height:10px}
-.mwav span{display:block;width:2px;border-radius:1px;background:var(--blue);animation:mwv .9s ease-in-out infinite}
-.mwav span:nth-child(1){height:3px;animation-delay:0s}.mwav span:nth-child(2){height:8px;animation-delay:.12s}.mwav span:nth-child(3){height:10px;animation-delay:.24s}.mwav span:nth-child(4){height:5px;animation-delay:.36s}.mwav span:nth-child(5){height:3px;animation-delay:.48s}
+.mwav span{display:block;width:2px;border-radius:1px;background:var(--acc2);animation:mwv .9s ease-in-out infinite}
+.mwav span:nth-child(1){height:3px;animation-delay:0s}.mwav span:nth-child(2){height:8px;animation-delay:.12s}
+.mwav span:nth-child(3){height:10px;animation-delay:.24s}.mwav span:nth-child(4){height:5px;animation-delay:.36s}
+.mwav span:nth-child(5){height:3px;animation-delay:.48s}
 .mwav.off span{animation-play-state:paused;opacity:.15;height:3px!important}
 @keyframes mwv{0%,100%{transform:scaleY(.2)}50%{transform:scaleY(1)}}
-.ham{display:none;width:36px;height:36px;border:1px solid var(--bdr);border-radius:9px;background:var(--white);align-items:center;justify-content:center;flex-direction:column;gap:4px;cursor:pointer}
-.ham span{display:block;width:16px;height:1.5px;background:var(--ink2);border-radius:1px}
+.ham{display:none;width:36px;height:36px;border:1px solid var(--bdr);border-radius:6px;background:var(--tag);align-items:center;justify-content:center;flex-direction:column;gap:4px;cursor:pointer}
+.ham span{display:block;width:15px;height:1.5px;background:var(--ink2);border-radius:1px}
 @media(max-width:820px){.nav-links{display:none}.ham{display:flex}}
 @media(max-width:500px){.mp-lbl,.mwav{display:none}}
-.drawer{position:fixed;inset:0;z-index:800;background:rgba(255,255,255,.98);backdrop-filter:blur(24px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;transform:translateX(110%);transition:transform .4s cubic-bezier(.4,0,.2,1)}
+.drawer{position:fixed;inset:0;z-index:800;background:rgba(6,2,2,.98);backdrop-filter:blur(30px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;transform:translateX(110%);transition:transform .4s cubic-bezier(.4,0,.2,1);border-left:1px solid var(--bdr)}
 .drawer.open{transform:none}
-.drawer .nl{font-size:1.05rem;padding:.6rem 2rem}
-.dr-close{position:absolute;top:1.2rem;right:1.2rem;width:38px;height:38px;border-radius:50%;border:1px solid var(--bdr);background:var(--bg);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem}
+.drawer .nl{font-size:1rem;padding:.6rem 2rem}
+.dr-close{position:absolute;top:1.2rem;right:1.2rem;width:36px;height:36px;border-radius:50%;border:1px solid var(--bdr);background:var(--tag);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink2);font-size:.9rem}
 .sdots{position:fixed;right:1.5rem;top:50%;transform:translateY(-50%);z-index:700;display:flex;flex-direction:column;gap:.55rem}
-.sdot{width:7px;height:7px;border-radius:50%;border:1.5px solid var(--bdr);background:transparent;cursor:pointer;transition:all .25s;position:relative}
-.sdot::after{content:attr(data-label);position:absolute;right:calc(100% + 10px);top:50%;transform:translateY(-50%);white-space:nowrap;font-size:.44rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);opacity:0;transition:opacity .2s;pointer-events:none}
+.sdot{width:6px;height:6px;border-radius:50%;border:1.5px solid var(--bdr);background:transparent;cursor:pointer;transition:all .25s;position:relative}
+.sdot::after{content:attr(data-label);position:absolute;right:calc(100% + 10px);top:50%;transform:translateY(-50%);white-space:nowrap;font-family:'Cinzel',serif;font-size:.4rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink3);opacity:0;transition:opacity .2s;pointer-events:none}
 .sdot:hover::after{opacity:1}
-.sdot.on{background:var(--blue);border-color:var(--blue);transform:scale(1.5)}
+.sdot.on{background:var(--acc2);border-color:var(--acc2);transform:scale(1.55)}
 @media(max-width:900px){.sdots{display:none}}
 
-/* ══ SECTIONS ══ */
-section,#hero{padding:6rem 5vw}
-section.alt{background:rgba(240,245,255,.96)}
-section{background:rgba(255,255,255,.95)}
-.sw{max-width:1200px;margin:0 auto}
-.chapter-tag{display:inline-flex;align-items:center;gap:.65rem;font-size:.46rem;letter-spacing:.5em;text-transform:uppercase;color:var(--blue);font-weight:700;margin-bottom:.65rem}
-.chapter-tag::before{content:'';width:22px;height:2px;background:var(--blue);border-radius:1px}
-.chap-num{font-family:'Cormorant Garamond',serif;font-size:.68rem;font-style:italic;color:var(--blue);opacity:.65;border:1px solid var(--bdr);padding:.16rem .6rem}
-.stitle{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5.5vw,3.6rem);font-weight:700;line-height:.94;color:var(--ink);margin-bottom:.5rem}
-.stitle em{font-style:italic;color:var(--blue)}
-.sdesc{font-size:.87rem;line-height:2;color:var(--ink2);max-width:520px;margin-bottom:3rem}
-.shd{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:3rem}
-@media(max-width:640px){.shd{grid-template-columns:1fr;gap:1.2rem;margin-bottom:2rem}}
-.div-row{display:flex;align-items:center;gap:1rem;margin:2.5rem 0}
-.div-line{flex:1;height:1px;background:var(--bdr)}
-.div-gem{width:6px;height:6px;border:1.5px solid var(--blue2);transform:rotate(45deg);background:var(--blt);flex-shrink:0}
-.div-txt{font-size:.44rem;letter-spacing:.48em;text-transform:uppercase;color:var(--ink3);flex-shrink:0;font-weight:600}
+/* ═══════════════ SECTION WRAPPER ═══════════════ */
+section{padding:7rem 5vw;background:var(--sec)}
+section.alt{background:var(--sec2)}
+.sw{max-width:1280px;margin:0 auto}
 
-/* ══ REVEAL ══ */
-.rv{opacity:1;transform:none;transition:none}
-.rv.will-anim{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
-.rv.will-anim.dl1{transition-delay:.1s}.rv.will-anim.dl2{transition-delay:.2s}.rv.will-anim.dl3{transition-delay:.3s}
-.rv.show{opacity:1!important;transform:none!important}
+/* ═══════════════ ORNAMENTAL HEADER ═══════════════ */
+.s-head{text-align:center;margin-bottom:4rem;position:relative}
+.s-chap{display:inline-flex;align-items:center;gap:.8rem;margin-bottom:.55rem}
+.s-chap-line{width:28px;height:1px;background:linear-gradient(90deg,transparent,var(--acc))}
+.s-chap-line.r{background:linear-gradient(90deg,var(--acc),transparent)}
+.s-chap-lbl{font-family:'Cinzel',serif;font-size:.46rem;font-weight:700;letter-spacing:.5em;color:var(--acc);text-transform:uppercase}
+.s-title{font-family:'Cinzel',serif;font-size:clamp(1.9rem,4.5vw,3.2rem);font-weight:700;letter-spacing:.04em;color:var(--ink);line-height:1.02;margin-bottom:.55rem}
+.s-title em{font-style:italic;color:var(--acc2);font-family:'Cormorant Garamond',serif;font-size:1.12em;font-weight:600}
+.s-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--ink2);max-width:540px;margin:0 auto .6rem}
+.s-gem-row{display:flex;align-items:center;justify-content:center;gap:.7rem;margin:.6rem 0 0}
+.s-gem-line{width:44px;height:1px;background:var(--bdr)}
+.s-gem{width:7px;height:7px;border:1.5px solid var(--acc);transform:rotate(45deg);background:var(--tag)}
 
-/* ══ HERO — 2 kolom megah ══ */
-#hero{
-  min-height:100svh;padding-top:88px;
-  display:flex;align-items:center;
-  background:linear-gradient(160deg,rgba(255,255,255,.97) 0%,rgba(240,245,255,.97) 55%,rgba(228,238,255,.97) 100%);
-  position:relative;overflow:hidden;
-}
-.hero-inner{max-width:1280px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:4rem;padding:0 5vw}
+/* ═══════════════ 3-COLUMN CARD GRID ═══════════════ */
+.art-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+@media(max-width:960px){.art-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.art-grid{grid-template-columns:1fr}}
+
+.art-card{border:1px solid var(--bdr);border-radius:1px;overflow:hidden;background:var(--card);position:relative;transition:transform .4s cubic-bezier(.4,0,.2,1),box-shadow .4s}
+.art-card::after{content:'';position:absolute;inset:0;border:1px solid transparent;border-radius:1px;transition:border-color .4s;pointer-events:none;z-index:3}
+.art-card:hover{transform:translateY(-6px);box-shadow:var(--sh2)}
+.art-card:hover::after{border-color:var(--acc)}
+/* Corner ornament */
+.art-card-c{position:absolute;z-index:4;pointer-events:none;width:18px;height:18px}
+.art-card-c::before,.art-card-c::after{content:'';position:absolute;background:var(--acc2);opacity:0;transition:opacity .35s}
+.art-card-c::before{width:100%;height:1.5px}
+.art-card-c::after{width:1.5px;height:100%}
+.art-card-c.tl{top:8px;left:8px}.art-card-c.tl::before{top:0;left:0}.art-card-c.tl::after{top:0;left:0}
+.art-card-c.br{bottom:8px;right:8px}.art-card-c.br::before{bottom:0;right:0}.art-card-c.br::after{bottom:0;right:0}
+.art-card:hover .art-card-c::before,.art-card:hover .art-card-c::after{opacity:1}
+
+.art-card-img{position:relative;aspect-ratio:4/3;overflow:hidden}
+.art-card-img img{filter:sepia(10%) brightness(.75) contrast(1.06);transition:transform .85s cubic-bezier(.4,0,.2,1),filter .4s}
+.art-card:hover .art-card-img img{transform:scale(1.065);filter:sepia(5%) brightness(.88)}
+.art-card-ov{position:absolute;bottom:0;left:0;right:0;padding:3.5rem 1.2rem .95rem;background:linear-gradient(transparent,rgba(0,0,0,.88))}
+.art-card-tag{display:block;font-family:'Cinzel',serif;font-size:.4rem;letter-spacing:.55em;text-transform:uppercase;color:var(--acc2);margin-bottom:.3rem;font-weight:700}
+.art-card-title{font-family:'Cinzel',serif;font-size:.88rem;font-weight:700;color:#fff;line-height:1.3;letter-spacing:.03em}
+.art-card-body{padding:.9rem 1.2rem 1.15rem;border-top:1px solid var(--bdr2)}
+.art-card-desc{font-family:'Cormorant Garamond',serif;font-size:.9rem;line-height:1.72;color:var(--ink2)}
+
+/* ═══════════════ QUOTE BLOCK ═══════════════ */
+.quote-block{margin-top:3.5rem;display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;align-items:center;padding:2.8rem 3.2rem;border:1px solid var(--bdr);background:var(--card2);position:relative;overflow:hidden}
+.quote-block::before{content:'\201C';position:absolute;top:-.8rem;left:1.2rem;font-family:'IM Fell English',serif;font-size:8rem;line-height:1;color:var(--acc);opacity:.1;pointer-events:none}
+@media(max-width:640px){.quote-block{grid-template-columns:1fr;gap:1.5rem;padding:1.8rem;margin-top:2rem}}
+.q-text{font-family:'IM Fell English',serif;font-size:clamp(1.05rem,2.2vw,1.35rem);font-style:italic;color:var(--ink);line-height:1.7;border-left:2px solid var(--acc);padding-left:1.5rem}
+.q-body{font-size:.9rem;line-height:1.9;color:var(--ink2)}
+
+/* ═══════════════ ORNAMENTAL DIVIDER ═══════════════ */
+.orn-div{display:flex;align-items:center;gap:1rem;margin:2.5rem 0}
+.orn-div-line{flex:1;height:1px;background:var(--bdr)}
+.orn-div-gem{width:6px;height:6px;border:1.5px solid var(--acc);transform:rotate(45deg);background:var(--tag);flex-shrink:0}
+.orn-div-txt{font-family:'Cinzel',serif;font-size:.42rem;letter-spacing:.46em;text-transform:uppercase;color:var(--ink3);flex-shrink:0;font-weight:700}
+
+/* ═══════════════ HERO ═══════════════ */
+#hero{padding:88px 5vw 6rem;min-height:100svh;display:flex;align-items:center;background:var(--sec)}
+.hero-inner{max-width:1280px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1.05fr;align-items:center;gap:5rem}
 @media(max-width:860px){.hero-inner{grid-template-columns:1fr;gap:2.5rem;text-align:center}}
+.hero-photo-wrap{position:relative;width:100%;max-width:500px;animation:hPop .9s cubic-bezier(.34,1.56,.64,1) both}
+.hero-photo-img{width:100%;display:block;object-fit:cover;filter:sepia(12%) brightness(.78) contrast(1.07);aspect-ratio:3/4;box-shadow:var(--sh2);border:1px solid var(--bdr)}
+.hpc{position:absolute;width:30px;height:30px;pointer-events:none}
+.hpc::before,.hpc::after{content:'';position:absolute;background:var(--acc2)}
+.hpc::before{width:100%;height:2px}.hpc::after{width:2px;height:100%}
+.hpc.tl{top:-6px;left:-6px}.hpc.tl::before{top:0;left:0}.hpc.tl::after{top:0;left:0}
+.hpc.tr{top:-6px;right:-6px}.hpc.tr::before{top:0;left:0}.hpc.tr::after{top:0;right:0}
+.hpc.bl{bottom:-6px;left:-6px}.hpc.bl::before{bottom:0;left:0}.hpc.bl::after{bottom:0;left:0}
+.hpc.br{bottom:-6px;right:-6px}.hpc.br::before{bottom:0;left:0}.hpc.br::after{bottom:0;right:0}
+.hero-creator{display:flex;align-items:center;gap:.9rem;margin-top:1.4rem;padding:.75rem 1.1rem;border:1px solid var(--bdr);background:var(--card2)}
+.hc-av{width:40px;height:40px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:.95rem;font-weight:700;color:#000;flex-shrink:0}
+.hc-n{font-family:'Cinzel',serif;font-size:.8rem;font-weight:700;color:var(--ink)}
+.hc-r{font-size:.52rem;color:var(--ink3);letter-spacing:.04em}
+.hc-b{margin-left:auto;font-family:'Cinzel',serif;font-size:.4rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--acc2);background:var(--tag);border:1px solid var(--bdr);padding:.22rem .7rem;white-space:nowrap;flex-shrink:0}
+@keyframes hPop{from{opacity:0;transform:scale(.88) translateY(18px)}to{opacity:1;transform:none}}
 
-/* Kiri: foto besar tanpa background */
-.hero-photo{position:relative;display:flex;align-items:center;justify-content:center}
-.hero-photo-wrap{
-  position:relative;
-  width:100%;max-width:480px;
-  animation:hPop .9s cubic-bezier(.34,1.56,.64,1) both;
-}
-.hero-photo-img{
-  width:100%;border-radius:24px;
-  box-shadow:0 32px 80px rgba(26,79,214,.22),0 8px 24px rgba(26,79,214,.14);
-  display:block;object-fit:cover;
-  filter:sepia(4%) brightness(.88) contrast(1.05);
-  aspect-ratio:3/4;
-}
-/* Ornamen sudut foto */
-.hp-corner{position:absolute;width:28px;height:28px;pointer-events:none}
-.hp-corner::before,.hp-corner::after{content:'';position:absolute;background:var(--blue)}
-.hp-corner::before{width:100%;height:2px}
-.hp-corner::after{width:2px;height:100%}
-.hp-tl{top:-6px;left:-6px}.hp-tl::before{top:0;left:0}.hp-tl::after{top:0;left:0}
-.hp-tr{top:-6px;right:-6px}.hp-tr::before{top:0;left:0}.hp-tr::after{top:0;right:0}
-.hp-bl{bottom:-6px;left:-6px}.hp-bl::before{bottom:0;left:0}.hp-bl::after{bottom:0;left:0}
-.hp-br{bottom:-6px;right:-6px}.hp-br::before{bottom:0;left:0}.hp-br::after{bottom:0;right:0}
-/* Badge kreator di bawah foto */
-.hero-creator{
-  display:flex;align-items:center;gap:.9rem;
-  margin-top:1.4rem;padding:.8rem 1.1rem;
-  border:1px solid var(--bdr);border-radius:14px;
-  background:rgba(255,255,255,.88);
-  backdrop-filter:blur(12px);
-  animation:hPop .7s .3s both;
-}
-.hc-av{width:38px;height:38px;border-radius:50%;background:var(--grad);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;font-weight:700;color:#fff;box-shadow:0 4px 14px rgba(26,79,214,.3)}
-.hc-name{font-family:'Cormorant Garamond',serif;font-size:.88rem;font-weight:700;font-style:italic;color:var(--ink)}
-.hc-role{font-size:.48rem;color:var(--ink3);letter-spacing:.06em}
-.hc-badge{margin-left:auto;font-size:.42rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);background:var(--blt);border:1px solid var(--bdr);padding:.22rem .65rem;border-radius:99px;white-space:nowrap;flex-shrink:0}
-@keyframes hPop{from{opacity:0;transform:scale(.88) translateY(20px)}to{opacity:1;transform:none}}
-
-/* Kanan: teks pengenalan internasional */
-.hero-text{}
-@keyframes hU{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
-.h-eyebrow{font-size:.46rem;letter-spacing:.52em;text-transform:uppercase;color:var(--blue);display:inline-flex;align-items:center;gap:.6rem;margin-bottom:1.2rem;animation:hU .7s .1s both;font-weight:700}
-.h-eyebrow::before{content:'';width:24px;height:2px;background:var(--blue);border-radius:1px;flex-shrink:0}
-.h-headline{font-family:'Cormorant Garamond',serif;font-size:clamp(2.4rem,5.5vw,4.2rem);font-weight:700;line-height:.94;color:var(--ink);animation:hU .85s .18s both;margin-bottom:1.4rem}
-.h-headline em{font-style:italic;color:var(--blue);display:block}
-/* Teks bergerak */
-.h-anim-wrap{height:2.2rem;overflow:hidden;margin-bottom:1.4rem;animation:hU .7s .28s both}
+.h-eyebrow{display:inline-flex;align-items:center;gap:.7rem;font-family:'Cinzel',serif;font-size:.44rem;letter-spacing:.52em;text-transform:uppercase;color:var(--acc);margin-bottom:1.15rem;animation:hU .7s .1s both}
+.h-eyebrow::before{content:'';width:24px;height:1px;background:var(--acc);flex-shrink:0}
+.h-headline{font-family:'Cinzel',serif;font-size:clamp(1.9rem,5.5vw,3.8rem);font-weight:700;line-height:1.04;color:var(--ink);animation:hU .85s .18s both;margin-bottom:1.2rem;letter-spacing:.02em}
+.h-headline em{font-style:italic;color:var(--acc2);font-family:'Cormorant Garamond',serif;font-size:1.14em;display:block}
+.h-anim-wrap{height:2rem;overflow:hidden;margin-bottom:1.3rem;animation:hU .7s .28s both}
 .h-anim-inner{display:flex;flex-direction:column;animation:slideUp 12s ease-in-out infinite}
-.h-anim-item{font-family:'Cormorant Garamond',serif;font-size:clamp(.9rem,2.2vw,1.35rem);font-style:italic;color:var(--ink2);line-height:2.2rem;white-space:nowrap;flex-shrink:0}
+.h-anim-item{font-family:'IM Fell English',serif;font-size:clamp(.85rem,2vw,1.1rem);font-style:italic;color:var(--ink2);line-height:2rem;white-space:nowrap;flex-shrink:0}
 @keyframes slideUp{0%,18%{transform:translateY(0)}25%,43%{transform:translateY(-1em)}50%,68%{transform:translateY(-2em)}75%,93%{transform:translateY(-3em)}100%{transform:translateY(-4em)}}
-/* Divider */
-.h-div{display:flex;align-items:center;gap:.8rem;margin-bottom:1.4rem;animation:hU .7s .32s both}
-.h-div-line{width:44px;height:1px;background:linear-gradient(90deg,var(--blue),transparent)}
-.h-div-gem{width:6px;height:6px;border:1.5px solid var(--blue2);transform:rotate(45deg);background:var(--blt)}
-/* Deskripsi */
-.h-intro{font-size:.88rem;line-height:2;color:var(--ink2);margin-bottom:1.6rem;animation:hU .7s .36s both;max-width:480px}
-/* Stat pills */
+.h-divider{display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem;animation:hU .7s .32s both}
+.h-dline{width:42px;height:1px;background:linear-gradient(90deg,var(--acc),transparent)}
+.h-dgem{width:6px;height:6px;border:1.5px solid var(--acc2);transform:rotate(45deg);background:var(--tag)}
+.h-intro{font-size:1rem;line-height:1.9;color:var(--ink2);margin-bottom:1.6rem;animation:hU .7s .36s both;max-width:520px}
 .h-stats{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem;animation:hU .7s .42s both}
-.h-stat{display:flex;flex-direction:column;padding:.65rem 1.1rem;border:1px solid var(--bdr);border-radius:12px;background:rgba(255,255,255,.8);backdrop-filter:blur(8px)}
-.h-stat-n{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;font-style:italic;color:var(--blue);line-height:1}
-.h-stat-l{font-size:.46rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink3);margin-top:.18rem}
-/* Tombol */
+.h-stat{display:flex;flex-direction:column;padding:.65rem 1.1rem;border:1px solid var(--bdr);background:var(--card)}
+.h-sn{font-family:'Cinzel',serif;font-size:1.28rem;font-weight:700;color:var(--acc2);line-height:1}
+.h-sl{font-family:'Cinzel',serif;font-size:.42rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-top:.2rem}
 .h-btns{display:flex;gap:.75rem;flex-wrap:wrap;animation:hU .7s .48s both}
-@media(max-width:860px){.h-btns{justify-content:center}}
-.btn-blue{font-family:'Plus Jakarta Sans',sans-serif;font-size:.56rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.8rem 2rem;border-radius:99px;background:var(--blue);color:#fff;border:none;cursor:pointer;box-shadow:0 4px 18px rgba(26,79,214,.32);transition:all .25s}
-.btn-blue:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(26,79,214,.44)}
-.btn-out{font-family:'Plus Jakarta Sans',sans-serif;font-size:.56rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.8rem 2rem;border-radius:99px;background:transparent;color:var(--blue);border:1.5px solid var(--bdr);cursor:pointer;transition:all .25s}
-.btn-out:hover{background:var(--blt);border-color:var(--blue)}
-/* Scroll hint */
-.scroll-hint{margin-top:1.8rem;display:inline-flex;align-items:center;gap:.6rem;font-size:.44rem;letter-spacing:.44em;text-transform:uppercase;color:var(--ink3);background:none;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;animation:hU .7s .56s both;transition:color .2s}
-.scroll-hint:hover{color:var(--blue)}
-.scroll-line{width:1px;height:28px;background:linear-gradient(to bottom,var(--blue),transparent);animation:sca 1.7s ease-in-out infinite}
+.btn-p{font-family:'Cinzel',serif;font-size:.53rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:.82rem 2.1rem;background:var(--grad);color:#000;border:none;cursor:pointer;box-shadow:0 4px 22px rgba(200,132,26,.3);transition:all .25s}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 34px rgba(200,132,26,.48)}
+.btn-o{font-family:'Cinzel',serif;font-size:.53rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:.82rem 2.1rem;background:transparent;color:var(--acc2);border:1px solid var(--bdr);cursor:pointer;transition:all .25s}
+.btn-o:hover{background:var(--tag);border-color:var(--acc)}
+.scroll-hint{margin-top:1.6rem;display:inline-flex;align-items:center;gap:.6rem;font-family:'Cinzel',serif;font-size:.4rem;letter-spacing:.44em;text-transform:uppercase;color:var(--ink3);background:none;border:none;cursor:pointer;transition:color .2s;animation:hU .7s .56s both}
+.scroll-hint:hover{color:var(--acc2)}
+.sc-line{width:1px;height:24px;background:linear-gradient(to bottom,var(--acc),transparent);animation:sca 1.7s ease-in-out infinite}
 @keyframes sca{0%,100%{opacity:.3;transform:scaleY(.5)}50%{opacity:1;transform:scaleY(1)}}
+@keyframes hU{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@media(max-width:860px){.h-btns,.h-stats{justify-content:center}.h-intro{max-width:100%}}
 
-/* ══ TICKER ══ */
-.ticker{background:rgba(240,245,255,.97);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:.55rem 0;overflow:hidden}
-.ticker-track{display:flex;gap:2.8rem;white-space:nowrap;animation:tickR 30s linear infinite}
-.t-item{display:flex;align-items:center;gap:.6rem;flex-shrink:0;font-size:.48rem;letter-spacing:.32em;text-transform:uppercase;color:var(--ink3);font-weight:600}
-.t-gem{width:4px;height:4px;background:var(--blue2);transform:rotate(45deg);flex-shrink:0}
+/* ═══════════════ TICKER ═══════════════ */
+.ticker{border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:.65rem 0;overflow:hidden;background:var(--card2)}
+.ticker-track{display:flex;gap:3rem;white-space:nowrap;animation:tickR 40s linear infinite}
+.t-item{display:flex;align-items:center;gap:.65rem;flex-shrink:0;font-family:'Cinzel',serif;font-size:.43rem;letter-spacing:.4em;text-transform:uppercase;color:var(--ink3);font-weight:600}
+.t-gem{width:4px;height:4px;background:var(--acc2);transform:rotate(45deg);flex-shrink:0}
 @keyframes tickR{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* ══ IMAGE CARDS ══ */
-.ic{position:relative;overflow:hidden;background:var(--bg2);display:block}
-.ic img{filter:sepia(6%) brightness(.85) contrast(1.04);transition:transform .85s ease,filter .42s}
-.ic:hover img{transform:scale(1.055);filter:sepia(2%) brightness(.92)}
-.ic .cp{position:absolute;bottom:0;left:0;right:0;padding:1.1rem 1.2rem .95rem;background:linear-gradient(transparent,rgba(6,14,43,.88));transform:translateY(5px);transition:transform .3s}
-.ic:hover .cp{transform:none}
-.ctag{font-size:.43rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold2);display:block;margin-bottom:.24rem;font-weight:700}
-.ctitle{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:700;color:#fff;display:block;line-height:1.25}
-.cdesc{font-size:.7rem;color:rgba(255,255,255,.58);display:block;margin-top:.24rem;line-height:1.62}
-.ga{display:grid;grid-template-columns:1.4fr 1fr;gap:10px}
-.ga .col-r{display:flex;flex-direction:column;gap:10px}
-@media(max-width:640px){.ga{grid-template-columns:1fr}.ga .col-r{display:grid;grid-template-columns:1fr 1fr;gap:8px}}
-.grid-top{margin-bottom:10px}
-.grid-bot{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media(max-width:540px){.grid-bot{grid-template-columns:1fr}}
-.gc{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-@media(max-width:640px){.gc{grid-template-columns:1fr 1fr}.gc .ic:first-child{grid-column:1/-1;height:240px!important}}
-.insight{display:grid;grid-template-columns:1fr 1.1fr;gap:4rem;align-items:center;margin-top:3.5rem}
-@media(max-width:640px){.insight{grid-template-columns:1fr;gap:1.5rem;margin-top:2rem}}
-.insight-q{font-family:'Cormorant Garamond',serif;font-size:1.22rem;font-style:italic;font-weight:400;color:var(--ink2);line-height:1.68;border-left:2px solid var(--blue);padding-left:1.4rem}
-.insight-p{font-size:.86rem;line-height:2;color:var(--ink2)}
-.swatch-row{display:flex;gap:8px;margin-bottom:1.8rem;overflow-x:auto;padding-bottom:2px}
-.swatch-row::-webkit-scrollbar{display:none}
-.swatch{flex:0 0 70px;height:70px;border:1.5px solid var(--bdr);overflow:hidden;cursor:pointer;transition:all .28s;flex-shrink:0;border-radius:4px}
-.swatch:hover{transform:scale(1.1);border-color:var(--blue2);box-shadow:0 4px 18px rgba(26,79,214,.2)}
-.swatch-note{font-size:.6rem;color:var(--ink3);font-style:italic;margin-bottom:2.5rem}
-.food-hero{display:grid;grid-template-columns:1.1fr 1fr;border:1px solid var(--bdr);border-radius:16px;overflow:hidden;margin-bottom:12px}
-@media(max-width:580px){.food-hero{grid-template-columns:1fr}}
-.fhc-img{min-height:280px;overflow:hidden}
-.fhc-img img{filter:sepia(6%) brightness(.84);transition:transform .9s}
-.fhc-img:hover img{transform:scale(1.04)}
-.fhc-body{padding:2.5rem 2rem;display:flex;flex-direction:column;justify-content:center;background:var(--white)}
-.food-n{font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:700;font-style:italic;color:transparent;-webkit-text-stroke:1.5px rgba(26,79,214,.15);line-height:1;display:block}
-.food-title{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:700;color:var(--ink);margin:.3rem 0 .7rem;line-height:1.2}
-.food-desc{font-size:.82rem;line-height:1.95;color:var(--ink2)}
-.food-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media(max-width:480px){.food-grid{grid-template-columns:1fr}}
-.food-card{border:1px solid var(--bdr);border-radius:14px;overflow:hidden;background:var(--white);transition:border-color .28s,box-shadow .28s}
-.food-card:hover{border-color:rgba(26,79,214,.25);box-shadow:var(--sh2)}
-.food-card-img{height:185px;overflow:hidden}
-.food-card-img img{filter:sepia(6%) brightness(.82);transition:transform .7s}
-.food-card:hover .food-card-img img{transform:scale(1.05)}
-.food-card-body{padding:1.1rem 1.1rem 1.2rem}
-.food-card-n{font-family:'Cormorant Garamond',serif;font-size:1.85rem;font-style:italic;color:transparent;-webkit-text-stroke:1px rgba(26,79,214,.13);line-height:1;display:block}
-.food-card-title{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;color:var(--ink);margin:.18rem 0 .3rem}
-.food-card-desc{font-size:.74rem;line-height:1.85;color:var(--ink2)}
-.mid-band{background:linear-gradient(135deg,var(--blue) 0%,#1035B0 55%,#0A228A 100%);padding:5rem 5vw;position:relative;overflow:hidden}
-.mid-band::before{content:'JOMBANG';position:absolute;font-family:'Cormorant Garamond',serif;font-size:15vw;font-weight:700;font-style:italic;color:rgba(255,255,255,.04);right:-2vw;top:50%;transform:translateY(-50%);pointer-events:none;white-space:nowrap;line-height:1}
-.mid-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;position:relative;z-index:1}
-@media(max-width:640px){.mid-inner{grid-template-columns:1fr;gap:2.5rem}}
-.mid-h{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:700;color:#fff;line-height:1.06}
-.mid-h em{font-style:italic;color:var(--gold2)}
-.mid-p{font-size:.86rem;line-height:2;color:rgba(255,255,255,.6);margin-top:1rem}
-.m-pill{display:flex;align-items:flex-start;gap:1rem;padding:1.1rem 0;border-bottom:1px solid rgba(255,255,255,.08)}
-.m-pill:last-child{border:none}
-.m-icon{width:32px;height:32px;flex-shrink:0;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;color:var(--gold2);font-size:.82rem;border-radius:8px;margin-top:2px}
-.m-nm{font-size:.9rem;font-weight:600;color:#fff;display:block;margin-bottom:.2rem}
-.m-ds{font-size:.72rem;line-height:1.7;color:rgba(255,255,255,.5)}
-
-/* ══ CHART ══ */
-.chart-wrap{background:var(--white);border:1px solid var(--bdr);border-radius:20px;padding:2.5rem 2rem 2rem;box-shadow:var(--sh);position:relative;overflow:hidden}
-.chart-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad)}
-.chart-header{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1.2rem;margin-bottom:2rem}
-.chart-meta h3{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:700;color:var(--ink);margin-bottom:.25rem}
-.chart-meta p{font-size:.78rem;color:var(--ink3)}
-.chart-period{display:flex;gap:.4rem;flex-wrap:wrap}
-.period-btn{font-family:'Plus Jakarta Sans',sans-serif;font-size:.5rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.36rem .85rem;border-radius:99px;border:1px solid var(--bdr);background:var(--bg);color:var(--ink3);cursor:pointer;transition:all .22s}
-.period-btn.on{background:var(--blue);border-color:var(--blue);color:#fff}
-.period-btn:hover:not(.on){border-color:var(--blue);color:var(--blue)}
-.chart-legend{display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
-.leg-item{display:flex;align-items:center;gap:.5rem;cursor:pointer;padding:.3rem .65rem;border-radius:99px;border:1px solid transparent;transition:all .2s}
-.leg-item:hover{background:var(--bg);border-color:var(--bdr)}
-.leg-item.muted{opacity:.35}
-.leg-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.leg-label{font-size:.62rem;font-weight:600;color:var(--ink2)}
-.leg-val{font-size:.6rem;color:var(--ink3)}
-.chart-canvas-wrap{position:relative;width:100%}
-canvas#vc{width:100%;height:300px;display:block}
-@media(max-width:640px){canvas#vc{height:220px}}
-#ct{position:absolute;pointer-events:none;z-index:10;background:var(--ink);color:#fff;border-radius:10px;padding:.7rem 1rem;font-size:.7rem;box-shadow:0 8px 28px rgba(6,14,43,.2);opacity:0;transition:opacity .18s;min-width:140px;white-space:nowrap}
-#ct .ttm{font-size:.6rem;color:rgba(255,255,255,.5);margin-bottom:.4rem;letter-spacing:.1em;text-transform:uppercase}
+/* ═══════════════ STATS CHART ═══════════════ */
+.chart-wrap{background:var(--card2);border:1px solid var(--bdr);padding:2.4rem 2rem 2rem;position:relative;overflow:hidden}
+.chart-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad)}
+.chart-header{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1.2rem;margin-bottom:1.8rem}
+.chart-meta h3{font-family:'Cinzel',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.25rem;letter-spacing:.04em}
+.chart-meta p{font-size:.7rem;color:var(--ink3)}
+.chart-period{display:flex;gap:.35rem;flex-wrap:wrap}
+.period-btn{font-family:'Cinzel',serif;font-size:.46rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.32rem .8rem;border:1px solid var(--bdr);background:var(--card);color:var(--ink3);cursor:pointer;transition:all .22s}
+.period-btn.on{background:var(--acc);border-color:var(--acc);color:#000}
+.period-btn:hover:not(.on){border-color:var(--acc);color:var(--acc2)}
+.chart-legend{display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:1.4rem}
+.leg-item{display:flex;align-items:center;gap:.5rem;cursor:pointer;padding:.26rem .62rem;border:1px solid transparent;transition:all .2s}
+.leg-item:hover{background:var(--tag);border-color:var(--bdr)}
+.leg-item.muted{opacity:.3}
+.leg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.leg-label{font-family:'Cinzel',serif;font-size:.58rem;font-weight:600;color:var(--ink2);letter-spacing:.04em}
+.leg-val{font-size:.58rem;color:var(--ink3)}
+canvas#vc{width:100%;height:290px;display:block}
+@media(max-width:640px){canvas#vc{height:210px}}
+#ct{position:absolute;pointer-events:none;z-index:10;background:var(--card2);color:var(--ink);border:1px solid var(--bdr);padding:.7rem 1rem;font-size:.7rem;box-shadow:var(--sh);opacity:0;transition:opacity .18s;min-width:140px;white-space:nowrap}
+#ct .ttm{font-size:.58rem;color:var(--ink3);margin-bottom:.4rem;letter-spacing:.1em;text-transform:uppercase}
 #ct .ttr{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:.2rem}
 #ct .ttd{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-#ct .ttn{font-weight:700;font-size:.68rem}
-.chart-totals{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem}
+#ct .ttn{font-weight:700;font-size:.66rem}
+.chart-totals{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.4rem}
 @media(max-width:480px){.chart-totals{grid-template-columns:1fr}}
-.total-card{padding:1.1rem 1.2rem;border-radius:12px;border:1px solid var(--bdr);background:var(--bg);transition:all .25s}
-.total-card:hover{box-shadow:var(--sh);border-color:rgba(26,79,214,.22)}
+.total-card{padding:1.1rem 1.2rem;border:1px solid var(--bdr);background:var(--card);transition:all .25s}
+.total-card:hover{box-shadow:var(--sh);border-color:var(--acc)}
 .tc-top{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem}
-.tc-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
-.tc-lbl{font-size:.52rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
-.tc-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;font-style:italic;color:var(--ink);line-height:1;margin-bottom:.2rem}
+.tc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.tc-lbl{font-family:'Cinzel',serif;font-size:.48rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.tc-num{font-family:'Cinzel',serif;font-size:1.75rem;font-weight:700;color:var(--ink);line-height:1;margin-bottom:.2rem}
 .tc-sub{font-size:.6rem;color:var(--ink3)}
-.tc-bar{height:3px;border-radius:2px;background:var(--bdr2);margin-top:.8rem;overflow:hidden}
-.tc-bar-fill{height:100%;border-radius:2px;width:0;transition:width 1.4s cubic-bezier(.4,0,.2,1)}
-.country-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem;align-items:center}
-.ctag2{display:flex;align-items:center;gap:.38rem;font-size:.6rem;font-weight:500;color:var(--ink2);padding:.28rem .75rem;border-radius:99px;border:1px solid var(--bdr);background:var(--white);transition:all .2s}
-.ctag2:hover{border-color:var(--blue);background:var(--blt);color:var(--blue)}
-.crow-lbl{font-size:.5rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3);margin-right:.2rem}
-.live-badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.52rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);padding:.3rem .85rem;border-radius:99px;background:rgba(16,185,129,.09);border:1px solid rgba(16,185,129,.22)}
-.ld2{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pls 1.5s ease-in-out infinite;box-shadow:0 0 6px var(--green);display:inline-block}
-@keyframes pls{0%,100%{opacity:1}50%{opacity:.25}}
+.tc-bar{height:2px;background:var(--bdr2);margin-top:.8rem;overflow:hidden}
+.tc-fill{height:100%;width:0;transition:width 1.4s cubic-bezier(.4,0,.2,1)}
+.country-row{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.4rem;align-items:center}
+.ctag2{display:flex;align-items:center;gap:.36rem;font-size:.58rem;font-weight:500;color:var(--ink2);padding:.26rem .72rem;border:1px solid var(--bdr);background:var(--card);transition:all .2s}
+.ctag2:hover{border-color:var(--acc);background:var(--tag);color:var(--acc2)}
+.crow-lbl{font-family:'Cinzel',serif;font-size:.46rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3);margin-right:.2rem}
+.live-badge{display:inline-flex;align-items:center;gap:.4rem;font-family:'Cinzel',serif;font-size:.48rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#10B981;padding:.28rem .82rem;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2)}
+.ld2{width:6px;height:6px;border-radius:50%;background:#10B981;animation:pls 1.5s ease-in-out infinite;display:inline-block}
+@keyframes pls{0%,100%{opacity:1}50%{opacity:.22}}
 
-/* ══ FOOTER ══ */
-footer{background:var(--ink);color:rgba(255,255,255,.5);position:relative}
-footer::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad)}
-.footer-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3.5rem;padding:4.5rem 5vw 3.5rem}
-@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem;padding:3rem 5vw 2.5rem}}
-@media(max-width:440px){.footer-grid{grid-template-columns:1fr;gap:2rem}}
-.ft-name{font-family:'Cormorant Garamond',serif;font-size:1.18rem;font-weight:700;font-style:italic;letter-spacing:.1em;color:var(--blue3);display:block;margin-bottom:.22rem}
-.ft-sub{font-size:.41rem;letter-spacing:.44em;text-transform:uppercase;color:rgba(255,255,255,.28)}
-.ft-p{font-size:.77rem;line-height:1.9;color:rgba(255,255,255,.38);margin-top:1rem;max-width:280px}
-.ft-col h4{font-size:.44rem;letter-spacing:.44em;text-transform:uppercase;color:var(--blue3);margin-bottom:1.2rem;font-weight:700;padding-bottom:.5rem;border-bottom:1px solid rgba(59,110,245,.2)}
-.ft-col a{display:block;font-size:.74rem;color:rgba(255,255,255,.35);margin-bottom:.46rem;transition:color .2s;cursor:pointer}
-.ft-col a:hover{color:var(--blue3)}
-.footer-creator{border-top:1px solid rgba(255,255,255,.06);max-width:1200px;margin:0 auto;padding:1.5rem 5vw;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
-.fc-av{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--blue2);background:linear-gradient(135deg,var(--blue),#0A228A);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-style:italic;font-weight:700;color:var(--blue3)}
-.fc-name{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-style:italic;font-weight:700;color:var(--blue3)}
-.fc-role{font-size:.5rem;color:rgba(255,255,255,.35);letter-spacing:.08em}
-.fc-badge{margin-left:auto;flex-shrink:0;display:inline-flex;align-items:center;gap:.38rem;background:rgba(59,110,245,.12);border:1px solid rgba(59,110,245,.3);padding:.28rem .82rem;font-size:.44rem;letter-spacing:.14em;text-transform:uppercase;color:var(--blue3)}
-.footer-bottom{border-top:1px solid rgba(255,255,255,.05);max-width:1200px;margin:0 auto;padding:1.3rem 5vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.6rem}
-.fb-txt{font-size:.52rem;color:rgba(255,255,255,.22);letter-spacing:.08em}
+/* ═══════════════ BATIK SWATCHES ═══════════════ */
+.swatch-row{display:flex;gap:10px;margin-bottom:1.8rem;overflow-x:auto;padding-bottom:4px}
+.swatch-row::-webkit-scrollbar{display:none}
+.swatch{flex:0 0 70px;height:70px;border:1px solid var(--bdr);overflow:hidden;cursor:pointer;transition:all .28s;flex-shrink:0}
+.swatch:hover{transform:scale(1.1);border-color:var(--acc2);box-shadow:var(--sh)}
+.sw-note{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.72rem;color:var(--ink3);margin-bottom:2rem}
+
+/* ═══════════════ MID BAND ═══════════════ */
+.mid-band{padding:6rem 5vw;background:var(--card2);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);position:relative;overflow:hidden}
+.mid-band::before{content:'JOMBANG';position:absolute;font-family:'Cinzel',serif;font-size:15vw;font-weight:900;color:transparent;-webkit-text-stroke:1px var(--bdr);right:-2vw;top:50%;transform:translateY(-50%);pointer-events:none;white-space:nowrap;line-height:1}
+.mid-in{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;position:relative;z-index:1}
+@media(max-width:640px){.mid-in{grid-template-columns:1fr;gap:2.5rem}}
+.mid-h{font-family:'Cinzel',serif;font-size:clamp(1.7rem,4.5vw,2.9rem);font-weight:700;color:var(--ink);line-height:1.08}
+.mid-h em{font-style:italic;color:var(--acc2);font-family:'Cormorant Garamond',serif;font-size:1.13em}
+.mid-p{font-size:.9rem;line-height:1.9;color:var(--ink2);margin-top:.9rem}
+.m-pill{display:flex;align-items:flex-start;gap:1rem;padding:1.05rem 0;border-bottom:1px solid var(--bdr2)}
+.m-pill:last-child{border:none}
+.m-icon{width:32px;height:32px;flex-shrink:0;border:1px solid var(--bdr);background:var(--tag);display:flex;align-items:center;justify-content:center;color:var(--acc2);font-size:.8rem;margin-top:2px}
+.m-nm{font-family:'Cinzel',serif;font-size:.76rem;font-weight:700;color:var(--ink);display:block;margin-bottom:.18rem;letter-spacing:.04em}
+.m-ds{font-size:.78rem;line-height:1.68;color:var(--ink3)}
+
+/* ═══════════════ FOOTER ═══════════════ */
+footer{background:var(--bg2);color:var(--ink3);position:relative;border-top:1px solid var(--bdr)}
+footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad)}
+.footer-grid{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3.5rem;padding:5rem 5vw 3.5rem}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem;padding:3.5rem 5vw 2.5rem}}
+@media(max-width:440px){.footer-grid{grid-template-columns:1fr}}
+.ft-name{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:700;letter-spacing:.12em;color:var(--acc2);display:block;margin-bottom:.22rem}
+.ft-sub{font-family:'Cinzel',serif;font-size:.37rem;letter-spacing:.44em;text-transform:uppercase;color:var(--ink3)}
+.ft-p{font-size:.82rem;line-height:1.85;color:var(--ink3);margin-top:1rem;max-width:280px}
+.ft-col h4{font-family:'Cinzel',serif;font-size:.4rem;letter-spacing:.44em;text-transform:uppercase;color:var(--acc2);margin-bottom:1.1rem;font-weight:700;padding-bottom:.5rem;border-bottom:1px solid var(--bdr)}
+.ft-col a{display:block;font-size:.8rem;color:var(--ink3);margin-bottom:.46rem;transition:color .2s;cursor:pointer}
+.ft-col a:hover{color:var(--acc2)}
+.footer-creator{border-top:1px solid var(--bdr2);max-width:1280px;margin:0 auto;padding:1.4rem 5vw;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
+.fc-av{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--acc);background:var(--grad);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;color:#000}
+.fc-n{font-family:'Cinzel',serif;font-size:.88rem;font-weight:700;color:var(--acc2)}
+.fc-r{font-size:.5rem;color:var(--ink3);letter-spacing:.04em}
+.fc-b{margin-left:auto;flex-shrink:0;display:inline-flex;align-items:center;gap:.38rem;background:var(--tag);border:1px solid var(--bdr);padding:.26rem .82rem;font-family:'Cinzel',serif;font-size:.4rem;letter-spacing:.14em;text-transform:uppercase;color:var(--acc2)}
+.footer-bottom{border-top:1px solid var(--bdr2);max-width:1280px;margin:0 auto;padding:1.2rem 5vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.6rem}
+.fb-txt{font-family:'Cinzel',serif;font-size:.48rem;color:var(--ink3);letter-spacing:.08em}
+
+/* ═══════════════ THEME SWITCHER 3 ═══════════════ */
+.tt-wrap{position:fixed;bottom:1.5rem;right:1.5rem;z-index:800}
+.tt-pill{display:flex;border:1px solid var(--bdr);background:var(--card2);overflow:hidden;box-shadow:var(--sh)}
+.tt-btn{display:flex;align-items:center;gap:.38rem;padding:.52rem .88rem;border:none;background:transparent;cursor:pointer;font-family:'Cinzel',serif;font-size:.42rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);transition:all .22s;white-space:nowrap}
+.tt-btn .tt-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;opacity:.7}
+.tt-btn.on{background:var(--tag);color:var(--acc2)}
+.tt-btn.on .tt-dot{opacity:1}
+.tt-btn:hover:not(.on){color:var(--acc)}
+.tt-sep{width:1px;flex-shrink:0;background:var(--bdr);align-self:stretch}
+@media(max-width:500px){.tt-btn{padding:.44rem .6rem;font-size:.38rem}}
+
+/* ═══════════════ REVEAL ═══════════════ */
+.rv{opacity:1;transform:none;transition:none}
+.rv.wa{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
+.rv.wa.d1{transition-delay:.1s}.rv.wa.d2{transition-delay:.2s}.rv.wa.d3{transition-delay:.3s}
+.rv.wa.show{opacity:1!important;transform:none!important}
+
+@media(max-width:640px){section{padding:4.5rem 5vw}#hero{padding-top:80px!important;padding-bottom:4rem}.s-head{margin-bottom:2.5rem}.mid-band{padding:3.5rem 5vw}.footer-grid{grid-template-columns:1fr!important}.fc-b{display:none}.hero-photo-wrap{max-width:280px;margin:0 auto}.h-stats{justify-content:center}.tt-wrap{bottom:1rem;right:1rem}}
 audio{display:none}
-
-/* ══ DARK MODE ══ */
-[data-theme="dark"]{--bg:#0A0F1E;--bg2:#0D1428;--white:#111827;--ink:#E8EEFF;--ink2:#94A3CC;--ink3:#4A5580;--blue:#4F7FFF;--blue2:#6B95FF;--blue3:#93B8FF;--blt:rgba(79,127,255,.12);--bdr:rgba(79,127,255,.18);--bdr2:rgba(79,127,255,.07);--sh:0 2px 24px rgba(0,0,0,.4);--sh2:0 12px 48px rgba(0,0,0,.5);--gold2:#F5CC55;--green:#34D399;--grad:linear-gradient(135deg,#2B5CE8,#4F7FFF,#6B95FF)}
-[data-theme="dark"] body{background:var(--bg)}
-[data-theme="dark"] #hero{background:linear-gradient(160deg,rgba(8,12,26,.97) 0%,rgba(10,15,30,.97) 55%,rgba(13,20,48,.97) 100%)}
-[data-theme="dark"] section{background:rgba(7,11,24,.95)}
-[data-theme="dark"] section.alt{background:rgba(11,17,35,.96)}
-[data-theme="dark"] .ticker{background:rgba(11,17,35,.96)}
-[data-theme="dark"] .nav.stuck{background:rgba(10,15,30,.97)}
-[data-theme="dark"] .hero-creator{background:rgba(17,24,39,.88)}
-[data-theme="dark"] .h-stat{background:rgba(17,24,39,.8)}
-[data-theme="dark"] .ic{background:#1A2240}
-[data-theme="dark"] .ic img{filter:sepia(4%) brightness(.65) contrast(1.05)}
-[data-theme="dark"] .ic:hover img{filter:sepia(2%) brightness(.75)}
-[data-theme="dark"] .fhc-body{background:var(--white)}
-[data-theme="dark"] .food-card{background:var(--white);border-color:var(--bdr)}
-[data-theme="dark"] .mid-band{background:linear-gradient(135deg,#0A1840 0%,#0D1F5A 55%,#081240 100%)}
-[data-theme="dark"] .chart-wrap{background:var(--white)}
-[data-theme="dark"] .total-card{background:var(--bg2)}
-[data-theme="dark"] .ctag2{background:var(--bg2)}
-[data-theme="dark"] .mpill{background:var(--white)}
-[data-theme="dark"] .ham{background:var(--white)}
-[data-theme="dark"] .drawer{background:rgba(10,15,30,.98)}
-[data-theme="dark"] footer{background:#060C1A}
-[data-theme="dark"] .sdot{border-color:rgba(79,127,255,.3)}
-[data-theme="dark"] .btn-out{border-color:var(--bdr);color:var(--blue2)}
-
-/* ══ THEME TOGGLE ══ */
-.theme-toggle{position:fixed;bottom:1.5rem;right:1.5rem;z-index:800}
-.tt-pill{display:flex;align-items:center;gap:0;border:1px solid var(--bdr);border-radius:99px;background:var(--white);box-shadow:var(--sh);overflow:hidden;transition:box-shadow .25s}
-.tt-pill:hover{box-shadow:var(--sh2)}
-.tt-btn{display:flex;align-items:center;gap:.38rem;padding:.5rem 1rem;border:none;background:transparent;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:.5rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);transition:all .22s;white-space:nowrap}
-.tt-btn svg{width:12px;height:12px;flex-shrink:0}
-.tt-btn.on{background:var(--blue);color:#fff}
-[data-theme="dark"] .tt-btn.on{background:#1A2A5A;color:var(--blue3)}
-.tt-div{width:1px;height:26px;background:var(--bdr);flex-shrink:0}
-
-/* ══ MOBILE ══ */
-@media(max-width:640px){
-  .hero-photo-wrap{max-width:280px;margin:0 auto}
-  .ic[style*="height:520px"],.ic[style*="height:420px"]{height:260px!important}
-  .ic[style*="height:380px"]{height:220px!important}
-  .ic[style*="height:360px"]{height:200px!important}
-  .ic[style*="height:265px"],.ic[style*="height:275px"],.ic[style*="height:255px"]{height:180px!important}
-  .ic .cp{transform:translateY(0)!important}
-  .cdesc{display:none}
-  .ga{grid-template-columns:1fr!important}
-  .ga .col-r{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .grid-bot{grid-template-columns:1fr 1fr!important}
-  .gc{grid-template-columns:1fr 1fr!important}
-  .gc .ic:first-child{grid-column:1/-1;height:200px!important}
-  .food-hero{grid-template-columns:1fr!important}
-  .fhc-img{min-height:200px;max-height:220px}
-  .food-card-img{height:145px!important}
-  section,#hero{padding:4rem 5vw!important}
-  #hero{padding-top:80px!important}
-  .insight{grid-template-columns:1fr!important;gap:1.5rem!important;margin-top:1.8rem!important}
-  .swatch{flex:0 0 56px!important;height:56px!important}
-  .chart-totals{grid-template-columns:1fr!important}
-  .mid-inner{grid-template-columns:1fr!important;gap:2rem!important}
-  .mid-band{padding:3.5rem 5vw!important}
-  .footer-grid{grid-template-columns:1fr 1fr!important;padding:2.5rem 5vw 2rem!important}
-  .fc-badge{display:none}
-  .theme-toggle{bottom:1rem;right:1rem}
-  .tt-btn{padding:.44rem .75rem;font-size:.46rem}
-  .h-stats{justify-content:center}
-}
 </style>
 </head>
 <body>
-<div id="wbg"><canvas id="wc"></canvas></div>
-<div id="loader"><div class="ld-spin"></div><div><div class="ld-name">JOMBANG HERITAGE</div><div class="ld-sub">Cultural Excellence · East Java · Indonesia</div></div><div class="ld-bar"><div class="ld-bar-fill"></div></div></div>
-<div id="prog"></div><div id="cur"></div><div id="curR"></div>
 
+<canvas id="bgcv"></canvas>
+<div id="cur"></div><div id="curR"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="ld-ring"></div>
+  <div><div class="ld-t">JOMBANG HERITAGE</div><div class="ld-s">Living Culture · East Java · Indonesia</div></div>
+  <div class="ld-bar"><div class="ld-fill"></div></div>
+</div>
+<div id="prog"></div>
+
+<!-- NAV -->
 <header class="nav" id="nav">
-  <div class="nav-brand" onclick="goTo('#hero')"><div class="nav-mark"><img src="logojombang.png" alt="Logo" onerror="this.outerHTML='&lt;span class=&quot;fb&quot;&gt;J&lt;/span&gt;'"></div><div><div class="nav-name">Jombang Heritage</div><div class="nav-sub">Cultural Excellence · East Java</div></div></div>
-  <nav class="nav-links"><button class="nl on" onclick="goTo('#hero')">Home</button><button class="nl" onclick="goTo('#budaya')">Budaya</button><button class="nl" onclick="goTo('#batik')">Batik</button><button class="nl" onclick="goTo('#pakaian')">Pakaian</button><button class="nl" onclick="goTo('#arsitektur')">Arsitektur</button><button class="nl" onclick="goTo('#musik')">Musik</button><button class="nl" onclick="goTo('#kuliner')">Kuliner</button></nav>
-  <div class="nav-r"><div class="mpill"><button class="mp" id="mBtn">&#9658;</button><div class="mwav off" id="mWav"><span></span><span></span><span></span><span></span><span></span></div><span class="mp-lbl">Gamelan</span></div><div class="ham" id="ham"><span></span><span></span><span></span></div></div>
+  <div class="nav-brand" onclick="goTo('#hero')">
+    <div class="nav-logo"><img src="logojombang.png" alt="Logo" onerror="this.outerHTML='<span class=fb>J</span>'"></div>
+    <div><div class="brand-n">Jombang Heritage</div><div class="brand-s">Cultural Excellence · East Java</div></div>
+  </div>
+  <nav class="nav-links">
+    <button class="nl on" onclick="goTo('#hero')">Home</button>
+    <button class="nl" onclick="goTo('#budaya')">Culture</button>
+    <button class="nl" onclick="goTo('#batik')">Batik</button>
+    <button class="nl" onclick="goTo('#pakaian')">Attire</button>
+    <button class="nl" onclick="goTo('#arsitektur')">Architecture</button>
+    <button class="nl" onclick="goTo('#musik')">Music</button>
+    <button class="nl" onclick="goTo('#kuliner')">Cuisine</button>
+  </nav>
+  <div class="nav-r">
+    <div class="mpill">
+      <button class="mp" id="mBtn">&#9658;</button>
+      <div class="mwav off" id="mWav"><span></span><span></span><span></span><span></span><span></span></div>
+      <span class="mp-lbl">Gamelan</span>
+    </div>
+    <div class="ham" id="ham"><span></span><span></span><span></span></div>
+  </div>
 </header>
 
-<div class="drawer" id="drawer"><div class="dr-close" id="drClose">&#10005;</div><button class="nl" onclick="goTo('#hero');closeDrawer()">Home</button><button class="nl" onclick="goTo('#budaya');closeDrawer()">Budaya</button><button class="nl" onclick="goTo('#batik');closeDrawer()">Batik</button><button class="nl" onclick="goTo('#pakaian');closeDrawer()">Pakaian</button><button class="nl" onclick="goTo('#arsitektur');closeDrawer()">Arsitektur</button><button class="nl" onclick="goTo('#musik');closeDrawer()">Musik</button><button class="nl" onclick="goTo('#kuliner');closeDrawer()">Kuliner</button></div>
-<nav class="sdots"><div class="sdot on" data-label="Home" onclick="goTo('#hero')"></div><div class="sdot" data-label="Statistik" onclick="goTo('#statistik')"></div><div class="sdot" data-label="Budaya" onclick="goTo('#budaya')"></div><div class="sdot" data-label="Batik" onclick="goTo('#batik')"></div><div class="sdot" data-label="Pakaian" onclick="goTo('#pakaian')"></div><div class="sdot" data-label="Arsitektur" onclick="goTo('#arsitektur')"></div><div class="sdot" data-label="Musik" onclick="goTo('#musik')"></div><div class="sdot" data-label="Kuliner" onclick="goTo('#kuliner')"></div></nav>
+<div class="drawer" id="drawer">
+  <div class="dr-close" id="drClose">✕</div>
+  <button class="nl" onclick="goTo('#hero');closeDrawer()">Home</button>
+  <button class="nl" onclick="goTo('#budaya');closeDrawer()">Culture</button>
+  <button class="nl" onclick="goTo('#batik');closeDrawer()">Batik</button>
+  <button class="nl" onclick="goTo('#pakaian');closeDrawer()">Attire</button>
+  <button class="nl" onclick="goTo('#arsitektur');closeDrawer()">Architecture</button>
+  <button class="nl" onclick="goTo('#musik');closeDrawer()">Music</button>
+  <button class="nl" onclick="goTo('#kuliner');closeDrawer()">Cuisine</button>
+</div>
+
+<nav class="sdots">
+  <div class="sdot on" data-label="Home" onclick="goTo('#hero')"></div>
+  <div class="sdot" data-label="Visitors" onclick="goTo('#statistik')"></div>
+  <div class="sdot" data-label="Culture" onclick="goTo('#budaya')"></div>
+  <div class="sdot" data-label="Batik" onclick="goTo('#batik')"></div>
+  <div class="sdot" data-label="Attire" onclick="goTo('#pakaian')"></div>
+  <div class="sdot" data-label="Architecture" onclick="goTo('#arsitektur')"></div>
+  <div class="sdot" data-label="Music" onclick="goTo('#musik')"></div>
+  <div class="sdot" data-label="Cuisine" onclick="goTo('#kuliner')"></div>
+</nav>
 
 <main>
-<!-- ═══════ HERO ═══════ -->
+<!-- ══════════════ HERO ══════════════ -->
 <section id="hero">
   <div class="hero-inner">
-
-    <!-- KIRI: Foto besar budaya -->
     <div class="hero-photo">
       <div class="hero-photo-wrap">
-        <div class="hp-corner hp-tl"></div>
-        <div class="hp-corner hp-tr"></div>
-        <div class="hp-corner hp-bl"></div>
-        <div class="hp-corner hp-br"></div>
-        <img class="hero-photo-img" src="r1.jpeg".jpg" alt="Budaya Jombang" onerror="this.src='budaya2.jpg'">
-        <!-- Badge kreator di bawah foto -->
+        <div class="hpc tl"></div><div class="hpc tr"></div>
+        <div class="hpc bl"></div><div class="hpc br"></div>
+        <img class="hero-photo-img" src="r1.jpeg" alt="Budaya Jombang" onerror="this.src='budaya2.jpg'">
         <div class="hero-creator">
           <div class="hc-av">R</div>
-          <div>
-            <div class="hc-name">Ringga Budi Utama</div>
-            <div class="hc-role">Politeknik Negeri Malang &middot; International Class</div>
-          </div>
-          <div class="hc-badge">&#10022; Creator</div>
+          <div><div class="hc-n">Ringga Budi Utama</div><div class="hc-r">Politeknik Negeri Malang · International Class</div></div>
+          <div class="hc-b">✦ Creator</div>
         </div>
       </div>
     </div>
-
-    <!-- KANAN: Teks pengenalan internasional -->
     <div class="hero-text">
-      <div class="h-eyebrow">Jombang &middot; Jawa Timur &middot; Indonesia</div>
-      <h1 class="h-headline">
-        Mengenal Budaya<br><em>Jombang untuk Dunia</em>
-      </h1>
-      <!-- Teks bergerak -->
+      <div class="h-eyebrow">Jombang · East Java · Indonesia</div>
+      <h1 class="h-headline">Discovering the Culture<br><em>of Jombang for the World</em></h1>
       <div class="h-anim-wrap">
         <div class="h-anim-inner">
-          <div class="h-anim-item">Tradisi leluhur yang diakui dunia internasional</div>
-          <div class="h-anim-item">Warisan budaya Jawa Timur yang tak ternilai</div>
-          <div class="h-anim-item">Batik, wayang, gamelan &amp; kuliner autentik</div>
-          <div class="h-anim-item">Maju &middot; Berbudaya &middot; Jombang Golden 2045</div>
-          <div class="h-anim-item">Tradisi leluhur yang diakui dunia internasional</div>
+          <div class="h-anim-item">Ancestral traditions recognised on the world stage</div>
+          <div class="h-anim-item">East Java's most treasured cultural heritage</div>
+          <div class="h-anim-item">Batik, wayang, gamelan &amp; authentic cuisine</div>
+          <div class="h-anim-item">Progressive · Cultured · Jombang Golden 2045</div>
+          <div class="h-anim-item">Ancestral traditions recognised on the world stage</div>
         </div>
       </div>
-      <div class="h-div"><div class="h-div-line"></div><div class="h-div-gem"></div></div>
-      <p class="h-intro">Jombang menyimpan kekayaan warisan budaya yang mencerminkan nilai-nilai leluhur Jawa Timur — dari seni topeng Jatiduwur, batik bercorak filosofis, arsitektur candi Majapahit, hingga kuliner autentik yang mendunia. Sebuah identitas budaya yang layak dikenal oleh khalayak internasional.</p>
-      <!-- Stats -->
+      <div class="h-divider"><div class="h-dline"></div><div class="h-dgem"></div></div>
+      <p class="h-intro">Jombang holds a wealth of cultural heritage reflecting the values of East Javanese ancestors — from Jatiduwur mask theatre, philosophically rich batik, Majapahit temple architecture, to authentic local cuisine with a worldwide following.</p>
       <div class="h-stats">
-        <div class="h-stat"><span class="h-stat-n">700+</span><span class="h-stat-l">Tahun Warisan</span></div>
-        <div class="h-stat"><span class="h-stat-n">6</span><span class="h-stat-l">Kategori Budaya</span></div>
-        <div class="h-stat"><span class="h-stat-n">100+</span><span class="h-stat-l">Motif Batik</span></div>
-        <div class="h-stat"><span class="h-stat-n">&#8734;</span><span class="h-stat-l">Tradisi Hidup</span></div>
+        <div class="h-stat"><span class="h-sn">700+</span><span class="h-sl">Years of Heritage</span></div>
+        <div class="h-stat"><span class="h-sn">6</span><span class="h-sl">Cultural Pillars</span></div>
+        <div class="h-stat"><span class="h-sn">100+</span><span class="h-sl">Batik Motifs</span></div>
+        <div class="h-stat"><span class="h-sn">∞</span><span class="h-sl">Living Traditions</span></div>
       </div>
       <div class="h-btns">
-        <button class="btn-blue" onclick="goTo('#budaya')">Jelajahi Budaya &#8595;</button>
-        <button class="btn-out" onclick="goTo('#statistik')">Statistik Pengunjung</button>
+        <button class="btn-p" onclick="goTo('#budaya')">Explore Culture ↓</button>
+        <button class="btn-o" onclick="goTo('#statistik')">Visitor Statistics</button>
       </div>
-      <button class="scroll-hint" onclick="goTo('#statistik')"><div class="scroll-line"></div>Gulir ke bawah</button>
-    </div>
-
-  </div>
-</section>
-
-<div class="ticker"><div class="ticker-track"><div class="t-item"><div class="t-gem"></div>Budaya Lokal</div><div class="t-item"><div class="t-gem"></div>Batik Tradisional</div><div class="t-item"><div class="t-gem"></div>Pakaian Adat</div><div class="t-item"><div class="t-gem"></div>Arsitektur Warisan</div><div class="t-item"><div class="t-gem"></div>Musik Tradisional</div><div class="t-item"><div class="t-gem"></div>Kuliner Autentik</div><div class="t-item"><div class="t-gem"></div>Kebanggaan Jawa Timur</div><div class="t-item"><div class="t-gem"></div>Jombang Golden 2045</div><div class="t-item"><div class="t-gem"></div>Budaya Lokal</div><div class="t-item"><div class="t-gem"></div>Batik Tradisional</div><div class="t-item"><div class="t-gem"></div>Pakaian Adat</div><div class="t-item"><div class="t-gem"></div>Arsitektur Warisan</div><div class="t-item"><div class="t-gem"></div>Musik Tradisional</div><div class="t-item"><div class="t-gem"></div>Kuliner Autentik</div><div class="t-item"><div class="t-gem"></div>Kebanggaan Jawa Timur</div><div class="t-item"><div class="t-gem"></div>Jombang Golden 2045</div></div></div>
-
-<section id="statistik" class="alt">
-  <div class="sw">
-    <div class="shd"><div><div class="chapter-tag">Data Real-Time</div><h2 class="stitle">Statistik <em>Pengunjung</em></h2></div><div><p class="sdesc" style="margin-bottom:.8rem">Setiap kunjungan tercatat otomatis. Grafik diperbarui real-time berdasarkan kategori pengunjung.</p><div class="live-badge"><span class="ld2"></span>Live &middot; Diperbarui setiap kunjungan</div></div></div>
-    <div class="chart-wrap">
-      <div class="chart-header"><div class="chart-meta"><h3>Kurva Akses Pengunjung</h3><p id="chartLabel">Memuat data...</p></div><div style="display:flex;align-items:center;gap:.8rem;flex-wrap:wrap"><div style="display:flex;align-items:center;gap:.4rem;font-size:.52rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green)"><span class="ld2"></span>Live</div><div class="chart-period"><button class="period-btn on" onclick="setPeriod(6,this)">6 Bulan</button><button class="period-btn" onclick="setPeriod(3,this)">3 Bulan</button><button class="period-btn" onclick="setPeriod(1,this)">Bulan Ini</button></div></div></div>
-      <div class="chart-legend"><div class="leg-item" onclick="toggleLine(0,this)" id="leg0"><div class="leg-dot" style="background:#1A4FD6"></div><span class="leg-label">Mancanegara</span><span class="leg-val" id="legV0">0 total</span></div><div class="leg-item" onclick="toggleLine(1,this)" id="leg1"><div class="leg-dot" style="background:#10B981"></div><span class="leg-label">Nasional</span><span class="leg-val" id="legV1">0 total</span></div><div class="leg-item" onclick="toggleLine(2,this)" id="leg2"><div class="leg-dot" style="background:#F0C040"></div><span class="leg-label">Lokal Jawa Timur</span><span class="leg-val" id="legV2">0 total</span></div></div>
-      <div class="chart-canvas-wrap"><canvas id="vc"></canvas><div id="ct"><div class="ttm" id="ttM">&mdash;</div><div class="ttr"><div class="ttd" style="background:#1A4FD6"></div><span>Mancanegara</span><span class="ttn" id="ttV0">&mdash;</span></div><div class="ttr"><div class="ttd" style="background:#10B981"></div><span>Nasional</span><span class="ttn" id="ttV1">&mdash;</span></div><div class="ttr"><div class="ttd" style="background:#F0C040"></div><span>Lokal</span><span class="ttn" id="ttV2">&mdash;</span></div></div></div>
-      <div class="chart-totals"><div class="total-card"><div class="tc-top"><div class="tc-dot" style="background:#1A4FD6"></div><span class="tc-lbl">Mancanegara</span></div><div class="tc-num" id="tc0">0</div><div class="tc-sub">India &middot; Pakistan &middot; Inggris &middot; Malaysia</div><div class="tc-bar"><div class="tc-bar-fill" id="tb0" style="background:#1A4FD6"></div></div></div><div class="total-card"><div class="tc-top"><div class="tc-dot" style="background:#10B981"></div><span class="tc-lbl">Nasional</span></div><div class="tc-num" id="tc1">0</div><div class="tc-sub">dari seluruh Indonesia</div><div class="tc-bar"><div class="tc-bar-fill" id="tb1" style="background:#10B981"></div></div></div><div class="total-card"><div class="tc-top"><div class="tc-dot" style="background:#F0C040"></div><span class="tc-lbl">Lokal Jatim</span></div><div class="tc-num" id="tc2">0</div><div class="tc-sub">dari Jawa Timur</div><div class="tc-bar"><div class="tc-bar-fill" id="tb2" style="background:#F0C040"></div></div></div></div>
-      <div class="country-row"><span class="crow-lbl">Mancanegara:</span><span class="ctag2">&#127470;&#127475; India <b id="cnt-in" style="color:var(--blue);margin-left:.3rem">0</b></span><span class="ctag2">&#127477;&#127472; Pakistan <b id="cnt-pk" style="color:var(--blue);margin-left:.3rem">0</b></span><span class="ctag2">&#127468;&#127463; Inggris <b id="cnt-gb" style="color:var(--blue);margin-left:.3rem">0</b></span><span class="ctag2">&#127474;&#127486; Malaysia <b id="cnt-my" style="color:var(--blue);margin-left:.3rem">0</b></span></div>
-      <div style="margin-top:1.2rem;font-size:.62rem;color:var(--ink3);display:flex;align-items:center;gap:.5rem"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Kunjungan terakhir: <span id="lastVisit" style="color:var(--blue);font-weight:600">&mdash;</span> &nbsp;&middot;&nbsp; Total: <span id="totalAll" style="color:var(--blue);font-weight:700">0</span> kunjungan</div>
+      <button class="scroll-hint" onclick="goTo('#statistik')"><div class="sc-line"></div>Scroll down</button>
     </div>
   </div>
 </section>
 
-<section id="budaya">
-  <div class="sw">
-    <div class="shd rv"><div><div class="chapter-tag"><span class="chap-num">01</span> Budaya Lokal</div><h2 class="stitle">Tradisi &amp; <em>Budaya Hidup</em></h2></div><p class="sdesc rv dl1">Budaya Jombang mencerminkan nilai-nilai keagamaan, tradisi lokal, kehidupan agraris, dan semangat gotong royong yang bertahan lintas generasi.</p></div>
-    <div class="div-row rv"><div class="div-line"></div><span class="div-gem"></span><span class="div-txt">Tiga Pilar Budaya</span><span class="div-gem"></span><div class="div-line"></div></div>
-    <div class="ga rv">
-      <a class="ic" style="height:520px" href="budaya1.jpg" target="_blank"><img src="budaya1.jpg" alt="Tradisi Lokal" onerror="this.style.opacity='.04'"><div class="cp"><span class="ctag">Budaya &middot; 01</span><span class="ctitle">Topeng Jatiduwur</span><span class="cdesc">Seni wayang topeng khas Desa Jatiduwur, memadukan tari, drama, dan gamelan dengan cerita Panji.</span></div></a>
-      <div class="col-r"><a class="ic" style="height:255px" href="budaya2.jpg" target="_blank"><img src="budaya2.jpg" alt="Seni Pertunjukan" onerror="this.style.opacity='.04'"><div class="cp"><span class="ctag">Budaya &middot; 02</span><span class="ctitle">Tari Remo</span></div></a><a class="ic" style="height:255px" href="budaya3.jpg" target="_blank"><img src="budaya3.jpg" alt="Kehidupan Budaya" onerror="this.style.opacity='.04'"><div class="cp"><span class="ctag">Budaya &middot; 03</span><span class="ctitle">Ludruk</span></div></a></div>
-    </div>
-    <div class="insight rv dl1"><div class="insight-q">"Budaya bukan sekadar warisan masa lalu, ia adalah praktik hidup yang bernapas di setiap generasi."</div><p class="insight-p">Jalinan budaya Jombang ditenun dari benang tradisi Islam, adat Jawa, dan nilai-nilai komunitas agraris yang telah bertahan berabad-abad, beradaptasi dengan anggun sambil menjaga karakter esensialnya.</p></div>
-  </div>
-</section>
-
-<section id="batik" class="alt">
-  <div class="sw">
-    <div class="shd rv"><div><div class="chapter-tag"><span class="chap-num">02</span> Kerajinan Tekstil</div><h2 class="stitle">Batik <em>Tradisional</em></h2></div><p class="sdesc rv dl1">Batik Jombang mencerminkan kreativitas lokal dalam mengolah motif, warna, dan filosofi menjadi seni tekstil dengan makna budaya mendalam.</p></div>
-    <div class="div-row rv"><div class="div-line"></div><span class="div-gem"></span><span class="div-txt">Motif Khas Jombang</span><span class="div-gem"></span><div class="div-line"></div></div>
-    <div class="swatch-row rv"><div class="swatch"><svg viewBox="0 0 68 68"><rect width="68" height="68" fill="#0F2A6E"/><circle cx="34" cy="34" r="24" fill="none" stroke="#6B95FF" stroke-width="1.5" opacity=".8"/><circle cx="34" cy="34" r="12" fill="none" stroke="#3B6EF5" stroke-width=".8" opacity=".5"/><circle cx="34" cy="34" r="4.5" fill="#6B95FF" opacity=".9"/><path d="M34 10L36 21 34 27 32 21Z" fill="#3B6EF5" opacity=".8"/><path d="M34 41L36 52 34 58 32 52Z" fill="#3B6EF5" opacity=".8"/><path d="M10 34L21 32 27 34 21 36Z" fill="#3B6EF5" opacity=".8"/><path d="M41 34L52 32 58 34 52 36Z" fill="#3B6EF5" opacity=".8"/></svg></div><div class="swatch"><svg viewBox="0 0 68 68"><rect width="68" height="68" fill="#0A1A4A"/><path d="M0 17L17 0 34 17 17 34Z" fill="rgba(59,110,245,.25)"/><path d="M34 17L51 0 68 17 51 34Z" fill="rgba(59,110,245,.25)"/><path d="M0 51L17 34 34 51 17 68Z" fill="rgba(59,110,245,.25)"/><path d="M34 51L51 34 68 51 51 68Z" fill="rgba(59,110,245,.25)"/><circle cx="17" cy="17" r="5" fill="#6B95FF" opacity=".8"/><circle cx="51" cy="17" r="5" fill="#6B95FF" opacity=".8"/><circle cx="17" cy="51" r="5" fill="#6B95FF" opacity=".8"/><circle cx="51" cy="51" r="5" fill="#6B95FF" opacity=".8"/><circle cx="34" cy="34" r="8" fill="#3B6EF5" opacity=".9"/></svg></div><div class="swatch"><svg viewBox="0 0 68 68"><rect width="68" height="68" fill="#060E2B"/><line x1="0" y1="0" x2="68" y2="68" stroke="#3B6EF5" stroke-width="1.5" opacity=".52"/><line x1="68" y1="0" x2="0" y2="68" stroke="#3B6EF5" stroke-width="1.5" opacity=".52"/><line x1="34" y1="0" x2="34" y2="68" stroke="#6B95FF" stroke-width=".7" opacity=".3"/><line x1="0" y1="34" x2="68" y2="34" stroke="#6B95FF" stroke-width=".7" opacity=".3"/><circle cx="34" cy="34" r="12" fill="rgba(59,110,245,.16)"/><circle cx="34" cy="34" r="4" fill="#6B95FF" opacity=".9"/></svg></div><div class="swatch"><svg viewBox="0 0 68 68"><rect width="68" height="68" fill="#0A1828"/><path d="M34 5L45 17 62 17 53 29 57 46 34 38 11 46 15 29 6 17 23 17Z" fill="none" stroke="#3B6EF5" stroke-width="1.5" opacity=".72"/><circle cx="34" cy="29" r="9" fill="none" stroke="#6B95FF" stroke-width=".8" opacity=".48"/><circle cx="34" cy="29" r="4" fill="#6B95FF" opacity=".9"/></svg></div><div class="swatch"><svg viewBox="0 0 68 68"><rect width="68" height="68" fill="#091228"/><path d="M8 34Q22 6 34 34Q46 62 60 34" stroke="#3B6EF5" stroke-width="2.5" fill="none" opacity=".85"/><path d="M8 17Q22 -11 34 17Q46 45 60 17" stroke="#6B95FF" stroke-width=".8" fill="none" opacity=".3"/><path d="M8 51Q22 23 34 51Q46 79 60 51" stroke="#6B95FF" stroke-width=".8" fill="none" opacity=".3"/><circle cx="34" cy="34" r="7" fill="#3B6EF5" opacity=".9"/></svg></div><div class="swatch"><svg viewBox="0 0 68 68"><rect width="68" height="68" fill="#0E1A40"/><circle cx="34" cy="34" r="27" fill="none" stroke="#3B6EF5" stroke-width="1" opacity=".6"/><circle cx="34" cy="34" r="17" fill="none" stroke="#6B95FF" stroke-width=".8" opacity=".4"/><path d="M34 7L37 20 34 26 31 20Z" fill="#6B95FF" opacity=".8"/><path d="M34 42L37 55 34 61 31 55Z" fill="#6B95FF" opacity=".8"/><path d="M7 34L20 31 26 34 20 37Z" fill="#6B95FF" opacity=".8"/><path d="M42 34L55 31 61 34 55 37Z" fill="#6B95FF" opacity=".8"/><circle cx="34" cy="34" r="6" fill="#3B6EF5" opacity=".9"/></svg></div></div>
-    <p class="swatch-note rv">&#8593; Representasi visual motif batik khas Jombang</p>
-    <div class="rv"><div class="grid-top"><a class="ic" style="height:380px" href="batik1.webp" target="_blank"><img src="batik1.webp" alt="Batik" onerror="this.style.opacity='.04'"><div class="cp"><span class="ctag">Batik &middot; 01</span><span class="ctitle">Sang Perintis Batik Jombang</span><span class="cdesc">Maniati meresmikan usaha batiknya Sekar Jati Star, pelopor batik pertama di Jombang.</span></div></a></div><div class="grid-bot"><a class="ic" style="height:265px" href="batik2.webp" target="_blank"><img src="batik2.webp" alt="Pola" onerror="this.style.opacity='.04'"><div class="cp"><span class="ctag">Batik &middot; 02</span><span class="ctitle">Keindahan Pola</span></div></a><a class="ic" style="height:265px" href="batik3.webp" target="_blank"><img src="batik3.webp" alt="Tekstil" onerror="this.style.opacity='.04'"><div class="cp"><span class="ctag">Batik &middot; 03</span><span class="ctitle">Warisan Tekstil</span></div></a></div></div>
-    <div class="insight rv dl1"><div class="insight-q">"Setiap benang menyimpan cerita — batik bukan sekadar kain, ia adalah bahasa yang berbicara melalui warna dan pola."</div><p class="insight-p">Tradisi batik Jombang mewakili kesenian halus berabad-abad, di mana pewarna alami, pola tangan, dan simbolisme budaya menyatu menghasilkan tekstil dengan keindahan luar biasa.</p></div>
-  </div>
-</section>
-
-<section id="pakaian">
-  <div class="sw">
-    <div class="shd rv"><div><div class="chapter-tag"><span class="chap-num">03</span> Identitas Visual</div><h2 class="stitle">Pakaian <em>Adat</em></h2></div><p class="sdesc rv dl1">Pakaian adat mencerminkan keindahan, nilai moral, dan martabat simbolis dalam masyarakat yang menjunjung tinggi warisan leluhur.</p></div>
-    <div class="div-row rv"><div class="div-line"></div><span class="div-gem"></span><span class="div-txt">Busana &amp; Identitas</span><span class="div-gem"></span><div class="div-line"></div></div>
-    <div class="ga rv" style="direction:rtl"><a class="ic" style="height:520px;direction:ltr" href="busana2.jpeg" target="_blank"><img src="busana2.jpeg" alt="Pakaian Khas" onerror="this.style.opacity='.04'"><div class="cp"><span class="ctag">Pakaian &middot; 03</span><span class="ctitle">Baju Batik Khas Jombang</span><span class="cdesc">Komodoningrat untuk perempuan dan bebet Kudawaningpati untuk pria — pakaian resmi Kabupaten Jombang.</span></div></a><div class="col-r" style="direction:ltr"><a class="ic" style="height:255px" href="busana1.jpg" target="_blank"><img src="busana1.jpg" alt="Pakaian" onerror="this.style.opacity='.04'"><div class="cp"><span class="ctag">Pakaian &middot; 01</span><span class="ctitle">Pakaian Tradisional</span></div></a><a class="ic" style="height:255px" href="busana2.webp" target="_blank"><img src="busana2.webp" alt="Aksesori" onerror="this.style.opacity='.04'"><div class="cp"><span class="ctag">Pakaian &middot; 02</span><span class="ctitle">Aksesori Tradisional</span></div></a></div></div>
-    <div class="insight rv dl1"><div class="insight-q">"Mengenakan pakaian adat adalah membawa sejarah — setiap busana adalah kesaksian kebijaksanaan generasi terdahulu."</div><p class="insight-p">Pakaian adat Jombang adalah bahasa visual yang mengungkapkan status sosial, kesempatan, makna spiritual, dan rasa memiliki komunitas melalui pilihan kain dan aksesori yang cermat.</p></div>
-  </div>
-</section>
-
-<div class="mid-band">
-  <div class="mid-inner sw">
-    <div class="rv"><h2 class="mid-h">Melestarikan Identitas,<br><em>Menginspirasi Dunia</em></h2><p class="mid-p">Jombang dikenal bukan hanya sebagai pusat religius, tetapi sebagai daerah dengan kekayaan budaya yang luar biasa melalui seni, batik, tradisi, arsitektur, musik, dan warisan kuliner lintas generasi.</p></div>
-    <div class="rv dl1"><div class="m-pill"><div class="m-icon">&#9670;</div><div><span class="m-nm">Nilai Tradisional</span><span class="m-ds">Melestarikan warisan leluhur dan identitas budaya untuk generasi mendatang.</span></div></div><div class="m-pill"><div class="m-icon">&#10022;</div><div><span class="m-nm">Presentasi Premium</span><span class="m-ds">Standar visual berkelas dunia untuk khalayak nasional dan internasional.</span></div></div><div class="m-pill"><div class="m-icon">&#9711;</div><div><span class="m-nm">Jangkauan Global</span><span class="m-ds">Memperkenalkan budaya hidup Jombang ke panggung dunia dengan bangga.</span></div></div></div>
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <div class="t-item"><div class="t-gem"></div>Local Culture</div><div class="t-item"><div class="t-gem"></div>Traditional Batik</div><div class="t-item"><div class="t-gem"></div>Ceremonial Attire</div><div class="t-item"><div class="t-gem"></div>Heritage Architecture</div><div class="t-item"><div class="t-gem"></div>Traditional Music</div><div class="t-item"><div class="t-gem"></div>Authentic Cuisine</div><div class="t-item"><div class="t-gem"></div>Pride of East Java</div><div class="t-item"><div class="t-gem"></div>Jombang Golden 2045</div>
+    <div class="t-item"><div class="t-gem"></div>Local Culture</div><div class="t-item"><div class="t-gem"></div>Traditional Batik</div><div class="t-item"><div class="t-gem"></div>Ceremonial Attire</div><div class="t-item"><div class="t-gem"></div>Heritage Architecture</div><div class="t-item"><div class="t-gem"></div>Traditional Music</div><div class="t-item"><div class="t-gem"></div>Authentic Cuisine</div><div class="t-item"><div class="t-gem"></div>Pride of East Java</div><div class="t-item"><div class="t-gem"></div>Jombang Golden 2045</div>
   </div>
 </div>
 
+<!-- ══════════════ VISITOR STATS ══════════════ -->
+<section id="statistik" class="alt">
+  <div class="sw">
+    <div class="s-head rv">
+      <div class="s-chap"><div class="s-chap-line"></div><span class="s-chap-lbl">Real-Time Data · Analytics</span><div class="s-chap-line r"></div></div>
+      <h2 class="s-title">Visitor <em>Statistics</em></h2>
+      <p class="s-sub">Every visit is tracked automatically from launch day — March 1, 2026. Data refreshes in real time by visitor origin.</p>
+      <div class="s-gem-row"><div class="s-gem-line"></div><div class="s-gem"></div><div class="s-gem-line"></div></div>
+    </div>
+    <div class="rv d1">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.8rem">
+        <p style="font-size:.8rem;color:var(--ink3)" id="chartLabel">Loading data...</p>
+        <div class="live-badge"><span class="ld2"></span>Live · Updated on every visit</div>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-header">
+          <div class="chart-meta"><h3>Visitor Access Chart</h3><p>International · National · Local East Java</p></div>
+          <div style="display:flex;align-items:center;gap:.8rem;flex-wrap:wrap">
+            <div class="chart-period">
+              <button class="period-btn on" onclick="setPeriod(6,this)">6 Months</button>
+              <button class="period-btn" onclick="setPeriod(3,this)">3 Months</button>
+              <button class="period-btn" onclick="setPeriod(1,this)">This Month</button>
+            </div>
+          </div>
+        </div>
+        <div class="chart-legend">
+          <div class="leg-item" onclick="toggleSeries(0,this)" id="leg0"><div class="leg-dot" style="background:#C9841A"></div><span class="leg-label">International</span><span class="leg-val" id="legV0">0 total</span></div>
+          <div class="leg-item" onclick="toggleSeries(1,this)" id="leg1"><div class="leg-dot" style="background:#10B981"></div><span class="leg-label">National</span><span class="leg-val" id="legV1">0 total</span></div>
+          <div class="leg-item" onclick="toggleSeries(2,this)" id="leg2"><div class="leg-dot" style="background:#7AA0FF"></div><span class="leg-label">Local East Java</span><span class="leg-val" id="legV2">0 total</span></div>
+        </div>
+        <div style="position:relative"><canvas id="vc"></canvas><div id="ct"><div class="ttm" id="ttM">—</div><div class="ttr"><div class="ttd" style="background:#C9841A"></div><span>International</span><span class="ttn" id="ttV0">—</span></div><div class="ttr"><div class="ttd" style="background:#10B981"></div><span>National</span><span class="ttn" id="ttV1">—</span></div><div class="ttr"><div class="ttd" style="background:#7AA0FF"></div><span>Local</span><span class="ttn" id="ttV2">—</span></div></div></div>
+        <div class="chart-totals">
+          <div class="total-card"><div class="tc-top"><div class="tc-dot" style="background:#C9841A"></div><span class="tc-lbl">International</span></div><div class="tc-num" id="tc0">0</div><div class="tc-sub">India · Pakistan · UK · Malaysia</div><div class="tc-bar"><div class="tc-fill" id="tb0" style="background:#C9841A"></div></div></div>
+          <div class="total-card"><div class="tc-top"><div class="tc-dot" style="background:#10B981"></div><span class="tc-lbl">National</span></div><div class="tc-num" id="tc1">0</div><div class="tc-sub">from across Indonesia</div><div class="tc-bar"><div class="tc-fill" id="tb1" style="background:#10B981"></div></div></div>
+          <div class="total-card"><div class="tc-top"><div class="tc-dot" style="background:#7AA0FF"></div><span class="tc-lbl">Local (East Java)</span></div><div class="tc-num" id="tc2">0</div><div class="tc-sub">from East Java province</div><div class="tc-bar"><div class="tc-fill" id="tb2" style="background:#7AA0FF"></div></div></div>
+        </div>
+        <div class="country-row"><span class="crow-lbl">International:</span><span class="ctag2">🇮🇳 India <b id="cnt-in" style="color:var(--acc2);margin-left:.3rem">0</b></span><span class="ctag2">🇵🇰 Pakistan <b id="cnt-pk" style="color:var(--acc2);margin-left:.3rem">0</b></span><span class="ctag2">🇬🇧 UK <b id="cnt-gb" style="color:var(--acc2);margin-left:.3rem">0</b></span><span class="ctag2">🇲🇾 Malaysia <b id="cnt-my" style="color:var(--acc2);margin-left:.3rem">0</b></span></div>
+        <div style="margin-top:1.1rem;font-size:.62rem;color:var(--ink3);display:flex;align-items:center;gap:.5rem">⏱ Last visit: <span id="lastVisit" style="color:var(--acc2);font-weight:600">—</span> &nbsp;·&nbsp; Total: <span id="totalAll" style="color:var(--acc2);font-weight:700">0</span> visits</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CULTURE ══════════════ -->
+<section id="budaya">
+  <div class="sw">
+    <div class="s-head rv">
+      <div class="s-chap"><div class="s-chap-line"></div><span class="s-chap-lbl">01 · Local Culture</span><div class="s-chap-line r"></div></div>
+      <h2 class="s-title">Tradition &amp; <em>Living Culture</em></h2>
+      <p class="s-sub">Religious values, Javanese custom, and the spirit of communal life that have endured across generations.</p>
+      <div class="s-gem-row"><div class="s-gem-line"></div><div class="s-gem"></div><div class="s-gem-line"></div></div>
+    </div>
+    <div class="art-grid rv d1">
+      <div class="art-card">
+        <div class="art-card-c tl"></div><div class="art-card-c br"></div>
+        <div class="art-card-img"><img src="budaya1.jpg" alt="Jatiduwur Mask Theatre" onerror="this.parentElement.style.background='var(--card2)'"><div class="art-card-ov"><span class="art-card-tag">Culture · 01</span><h3 class="art-card-title">Jatiduwur Mask Theatre</h3></div></div>
+        <div class="art-card-body"><p class="art-card-desc">A rare mask performance art from Jatiduwur village — blending dance, drama and gamelan in the ancient Panji cycle, a purely Javanese epic predating even the Mahabharata adaptations.</p></div>
+      </div>
+      <div class="art-card">
+        <div class="art-card-c tl"></div><div class="art-card-c br"></div>
+        <div class="art-card-img"><img src="budaya2.jpg" alt="Tari Remo" onerror="this.parentElement.style.background='var(--card2)'"><div class="art-card-ov"><span class="art-card-tag">Culture · 02</span><h3 class="art-card-title">Tari Remo</h3></div></div>
+        <div class="art-card-body"><p class="art-card-desc">The defining dance of East Java, born in Jombang. Its thunderous gejug foot-stamps and lightning-quick trecet footwork embody the warrior spirit — now performed at national state ceremonies.</p></div>
+      </div>
+      <div class="art-card">
+        <div class="art-card-c tl"></div><div class="art-card-c br"></div>
+        <div class="art-card-img"><img src="budaya3.jpg" alt="Ludruk" onerror="this.parentElement.style.background='var(--card2)'"><div class="art-card-ov"><span class="art-card-tag">Culture · 03</span><h3 class="art-card-title">Ludruk</h3></div></div>
+        <div class="art-card-body"><p class="art-card-desc">East Java's greatest folk theatre, born right here in Jombang. Combining Tari Remo, comedy, song and drama — it was once a living propaganda weapon that fuelled Indonesia's independence movement.</p></div>
+      </div>
+    </div>
+    <div class="quote-block rv d2">
+      <div class="q-text">"Culture is not merely a legacy of the past — it is a living practice breathing through every generation of Jombang."</div>
+      <p class="q-body">The cultural fabric of Jombang is woven from threads of Islamic tradition, Javanese adat, and agrarian communal values that have held for centuries — adapting gracefully to the modern world while preserving an essential character entirely its own.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ BATIK ══════════════ -->
+<section id="batik" class="alt">
+  <div class="sw">
+    <div class="s-head rv">
+      <div class="s-chap"><div class="s-chap-line"></div><span class="s-chap-lbl">02 · Textile Heritage</span><div class="s-chap-line r"></div></div>
+      <h2 class="s-title">Traditional <em>Batik</em></h2>
+      <p class="s-sub">Local artistry transforming motif, colour and philosophy into a textile art form of profound cultural depth.</p>
+      <div class="s-gem-row"><div class="s-gem-line"></div><div class="s-gem"></div><div class="s-gem-line"></div></div>
+    </div>
+    <div class="rv">
+      <div class="swatch-row">
+        <div class="swatch"><svg viewBox="0 0 70 70"><rect width="70" height="70" fill="#0A0203"/><circle cx="35" cy="35" r="26" fill="none" stroke="rgba(200,132,26,.7)" stroke-width="1.5"/><circle cx="35" cy="35" r="14" fill="none" stroke="rgba(200,132,26,.4)" stroke-width=".8"/><circle cx="35" cy="35" r="5" fill="rgba(232,184,75,.85)"/><line x1="35" y1="9" x2="35" y2="22" stroke="rgba(200,132,26,.7)" stroke-width="2"/><line x1="35" y1="48" x2="35" y2="61" stroke="rgba(200,132,26,.7)" stroke-width="2"/><line x1="9" y1="35" x2="22" y2="35" stroke="rgba(200,132,26,.7)" stroke-width="2"/><line x1="48" y1="35" x2="61" y2="35" stroke="rgba(200,132,26,.7)" stroke-width="2"/></svg></div>
+        <div class="swatch"><svg viewBox="0 0 70 70"><rect width="70" height="70" fill="#0A0203"/><path d="M0 18L18 0 35 18 18 35Z" fill="rgba(200,132,26,.22)"/><path d="M35 18L52 0 70 18 52 35Z" fill="rgba(200,132,26,.22)"/><path d="M0 52L18 35 35 52 18 70Z" fill="rgba(200,132,26,.22)"/><path d="M35 52L52 35 70 52 52 70Z" fill="rgba(200,132,26,.22)"/><circle cx="18" cy="18" r="5.5" fill="rgba(232,184,75,.8)"/><circle cx="52" cy="18" r="5.5" fill="rgba(232,184,75,.8)"/><circle cx="18" cy="52" r="5.5" fill="rgba(232,184,75,.8)"/><circle cx="52" cy="52" r="5.5" fill="rgba(232,184,75,.8)"/><circle cx="35" cy="35" r="8" fill="rgba(200,132,26,.85)"/></svg></div>
+        <div class="swatch"><svg viewBox="0 0 70 70"><rect width="70" height="70" fill="#0A0203"/><line x1="0" y1="0" x2="70" y2="70" stroke="rgba(200,132,26,.55)" stroke-width="1.5"/><line x1="70" y1="0" x2="0" y2="70" stroke="rgba(200,132,26,.55)" stroke-width="1.5"/><line x1="35" y1="0" x2="35" y2="70" stroke="rgba(232,184,75,.25)" stroke-width=".8"/><line x1="0" y1="35" x2="70" y2="35" stroke="rgba(232,184,75,.25)" stroke-width=".8"/><circle cx="35" cy="35" r="11" fill="rgba(200,132,26,.18)"/><circle cx="35" cy="35" r="4" fill="rgba(232,184,75,.9)"/></svg></div>
+        <div class="swatch"><svg viewBox="0 0 70 70"><rect width="70" height="70" fill="#0A0203"/><path d="M35 5L46 18 63 18 54 30 58 47 35 39 12 47 16 30 7 18 24 18Z" fill="none" stroke="rgba(200,132,26,.7)" stroke-width="1.5"/><circle cx="35" cy="29" r="9" fill="none" stroke="rgba(232,184,75,.5)" stroke-width=".8"/><circle cx="35" cy="29" r="4" fill="rgba(232,184,75,.9)"/></svg></div>
+        <div class="swatch"><svg viewBox="0 0 70 70"><rect width="70" height="70" fill="#0A0203"/><path d="M8 35Q22 7 35 35Q48 63 62 35" stroke="rgba(200,132,26,.85)" stroke-width="2.5" fill="none"/><path d="M8 18Q22-10 35 18Q48 46 62 18" stroke="rgba(200,132,26,.28)" stroke-width=".8" fill="none"/><path d="M8 52Q22 24 35 52Q48 80 62 52" stroke="rgba(200,132,26,.28)" stroke-width=".8" fill="none"/><circle cx="35" cy="35" r="7" fill="rgba(200,132,26,.88)"/></svg></div>
+        <div class="swatch"><svg viewBox="0 0 70 70"><rect width="70" height="70" fill="#0A0203"/><circle cx="35" cy="35" r="28" fill="none" stroke="rgba(200,132,26,.6)" stroke-width="1"/><circle cx="35" cy="35" r="16" fill="none" stroke="rgba(232,184,75,.4)" stroke-width=".8"/><path d="M35 7L38 20 35 26 32 20Z" fill="rgba(200,132,26,.8)"/><path d="M35 44L38 57 35 63 32 57Z" fill="rgba(200,132,26,.8)"/><path d="M7 35L20 32 26 35 20 38Z" fill="rgba(200,132,26,.8)"/><path d="M44 35L57 32 63 35 57 38Z" fill="rgba(200,132,26,.8)"/><circle cx="35" cy="35" r="5.5" fill="rgba(232,184,75,.9)"/></svg></div>
+      </div>
+      <p class="sw-note">↑ Visual interpretation of Jombang's signature batik motifs — Kawung, Parang, Galaran, Bintang, Lereng, Ceplok</p>
+    </div>
+    <div class="art-grid rv d1">
+      <div class="art-card">
+        <div class="art-card-c tl"></div><div class="art-card-c br"></div>
+        <div class="art-card-img"><img src="batik1.webp" alt="The Pioneer" onerror="this.parentElement.style.background='var(--card2)'"><div class="art-card-ov"><span class="art-card-tag">Batik · 01</span><h3 class="art-card-title">The Pioneer of Jombang Batik</h3></div></div>
+        <div class="art-card-body"><p class="art-card-desc">Maniati founded Sekar Jati Star — the first batik enterprise in Jombang. She pioneered a batik-making tradition that has since grown to encompass hundreds of uniquely philosophical regional motifs.</p></div>
+      </div>
+      <div class="art-card">
+        <div class="art-card-c tl"></div><div class="art-card-c br"></div>
+        <div class="art-card-img"><img src="batik2.webp" alt="Pattern Beauty" onerror="this.parentElement.style.background='var(--card2)'"><div class="art-card-ov"><span class="art-card-tag">Batik · 02</span><h3 class="art-card-title">The Beauty of Pattern</h3></div></div>
+        <div class="art-card-body"><p class="art-card-desc">Natural dyes, hand-drawn wax technique, and deep cultural symbolism unite in every cloth — making Jombang batik a visual language that speaks in colour, line and meaning simultaneously.</p></div>
+      </div>
+      <div class="art-card">
+        <div class="art-card-c tl"></div><div class="art-card-c br"></div>
+        <div class="art-card-img"><img src="batik3.webp" alt="Textile Heritage" onerror="this.parentElement.style.background='var(--card2)'"><div class="art-card-ov"><span class="art-card-tag">Batik · 03</span><h3 class="art-card-title">Textile Heritage</h3></div></div>
+        <div class="art-card-body"><p class="art-card-desc">Centuries of refined craft passed down through families. The Sekar Jati, Wringin Sungsang and Panji motifs have become Jombang's textile signature — increasingly recognised on the international stage.</p></div>
+      </div>
+    </div>
+    <div class="quote-block rv d2">
+      <div class="q-text">"Every thread holds a story — batik is not merely cloth, it is a language that speaks through colour and pattern."</div>
+      <p class="q-body">Jombang's batik tradition represents centuries of refined artistry, where natural dyes, hand technique and cultural symbolism converge to produce textiles whose beauty goes far beyond aesthetics — becoming a statement of identity and regional pride.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ ATTIRE ══════════════ -->
+<section id="pakaian">
+  <div class="sw">
+    <div class="s-head rv">
+      <div class="s-chap"><div class="s-chap-line"></div><span class="s-chap-lbl">03 · Visual Identity</span><div class="s-chap-line r"></div></div>
+      <h2 class="s-title">Traditional <em>Attire</em></h2>
+      <p class="s-sub">Ceremonial dress as a visual language expressing dignity, moral values and community identity.</p>
+      <div class="s-gem-row"><div class="s-gem-line"></div><div class="s-gem"></div><div class="s-gem-line"></div></div>
+    </div>
+    <div class="art-grid rv d1">
+      <div class="art-card">
+        <div class="art-card-c tl"></div><div class="art-card-c br"></div>
+        <div class="art-card-img"><img src="busana1.jpg" alt="Traditional Dress" onerror="this.parentElement.style.background='var(--card2)'"><div class="art-card-ov"><span class="art-card-tag">Attire · 01</span><h3 class="art-card-title">Traditional Dress</h3></div></div>
+        <div class="art-card-body"><p class="art-card-desc">Jombang's traditional garments weave Javanese elegance with local wisdom — reflecting social standing, spiritual values and a deep sense of communal belonging passed through generations.</p></div>
+      </div>
+      <div class="art-card">
+        <div class="art-card-c tl"></div><div class="art-card-c br"></div>
+        <div class="art-card-img"><img src="busana2.jpeg" alt="Official Jombang Batik" onerror="this.parentElement.style.background='var(--card2)'"><div class="art-card-ov"><span class="art-card-tag">Attire · 02</span><h3 class="art-card-title">Official Jombang Batik Garment</h3></div></div>
+        <div class="art-card-body"><p class="art-card-desc">Komodoningrat for women and Kudawaningpati for men — the official ceremonial dress of Jombang Regency, adopted as a proud symbol of regional identity at formal state occasions.</p></div>
+      </div>
+      <div class="art-card">
+        <div class="art-card-c tl"></div><div class="art-card-c br"></div>
+        <div class="art-card-img"><img src="busana2.webp" alt="Traditional Accessories" onerror="this.parentElement.style.background='var(--card2)'"><div class="art-card-ov"><span class="art-card-tag">Attire · 03</span><h3 class="art-card-title">Traditional Accessories</h3></div></div>
+        <div class="art-card-body"><p class="art-card-desc">From patterned jarik cloth to selendang sashes and ceremonial headwear — each accessory completes the ensemble with layers of symbolic meaning rooted in cultural and historical significance.</p></div>
+      </div>
+    </div>
+    <div class="quote-block rv d2">
+      <div class="q-text">"To wear traditional attire is to carry history — every garment is a testimony of the wisdom of those who came before."</div>
+      <p class="q-body">Jombang's ceremonial dress is a visual language articulating social occasion, spiritual meaning and communal belonging through deliberate choices of cloth, motif and accessory — a living archive worn on the body.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MID BAND -->
+<div class="mid-band">
+  <div class="mid-in sw">
+    <div class="rv">
+      <h2 class="mid-h">Preserving Identity,<br><em>Inspiring the World</em></h2>
+      <p class="mid-p">Jombang is known not only as a centre of Islamic learning, but as a region of extraordinary cultural wealth — expressed through art, batik, tradition, architecture, music and culinary heritage spanning generations.</p>
+    </div>
+    <div class="rv d1">
+      <div class="m-pill"><div class="m-icon">◆</div><div><span class="m-nm">Traditional Values</span><span class="m-ds">Preserving ancestral heritage and cultural identity for generations to come.</span></div></div>
+      <div class="m-pill"><div class="m-icon">✦</div><div><span class="m-nm">World-Class Presentation</span><span class="m-ds">International visual standards for national and global audiences.</span></div></div>
+      <div class="m-pill"><div class="m-icon">◯</div><div><span class="m-nm">Global Reach</span><span class="m-ds">Proudly introducing the living culture of Jombang to the world stage.</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ ARCHITECTURE ══════════════ -->
 <section id="arsitektur" class="alt">
   <div class="sw">
-    <div class="shd rv"><div><div class="chapter-tag"><span class="chap-num">04</span> Warisan Terbangun</div><h2 class="stitle">Arsitektur <em>Tradisional</em></h2></div><p class="sdesc rv dl1">Rumah tradisional mencerminkan cara hidup, nilai komunal, dan filosofi arsitektur yang terhubung dengan lingkungan dan kearifan budaya.</p></div>
-    <div class="div-row rv"><div class="div-line"></div><span class="div-gem"></span><span class="div-txt">Warisan Arsitektur</span><span class="div-gem"></span><div class="div-line"></div></div>
-    <div class="rv"><div class="grid-top"><a class="ic" style="height:420px" href="bangunan1.jpg" target="_blank"><img src="bangunan1.jpg" alt="Candi Rimbi" onerror="this.style.opacity='.04'"><div class="cp"><span class="ctag">Arsitektur &middot; 01</span><span class="ctitle">Candi Rimbi</span><span class="cdesc">Peninggalan Kerajaan Majapahit abad ke-14 di Kecamatan Bareng, Jombang.</span></div></a></div><div class="grid-bot"><a class="ic" style="height:275px" href="bangunan3.jpg" target="_blank"><img src="bangunan3.jpg" alt="Museum" onerror="this.style.opacity='.04'"><div class="cp"><span class="ctag">Arsitektur &middot; 02</span><span class="ctitle">Museum KH. Hasyim Asy'ari</span></div></a><a class="ic" style="height:275px" href="bangunan2.webp" target="_blank"><img src="bangunan2.webp" alt="Warisan" onerror="this.style.opacity='.04'"><div class="cp"><span class="ctag">Arsitektur &middot; 03</span><span class="ctitle">Warisan Arsitektur</span></div></a></div></div>
-    <div class="insight rv dl1"><div class="insight-q">"Rumah tradisional tidak sekadar dibangun, ia tumbuh dari nilai-nilai, dibentuk oleh tangan komunitas."</div><p class="insight-p">Arsitektur tradisional Jawa seperti Joglo adalah mahakarya filosofi ruang — dari pendapa untuk musyawarah hingga dalem yang sakral, setiap ruang bermakna mendalam bagi kehidupan komunitas.</p></div>
+    <div class="s-head rv">
+      <div class="s-chap"><div class="s-chap-line"></div><span class="s-chap-lbl">04 · Built Heritage</span><div class="s-chap-line r"></div></div>
+      <h2 class="s-title">Traditional <em>Architecture</em></h2>
+      <p class="s-sub">The physical legacy of Majapahit and the Javanese philosophy of space, rooted in environment and cultural wisdom.</p>
+      <div class="s-gem-row"><div class="s-gem-line"></div><div class="s-gem"></div><div class="s-gem-line"></div></div>
+    </div>
+    <div class="art-grid rv d1">
+      <div class="art-card">
+        <div class="art-card-c tl"></div><div class="art-card-c br"></div>
+        <div class="art-card-img"><img src="bangunan1.jpg" alt="Candi Rimbi" onerror="this.parentElement.style.background='var(--card2)'"><div class="art-card-ov"><span class="art-card-tag">Architecture · 01</span><h3 class="art-card-title">Candi Rimbi</h3></div></div>
+        <div class="art-card-body"><p class="art-card-desc">A 14th-century Majapahit-era temple in Bareng district — a silent witness to the golden age of East Javanese civilisation, its Hindu-Buddhist stonework still standing after seven centuries.</p></div>
+      </div>
+      <div class="art-card">
+        <div class="art-card-c tl"></div><div class="art-card-c br"></div>
+        <div class="art-card-img"><img src="bangunan3.jpg" alt="KH. Hasyim Asy'ari Museum" onerror="this.parentElement.style.background='var(--card2)'"><div class="art-card-ov"><span class="art-card-tag">Architecture · 02</span><h3 class="art-card-title">KH. Hasyim Asy'ari Museum</h3></div></div>
+        <div class="art-card-body"><p class="art-card-desc">A museum honouring the National Hero and founder of Nahdlatul Ulama — a fusion of traditional Javanese architecture with the Islamic values that have shaped Jombang's identity for over a century.</p></div>
+      </div>
+      <div class="art-card">
+        <div class="art-card-c tl"></div><div class="art-card-c br"></div>
+        <div class="art-card-img"><img src="bangunan2.webp" alt="Architectural Heritage" onerror="this.parentElement.style.background='var(--card2)'"><div class="art-card-ov"><span class="art-card-tag">Architecture · 03</span><h3 class="art-card-title">Architectural Heritage</h3></div></div>
+        <div class="art-card-body"><p class="art-card-desc">The Joglo and traditional pendapa — masterworks of Javanese spatial philosophy, where every room carries meaning: the open pendapa for community gathering, the inner dalem for the sacred.</p></div>
+      </div>
+    </div>
+    <div class="quote-block rv d2">
+      <div class="q-text">"Traditional architecture is not simply built — it grows from values, shaped by the hands and souls of a community."</div>
+      <p class="q-body">From the pendapa for deliberation to the sacred inner dalem, every space in Javanese architecture carries profound meaning. Jombang's built heritage is a physical record of how ancestors understood the relationship between nature, humanity and the divine.</p>
+    </div>
   </div>
 </section>
 
+<!-- ══════════════ MUSIC ══════════════ -->
 <section id="musik">
   <div class="sw">
-    <div class="shd rv"><div><div class="chapter-tag"><span class="chap-num">05</span> Ekspresi Jiwa</div><h2 class="stitle">Musik <em>Tradisional</em></h2></div><p class="sdesc rv dl1">Lagu-lagu tradisional berfungsi sebagai media untuk mengekspresikan nilai-nilai kehidupan dan rasa kebersamaan yang tumbuh dalam masyarakat lintas generasi.</p></div>
-    <div class="div-row rv"><div class="div-line"></div><span class="div-gem"></span><span class="div-txt">Suara &amp; Jiwa</span><span class="div-gem"></span><div class="div-line"></div></div>
-    <div class="gc rv"><a class="ic" style="height:360px" href="music1.webp" target="_blank"><img src="music1.webp" alt="Lagu Tradisional" onerror="this.style.opacity='.04'"><div class="cp"><span class="ctag">Musik &middot; 01</span><span class="ctitle">Lagu Tradisional</span><span class="cdesc">Ekspresi budaya yang diturunkan secara lisan selama berabad-abad.</span></div></a><a class="ic" style="height:360px" href="music2.webp" target="_blank"><img src="music2.webp" alt="Identitas Musik" onerror="this.style.opacity='.04'"><div class="cp"><span class="ctag">Musik &middot; 02</span><span class="ctitle">Musik &amp; Identitas</span><span class="cdesc">Mencerminkan identitas komunitas dan nilai-nilai budaya lokal.</span></div></a><a class="ic" style="height:360px" href="music3.webp" target="_blank"><img src="music3.webp" alt="Seni Pertunjukan" onerror="this.style.opacity='.04'"><div class="cp"><span class="ctag">Musik &middot; 03</span><span class="ctitle">Seni Pertunjukan</span><span class="cdesc">Memperkuat daya tarik budaya melalui penampilan seni.</span></div></a></div>
-    <div class="insight rv dl1"><div class="insight-q">"Musik adalah benang tak kasatmata yang mengikat komunitas — terdengar saat lahir, panen, perayaan, dan istirahat."</div><p class="insight-p">Dari nada gamelan yang bergema hingga melodi rakyat yang dinyanyikan saat festival panen, musik tradisional di Jombang tak terpisahkan dari kehidupan sehari-hari.</p></div>
+    <div class="s-head rv">
+      <div class="s-chap"><div class="s-chap-line"></div><span class="s-chap-lbl">05 · Soul &amp; Expression</span><div class="s-chap-line r"></div></div>
+      <h2 class="s-title">Traditional <em>Music</em></h2>
+      <p class="s-sub">An expression of life's values and communal spirit that has grown within society across the generations.</p>
+      <div class="s-gem-row"><div class="s-gem-line"></div><div class="s-gem"></div><div class="s-gem-line"></div></div>
+    </div>
+    <div class="art-grid rv d1">
+      <div class="art-card">
+        <div class="art-card-c tl"></div><div class="art-card-c br"></div>
+        <div class="art-card-img"><img src="music1.webp" alt="Traditional Songs" onerror="this.parentElement.style.background='var(--card2)'"><div class="art-card-ov"><span class="art-card-tag">Music · 01</span><h3 class="art-card-title">Traditional Songs</h3></div></div>
+        <div class="art-card-body"><p class="art-card-desc">A melodic inheritance passed down orally for centuries — every lyric holds local wisdom, prayer and the hopes of Jombang's ancestors, carried forward in living voice rather than written score.</p></div>
+      </div>
+      <div class="art-card">
+        <div class="art-card-c tl"></div><div class="art-card-c br"></div>
+        <div class="art-card-img"><img src="music2.webp" alt="Gamelan and Identity" onerror="this.parentElement.style.background='var(--card2)'"><div class="art-card-ov"><span class="art-card-tag">Music · 02</span><h3 class="art-card-title">Gamelan &amp; Identity</h3></div></div>
+        <div class="art-card-body"><p class="art-card-desc">The resonance of Jombang's gamelan reflects a community's identity — the interplay of slendro and pelog tunings producing a harmonic universe found nowhere else in quite this particular form.</p></div>
+      </div>
+      <div class="art-card">
+        <div class="art-card-c tl"></div><div class="art-card-c br"></div>
+        <div class="art-card-img"><img src="music3.webp" alt="Performing Arts" onerror="this.parentElement.style.background='var(--card2)'"><div class="art-card-ov"><span class="art-card-tag">Music · 03</span><h3 class="art-card-title">Performing Arts</h3></div></div>
+        <div class="art-card-body"><p class="art-card-desc">From the flowing tones of gamelan to the rousing beat of kendang — traditional music in Jombang bridges the tangible world and the spiritual realm of the ancestors, present at every meaningful moment.</p></div>
+      </div>
+    </div>
+    <div class="quote-block rv d2">
+      <div class="q-text">"Music is the invisible thread binding a community — heard at birth, harvest, celebration and rest."</div>
+      <p class="q-body">From gamelan echoing through pesantren courtyards to the melodies of Tari Remo — traditional music in Jombang is inseparable from the rhythm of daily life, present in every significant passage of its people.</p>
+    </div>
   </div>
 </section>
 
+<!-- ══════════════ CUISINE ══════════════ -->
 <section id="kuliner" class="alt">
   <div class="sw">
-    <div class="shd rv"><div><div class="chapter-tag"><span class="chap-num">06</span> Gastronomi Daerah</div><h2 class="stitle">Kuliner <em>Tradisional</em></h2></div><p class="sdesc rv dl1">Kuliner tradisional Jombang mencerminkan cita rasa lokal, kebiasaan masyarakat, dan keunikan gastronomi daerah yang berkembang selama berabad-abad.</p></div>
-    <div class="div-row rv"><div class="div-line"></div><span class="div-gem"></span><span class="div-txt">Gastronomi</span><span class="div-gem"></span><div class="div-line"></div></div>
-    <div class="food-hero rv"><div class="fhc-img"><img src="makan1.jpeg" alt="Nasi Kikil" onerror="this.style.opacity='.04'"></div><div class="fhc-body"><span class="food-n">01</span><h3 class="food-title">Nasi Kikil</h3><p class="food-desc">Perpaduan cita rasa, bahan lokal, dan kebiasaan makan yang berkembang di tengah masyarakat Jombang &mdash; arsip hidup cita rasa dan kenangan.</p></div></div>
-    <div class="food-grid rv dl1"><div class="food-card"><div class="food-card-img"><img src="makan2.jpeg" alt="Cita Rasa" onerror="this.style.opacity='.04'"></div><div class="food-card-body"><span class="food-card-n">02</span><h3 class="food-card-title">Identitas Cita Rasa Lokal</h3><p class="food-card-desc">Cita rasa lokal menjadi daya tarik utama kuliner Jombang, menawarkan pengalaman autentik yang berakar pada tradisi daerah.</p></div></div><div class="food-card"><div class="food-card-img"><img src="makan3.png" alt="Gastronomi" onerror="this.style.opacity='.04'"></div><div class="food-card-body"><span class="food-card-n">03</span><h3 class="food-card-title">Warisan Gastronomi</h3><p class="food-card-desc">Makanan tradisional dipromosikan sebagai warisan gastronomi, mendukung pariwisata dan memperkuat kebanggaan budaya.</p></div></div></div>
-    <div class="insight rv dl1"><div class="insight-q">"Makanan yang dimasak dengan tradisi adalah perjalanan waktu &mdash; setiap suapan adalah warisan dari mereka yang mendahului."</div><p class="insight-p">Warisan kuliner Jombang adalah permadani kaya yang terjalin dari bahan lokal, teknik kuno, dan resep yang diturunkan dari nenek ke cucu &mdash; bentuk transmisi budaya yang sangat personal.</p></div>
+    <div class="s-head rv">
+      <div class="s-chap"><div class="s-chap-line"></div><span class="s-chap-lbl">06 · Regional Gastronomy</span><div class="s-chap-line r"></div></div>
+      <h2 class="s-title">Traditional <em>Cuisine</em></h2>
+      <p class="s-sub">Local flavours reflecting the habits and unique gastronomy of a region developed across centuries.</p>
+      <div class="s-gem-row"><div class="s-gem-line"></div><div class="s-gem"></div><div class="s-gem-line"></div></div>
+    </div>
+    <div class="art-grid rv d1">
+      <div class="art-card">
+        <div class="art-card-c tl"></div><div class="art-card-c br"></div>
+        <div class="art-card-img"><img src="makan1.jpeg" alt="Nasi Kikil" onerror="this.parentElement.style.background='var(--card2)'"><div class="art-card-ov"><span class="art-card-tag">Cuisine · 01</span><h3 class="art-card-title">Nasi Kikil</h3></div></div>
+        <div class="art-card-body"><p class="art-card-desc">Jombang's culinary icon across generations — braised beef tendon in deeply aromatic East Javanese spice, served over white rice with petis sambal. A dish that tastes of memory and place.</p></div>
+      </div>
+      <div class="art-card">
+        <div class="art-card-c tl"></div><div class="art-card-c br"></div>
+        <div class="art-card-img"><img src="makan2.jpeg" alt="Local Flavour Identity" onerror="this.parentElement.style.background='var(--card2)'"><div class="art-card-ov"><span class="art-card-tag">Cuisine · 02</span><h3 class="art-card-title">Local Flavour Identity</h3></div></div>
+        <div class="art-card-body"><p class="art-card-desc">Local spice, age-old cooking methods and fresh nusantara ingredients create an authentic Jombang flavour profile impossible to replicate elsewhere — the product of a place, not a recipe.</p></div>
+      </div>
+      <div class="art-card">
+        <div class="art-card-c tl"></div><div class="art-card-c br"></div>
+        <div class="art-card-img"><img src="makan3.png" alt="Gastronomic Heritage" onerror="this.parentElement.style.background='var(--card2)'"><div class="art-card-ov"><span class="art-card-tag">Cuisine · 03</span><h3 class="art-card-title">Gastronomic Heritage</h3></div></div>
+        <div class="art-card-body"><p class="art-card-desc">Recipes kept by ancestors for centuries — traditional Jombang food is now promoted as gastronomic heritage, supporting cultural tourism while strengthening pride in the region's distinct identity.</p></div>
+      </div>
+    </div>
+    <div class="quote-block rv d2">
+      <div class="q-text">"Food cooked with tradition is time travel — every mouthful is a gift from those who came before."</div>
+      <p class="q-body">Jombang's culinary heritage is a rich tapestry woven from local ingredients, ancient technique and recipes passed from grandmother to grandchild — cultural transmission at its most personal, recorded not on paper but in taste and memory.</p>
+    </div>
   </div>
 </section>
 </main>
 
 <footer>
-  <div class="footer-grid"><div><span class="ft-name">Jombang Heritage</span><div class="ft-sub">Cultural Excellence &middot; East Java &middot; Indonesia</div><p class="ft-p">Mempersembahkan kekayaan budaya Kabupaten Jombang dengan cara yang modern dan elegan untuk khalayak nasional maupun internasional.</p></div><div class="ft-col"><h4>Jelajahi</h4><a onclick="goTo('#budaya')">Budaya Lokal</a><a onclick="goTo('#batik')">Batik Tradisional</a><a onclick="goTo('#pakaian')">Pakaian Adat</a></div><div class="ft-col"><h4>Warisan</h4><a onclick="goTo('#arsitektur')">Arsitektur</a><a onclick="goTo('#musik')">Musik Tradisional</a><a onclick="goTo('#kuliner')">Kuliner</a></div><div class="ft-col"><h4>Tentang</h4><a>Kabupaten Jombang</a><a>Jawa Timur, Indonesia</a><a>&#169; 2025</a></div></div>
-  <div class="footer-creator"><div class="fc-av">R</div><div><div class="fc-name">Ringga Budi Utama</div><div class="fc-role">Website Creator &amp; Designer &middot; Politeknik Negeri Malang &middot; International Class</div></div><div class="fc-badge">&#10022; Website Creator</div></div>
-  <div class="footer-bottom"><span class="fb-txt">&#169; 2025 Jombang Heritage &middot; Hak Cipta Dilindungi</span><span class="fb-txt">Dibuat dengan bangga oleh Ringga Budi Utama &middot; Polinema</span></div>
+  <div class="footer-grid">
+    <div>
+      <span class="ft-name">Jombang Heritage</span>
+      <div class="ft-sub">Cultural Excellence · East Java · Indonesia</div>
+      <p class="ft-p">Presenting the cultural wealth of Jombang Regency with a modern, refined sensibility for national and international audiences.</p>
+    </div>
+    <div class="ft-col"><h4>Explore</h4><a onclick="goTo('#budaya')">Local Culture</a><a onclick="goTo('#batik')">Traditional Batik</a><a onclick="goTo('#pakaian')">Ceremonial Attire</a></div>
+    <div class="ft-col"><h4>Heritage</h4><a onclick="goTo('#arsitektur')">Architecture</a><a onclick="goTo('#musik')">Traditional Music</a><a onclick="goTo('#kuliner')">Cuisine</a></div>
+    <div class="ft-col"><h4>About</h4><a>Jombang Regency</a><a>East Java, Indonesia</a><a>© 2025</a></div>
+  </div>
+  <div class="footer-creator">
+    <div class="fc-av">R</div>
+    <div><div class="fc-n">Ringga Budi Utama</div><div class="fc-r">Website Creator &amp; Designer · Politeknik Negeri Malang · International Class</div></div>
+    <div class="fc-b">✦ Website Creator</div>
+  </div>
+  <div class="footer-bottom">
+    <span class="fb-txt">© 2025 Jombang Heritage · All Rights Reserved</span>
+    <span class="fb-txt">Crafted with pride by Ringga Budi Utama · Polinema</span>
+  </div>
 </footer>
 
-<div class="theme-toggle">
+<!-- THEME SWITCHER -->
+<div class="tt-wrap">
   <div class="tt-pill">
-    <button class="tt-btn on" id="ttLight" onclick="setTheme('light')" title="Light Mode">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      Light
-    </button>
-    <div class="tt-div"></div>
-    <button class="tt-btn" id="ttDark" onclick="setTheme('dark')" title="Dark Mode">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      Dark
-    </button>
+    <button class="tt-btn on" id="tt0" onclick="setTheme('kencono')"><div class="tt-dot" style="background:#C9841A"></div>Kencono</button>
+    <div class="tt-sep"></div>
+    <button class="tt-btn" id="tt1" onclick="setTheme('samudra')"><div class="tt-dot" style="background:#3B6EF5"></div>Samudra</button>
+    <div class="tt-sep"></div>
+    <button class="tt-btn" id="tt2" onclick="setTheme('rimba')"><div class="tt-dot" style="background:#9B7420"></div>Rimba</button>
   </div>
 </div>
 
 <audio id="bgAudio" loop><source src="lagu11.mp3" type="audio/mpeg"></audio>
+
 <script>
-/* LOADER */
-(function(){var lo=document.getElementById('loader');function hide(){if(lo)lo.classList.add('gone');}setTimeout(hide,900);window.addEventListener('load',function(){setTimeout(hide,100);});})();
-/* CURSOR */
-var c=document.getElementById('cur'),cr=document.getElementById('curR');
-document.addEventListener('mousemove',function(e){c.style.left=e.clientX+'px';c.style.top=e.clientY+'px';cr.style.left=e.clientX+'px';cr.style.top=e.clientY+'px';});
-document.querySelectorAll('a,button').forEach(function(el){el.addEventListener('mouseenter',function(){cr.style.width='38px';cr.style.height='38px'});el.addEventListener('mouseleave',function(){cr.style.width='26px';cr.style.height='26px'});});
-/* SCROLL */
+/* ── LOADER ── */
+(function(){
+  var lo=document.getElementById('loader');
+  function hide(){if(lo)lo.classList.add('gone');}
+  setTimeout(hide,900);
+  window.addEventListener('load',function(){setTimeout(hide,100);});
+})();
+
+/* ── CURSOR ── */
+var cur=document.getElementById('cur'),curR=document.getElementById('curR');
+document.addEventListener('mousemove',function(e){
+  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+  curR.style.left=e.clientX+'px';curR.style.top=e.clientY+'px';
+});
+document.querySelectorAll('a,button').forEach(function(el){
+  el.addEventListener('mouseenter',function(){curR.style.width='38px';curR.style.height='38px';});
+  el.addEventListener('mouseleave',function(){curR.style.width='24px';curR.style.height='24px';});
+});
+
+/* ── BACKGROUND CANVAS (Cultural Patterns per Theme) ── */
+(function(){
+  var cv=document.getElementById('bgcv');
+  if(!cv)return;
+  var cx=cv.getContext('2d'),W,H,tick=0,raf;
+  function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
+  resize();window.addEventListener('resize',resize);
+
+  function theme(){return document.documentElement.getAttribute('data-theme')||'kencono';}
+  function col(a){
+    var t=theme();
+    if(t==='kencono')return'rgba(200,132,26,'+a+')';
+    if(t==='samudra')return'rgba(59,110,245,'+a+')';
+    return'rgba(155,116,32,'+a+')';
+  }
+
+  /* KENCONO: Wayang silhouettes floating */
+  function drawWayang(px,py,sc,al,flip){
+    cx.save();cx.translate(px,py);if(flip)cx.scale(-1,1);cx.scale(sc,sc);
+    cx.fillStyle=col(al);cx.strokeStyle=col(al*1.4);cx.lineWidth=1.2/sc;
+    /* Mahkota */
+    cx.beginPath();cx.moveTo(-10,-82);cx.lineTo(10,-82);cx.lineTo(8,-70);cx.lineTo(-8,-70);cx.closePath();cx.fill();
+    cx.beginPath();cx.moveTo(-2,-82);cx.bezierCurveTo(-4,-100,4,-108,0,-116);cx.bezierCurveTo(-4,-108,4,-100,2,-82);cx.closePath();cx.fill();
+    cx.beginPath();cx.moveTo(-10,-82);cx.bezierCurveTo(-13,-94,-8,-100,-6,-108);cx.bezierCurveTo(-10,-98,-14,-92,-10,-82);cx.closePath();cx.fill();
+    cx.beginPath();cx.moveTo(10,-82);cx.bezierCurveTo(13,-94,8,-100,6,-108);cx.bezierCurveTo(10,-98,14,-92,10,-82);cx.closePath();cx.fill();
+    /* Kepala */
+    cx.beginPath();cx.ellipse(0,-56,9,12,0,0,Math.PI*2);cx.fill();
+    cx.beginPath();cx.moveTo(0,-56);cx.bezierCurveTo(6,-52,10,-48,12,-44);cx.lineTo(8,-44);cx.bezierCurveTo(6,-47,4,-50,0,-52);cx.closePath();cx.fill();
+    /* Badan */
+    cx.beginPath();cx.moveTo(-13,-36);cx.bezierCurveTo(-16,-24,-14,-6,-10,12);cx.lineTo(-8,46);cx.lineTo(8,46);cx.lineTo(10,12);cx.bezierCurveTo(14,-6,16,-24,13,-36);cx.closePath();cx.fill();
+    /* Selendang kiri */
+    cx.beginPath();cx.moveTo(-13,-32);cx.bezierCurveTo(-24,-26,-33,-10,-36,10);cx.bezierCurveTo(-38,26,-34,40,-30,54);cx.lineTo(-26,52);cx.bezierCurveTo(-30,38,-34,24,-32,10);cx.bezierCurveTo(-28,-8,-20,-24,-12,-28);cx.closePath();cx.fill();
+    /* Lengan */
+    cx.beginPath();cx.moveTo(-13,-16);cx.bezierCurveTo(-26,-12,-35,-2,-40,8);cx.bezierCurveTo(-44,14,-44,20,-40,23);cx.lineTo(-38,19);cx.bezierCurveTo(-40,13,-40,7,-36,3);cx.bezierCurveTo(-30,-4,-22,-10,-12,-12);cx.closePath();cx.fill();
+    cx.beginPath();cx.moveTo(13,-16);cx.bezierCurveTo(26,-10,34,4,35,18);cx.lineTo(31,18);cx.bezierCurveTo(30,4,24,-7,12,-12);cx.closePath();cx.fill();
+    /* Dodot */
+    cx.beginPath();cx.moveTo(-11,46);cx.bezierCurveTo(-16,56,-18,74,-14,102);cx.bezierCurveTo(-10,120,-5,134,0,138);cx.bezierCurveTo(5,134,10,120,14,102);cx.bezierCurveTo(18,74,16,56,11,46);cx.closePath();cx.fill();
+    cx.restore();
+  }
+
+  /* SAMUDRA: Parang batik diagonal pattern */
+  function drawParang(){
+    var spacing=60,c=col(.04);
+    cx.strokeStyle=c;cx.lineWidth=1.5;
+    cx.save();cx.translate(0,0);cx.rotate(-Math.PI/4);
+    var step=spacing*1.414;
+    for(var x=-step;x<W*1.5;x+=step){
+      for(var y=-step;y<H*1.5;y+=spacing/2){
+        cx.beginPath();
+        cx.moveTo(x,y);
+        cx.bezierCurveTo(x+step*.25,y-spacing*.3,x+step*.75,y+spacing*.3,x+step,y);
+        cx.stroke();
+      }
+    }
+    cx.restore();
+    cx.fillStyle=col(.028);
+    for(var xi=-step;xi<W*1.5;xi+=step){
+      for(var yi=-step;yi<H*1.5;yi+=spacing){
+        cx.save();cx.translate(xi,yi);cx.rotate(-Math.PI/4);
+        cx.beginPath();cx.arc(0,0,4,0,Math.PI*2);cx.fill();
+        cx.restore();
+      }
+    }
+  }
+
+  /* RIMBA: Kawung floral pattern */
+  function drawKawung(){
+    var s=65,pal=col(.035),pal2=col(.015);
+    for(var xi=0;xi<W+s;xi+=s){
+      for(var yi=0;yi<H+s;yi+=s){
+        var ox=(yi/s%2===0)?0:s/2;
+        var x=xi+ox,y=yi;
+        cx.strokeStyle=pal;cx.lineWidth=.8;
+        cx.beginPath();cx.ellipse(x,y,s*.32,s*.14,Math.PI/4,0,Math.PI*2);cx.stroke();
+        cx.beginPath();cx.ellipse(x,y,s*.32,s*.14,-Math.PI/4,0,Math.PI*2);cx.stroke();
+        cx.fillStyle=pal2;cx.beginPath();cx.arc(x,y,3,0,Math.PI*2);cx.fill();
+      }
+    }
+    cx.fillStyle=pal;
+    for(var xi2=0;xi2<W+s;xi2+=s){
+      for(var yi2=0;yi2<H+s;yi2+=s){
+        var ox2=(yi2/s%2===0)?0:s/2;
+        cx.beginPath();cx.arc(xi2+ox2,yi2,5.5,0,Math.PI*2);
+        cx.fill();
+      }
+    }
+  }
+
+  var figs=[
+    {x:.07,y:.5,sc:.48,al:.065,fl:false,sp:.7,ph:0},
+    {x:.93,y:.5,sc:.48,al:.065,fl:true,sp:.85,ph:1.8},
+    {x:.5,y:.52,sc:.24,al:.03,fl:false,sp:.5,ph:.9},
+    {x:.02,y:.38,sc:.25,al:.036,fl:false,sp:.65,ph:2.4},
+    {x:.98,y:.62,sc:.25,al:.036,fl:true,sp:.75,ph:1.2},
+  ];
+
+  function loop(){
+    tick+=0.006;
+    cx.clearRect(0,0,W,H);
+    var t=theme();
+    if(t==='kencono'){
+      var sc=Math.min(W,H)/680;
+      figs.forEach(function(f){
+        var fy=Math.sin(tick*f.sp+f.ph)*14;
+        var fa=f.al+Math.sin(tick*f.sp*1.2+f.ph)*.008;
+        drawWayang(f.x*W,f.y*H+fy,f.sc*sc,Math.max(.018,fa),f.fl);
+      });
+    } else if(t==='samudra'){
+      drawParang();
+    } else {
+      drawKawung();
+    }
+    raf=requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ── THEME ── */
+function setTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  ['kencono','samudra','rimba'].forEach(function(n,i){
+    document.getElementById('tt'+i).classList.toggle('on',n===t);
+  });
+  try{localStorage.setItem('jh_theme',t);}catch(e){}
+}
+(function(){setTheme(localStorage.getItem('jh_theme')||'kencono');})();
+
+/* ── SCROLL ── */
 var SECS=['hero','statistik','budaya','batik','pakaian','arsitektur','musik','kuliner'];
 window.addEventListener('scroll',function(){
   var dc=document.documentElement;
@@ -575,123 +899,383 @@ window.addEventListener('scroll',function(){
   updateDots();doReveal();
 });
 function goTo(id){var el=document.querySelector(id);if(!el)return;window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-78,behavior:'smooth'});}
-function updateDots(){var sy=window.scrollY+130,active=SECS[0];SECS.forEach(function(s){var el=document.getElementById(s);if(el&&el.offsetTop<=sy)active=s});document.querySelectorAll('.sdot').forEach(function(d,i){d.classList.toggle('on',SECS[i]===active)});document.querySelectorAll('.nl').forEach(function(l,i){if(SECS[i])l.classList.toggle('on',SECS[i]===active)});}
-document.getElementById('ham').onclick=function(){document.getElementById('drawer').classList.add('open')};
-document.getElementById('drClose').onclick=function(){document.getElementById('drawer').classList.remove('open')};
-function closeDrawer(){document.getElementById('drawer').classList.remove('open')}
-/* REVEAL */
-function doReveal(){document.querySelectorAll('.rv').forEach(function(el){var r=el.getBoundingClientRect();if(r.top<window.innerHeight+80){el.classList.add('will-anim','show');}});}
-setTimeout(function(){doReveal();if('IntersectionObserver' in window){var io=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting)en.target.classList.add('will-anim','show');});},{threshold:.04,rootMargin:'0px 0px -20px 0px'});document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});}},100);
-/* MUSIC */
+function updateDots(){
+  var sy=window.scrollY+130,active=SECS[0];
+  SECS.forEach(function(s){var el=document.getElementById(s);if(el&&el.offsetTop<=sy)active=s;});
+  document.querySelectorAll('.sdot').forEach(function(d,i){d.classList.toggle('on',SECS[i]===active);});
+  document.querySelectorAll('.nl').forEach(function(l,i){if(SECS[i])l.classList.toggle('on',SECS[i]===active);});
+}
+document.getElementById('ham').onclick=function(){document.getElementById('drawer').classList.add('open');};
+document.getElementById('drClose').onclick=function(){document.getElementById('drawer').classList.remove('open');};
+function closeDrawer(){document.getElementById('drawer').classList.remove('open');}
+
+/* ── REVEAL ── */
+function doReveal(){
+  document.querySelectorAll('.rv').forEach(function(el){
+    var r=el.getBoundingClientRect();
+    if(r.top<window.innerHeight+80){el.classList.add('wa','show');}
+  });
+}
+setTimeout(function(){
+  doReveal();
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting)en.target.classList.add('wa','show');});},{threshold:.04,rootMargin:'0px 0px -20px 0px'});
+    document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+  }
+},120);
+
+/* ── MUSIC ── */
 var aud=document.getElementById('bgAudio'),mb=document.getElementById('mBtn'),mw=document.getElementById('mWav'),pl=false;
 aud.volume=.38;
 function setP(p){mb.innerHTML=p?'&#9646;&#9646;':'&#9658;';mw.classList.toggle('off',!p);pl=p;}
 mb.addEventListener('click',function(e){e.stopPropagation();if(pl){aud.pause();setP(false);}else{aud.play().then(function(){setP(true);}).catch(function(){});}});
-aud.play().then(function(){setP(true);}).catch(function(){document.addEventListener('click',function fn(){aud.play().then(function(){setP(true);}).catch(function(){});document.removeEventListener('click',fn);});});
-/* VISITOR CHART */
-(function(){
-  var SK='jh_v5',CK='jh_c5';
-  var MI=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-  var MS=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
-  var COLORS=['#1A4FD6','#10B981','#F0C040'],FILLS=['rgba(26,79,214,.13)','rgba(16,185,129,.13)','rgba(240,192,64,.13)'];
-  var CNT=['in','pk','gb','my'],visible=[true,true,true],period=6,hIdx=-1,canvas,ctx;
-  function ld(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
-  function sv(d){try{localStorage.setItem(SK,JSON.stringify(d));}catch(e){}}
-  function ldC(){try{return JSON.parse(localStorage.getItem(CK))||{in:0,pk:0,gb:0,my:0};}catch(e){return{in:0,pk:0,gb:0,my:0};}}
-  function svC(d){try{localStorage.setItem(CK,JSON.stringify(d));}catch(e){}}
-  function seed(){if(localStorage.getItem(SK+'_seeded'))return;var now=new Date();var data={};var base=[[3,9,6],[4,12,8],[5,14,10],[7,18,13],[8,22,16],[10,26,18]];for(var i=5;i>=0;i--){var d=new Date(now.getFullYear(),now.getMonth()-i,1);var key=d.getFullYear()+'-'+(d.getMonth()+1);var b=base[5-i];data[key]={int:b[0],nat:b[1],loc:b[2],ts:d.toISOString()};}sv(data);svC({in:4,pk:3,gb:5,my:5});localStorage.setItem(SK+'_seeded','1');}
-  function record(){var now=new Date();var key=now.getFullYear()+'-'+(now.getMonth()+1);var data=ld();if(!data[key])data[key]={int:0,nat:0,loc:0,ts:now.toISOString()};var r=Math.random();var cat=r<.15?'int':r<.55?'loc':'nat';data[key][cat]++;data[key].ts=now.toISOString();sv(data);if(cat==='int'){var cd=ldC();var pick=CNT[Math.floor(Math.random()*CNT.length)];cd[pick]=(cd[pick]||0)+1;svC(cd);}}
-  function slots(n){var now=new Date(),arr=[];for(var i=n-1;i>=0;i--){var d=new Date(now.getFullYear(),now.getMonth()-i,1);arr.push({key:d.getFullYear()+'-'+(d.getMonth()+1),m:d.getMonth(),y:d.getFullYear()});}return arr;}
-  function chartData(n){var st=ld(),sl=slots(n),labels=[],full=[],int2=[],nat=[],loc=[];sl.forEach(function(s){labels.push(MS[s.m]);full.push(MI[s.m]+' '+s.y);var v=st[s.key]||{int:0,nat:0,loc:0};int2.push(v.int||0);nat.push(v.nat||0);loc.push(v.loc||0);});return{labels:labels,full:full,int:int2,nat:nat,loc:loc};}
-  function fmt(n){return n>=1000?(Math.round(n/100)/10).toFixed(1)+'K':n;}
-  function updateUI(){var d=chartData(period);var si=d.int.reduce(function(a,b){return a+b;},0),sn=d.nat.reduce(function(a,b){return a+b;},0),sl2=d.loc.reduce(function(a,b){return a+b;},0);var mx=Math.max(si,sn,sl2,1);document.getElementById('tc0').textContent=fmt(si);document.getElementById('tc1').textContent=fmt(sn);document.getElementById('tc2').textContent=fmt(sl2);document.getElementById('legV0').textContent=fmt(si)+' total';document.getElementById('legV1').textContent=fmt(sn)+' total';document.getElementById('legV2').textContent=fmt(sl2)+' total';setTimeout(function(){document.getElementById('tb0').style.width=Math.round(si/mx*100)+'%';document.getElementById('tb1').style.width='100%';document.getElementById('tb2').style.width=Math.round(sl2/mx*100)+'%';},300);var cd=ldC();CNT.forEach(function(c){var el=document.getElementById('cnt-'+c);if(el)el.textContent=cd[c]||0;});var all=ld(),tot=0;Object.values(all).forEach(function(v){tot+=(v.int||0)+(v.nat||0)+(v.loc||0);});document.getElementById('totalAll').textContent=tot;var sl3=slots(period);var lbl=document.getElementById('chartLabel');if(lbl)lbl.textContent=MI[sl3[0].m]+' '+sl3[0].y+' — '+MI[sl3[sl3.length-1].m]+' '+sl3[sl3.length-1].y+' · Data real kunjungan';var allD=ld(),lastTs=null;Object.values(allD).forEach(function(v){if(v.ts&&(!lastTs||v.ts>lastTs))lastTs=v.ts;});var lv=document.getElementById('lastVisit');if(lv&&lastTs){var dt=new Date(lastTs);lv.textContent=dt.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});}}
-  function initCanvas(){canvas=document.getElementById('vc');if(!canvas)return;ctx=canvas.getContext('2d');resizeC();}
-  function resizeC(){if(!canvas)return;var dpr=window.devicePixelRatio||1,w=canvas.parentElement.clientWidth,h=window.innerWidth<640?220:300;canvas.style.width=w+'px';canvas.style.height=h+'px';canvas.width=w*dpr;canvas.height=h*dpr;ctx.scale(dpr,dpr);draw();}
-  function draw(){if(!canvas||!ctx)return;var d=chartData(period),dpr=window.devicePixelRatio||1,W=canvas.width/dpr,H=canvas.height/dpr;var P={t:16,r:18,b:36,l:46},cW=W-P.l-P.r,cH=H-P.t-P.b,n=d.labels.length;ctx.clearRect(0,0,W,H);if(n<2)return;var allV=[];if(visible[0])allV=allV.concat(d.int);if(visible[1])allV=allV.concat(d.nat);if(visible[2])allV=allV.concat(d.loc);var mx=Math.max.apply(null,allV.concat([1]))*1.18;function xp(i){return P.l+(i/(n-1))*cW;}function yp(v){return P.t+cH-(v/mx)*cH;}ctx.setLineDash([3,5]);ctx.strokeStyle='rgba(26,79,214,.07)';ctx.lineWidth=1;for(var g=0;g<=4;g++){var gy=P.t+(g/4)*cH;ctx.beginPath();ctx.moveTo(P.l,gy);ctx.lineTo(P.l+cW,gy);ctx.stroke();var vl=Math.round(mx*(1-g/4));ctx.fillStyle='rgba(126,142,192,.6)';ctx.font='500 10px Plus Jakarta Sans,sans-serif';ctx.textAlign='right';ctx.fillText(vl>=1000?(Math.round(vl/100)/10)+'K':vl,P.l-6,gy+4);}ctx.setLineDash([]);ctx.fillStyle='rgba(126,142,192,.72)';ctx.font='500 10px Plus Jakarta Sans,sans-serif';ctx.textAlign='center';d.labels.forEach(function(lbl,i){ctx.fillText(lbl,xp(i),H-7);});[{v:d.int,ci:0},{v:d.nat,ci:1},{v:d.loc,ci:2}].forEach(function(s){if(!visible[s.ci])return;ctx.beginPath();ctx.moveTo(xp(0),yp(s.v[0]));for(var i=1;i<n;i++){var cx1=xp(i-1)+cW/(n-1)*.42,cx2=xp(i)-cW/(n-1)*.42;ctx.bezierCurveTo(cx1,yp(s.v[i-1]),cx2,yp(s.v[i]),xp(i),yp(s.v[i]));}ctx.lineTo(xp(n-1),P.t+cH);ctx.lineTo(xp(0),P.t+cH);ctx.closePath();ctx.fillStyle=FILLS[s.ci];ctx.fill();ctx.beginPath();ctx.moveTo(xp(0),yp(s.v[0]));for(var i=1;i<n;i++){var cx1=xp(i-1)+cW/(n-1)*.42,cx2=xp(i)-cW/(n-1)*.42;ctx.bezierCurveTo(cx1,yp(s.v[i-1]),cx2,yp(s.v[i]),xp(i),yp(s.v[i]));}ctx.strokeStyle=COLORS[s.ci];ctx.lineWidth=2.5;ctx.stroke();});if(hIdx>=0&&hIdx<n){ctx.beginPath();ctx.moveTo(xp(hIdx),P.t);ctx.lineTo(xp(hIdx),P.t+cH);ctx.strokeStyle='rgba(26,79,214,.18)';ctx.lineWidth=1;ctx.setLineDash([3,3]);ctx.stroke();ctx.setLineDash([]);[{v:d.int,ci:0},{v:d.nat,ci:1},{v:d.loc,ci:2}].forEach(function(s){if(!visible[s.ci])return;ctx.beginPath();ctx.arc(xp(hIdx),yp(s.v[hIdx]),5,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle=COLORS[s.ci];ctx.lineWidth=2.5;ctx.stroke();});}}
-  function getIdx(e){var d=chartData(period),n=d.labels.length,dpr=window.devicePixelRatio||1,W=canvas.width/dpr,cW=W-64;var rect=canvas.getBoundingClientRect(),mx=(e.touches?e.touches[0].clientX:e.clientX)-rect.left,best=-1,bd=9999;for(var i=0;i<n;i++){var x=46+(i/(n-1))*cW,dist=Math.abs(mx-x);if(dist<bd){bd=dist;best=i;}}return bd<38?best:-1;}
-  function showTip(e){var idx=getIdx(e),d=chartData(period),tip=document.getElementById('ct');if(idx<0){tip.style.opacity='0';hIdx=-1;draw();return;}hIdx=idx;draw();var dpr=window.devicePixelRatio||1,W=canvas.width/dpr,cW=W-64,x=46+(idx/(d.labels.length-1))*cW;var rect=canvas.getBoundingClientRect(),tw=156,tx=x-tw/2;tx=Math.max(4,Math.min(rect.width-tw-4,tx));tip.style.left=tx+'px';tip.style.top='8px';tip.style.opacity='1';document.getElementById('ttM').textContent=d.full[idx];document.getElementById('ttV0').textContent=visible[0]?d.int[idx]:'\u2014';document.getElementById('ttV1').textContent=visible[1]?d.nat[idx]:'\u2014';document.getElementById('ttV2').textContent=visible[2]?d.loc[idx]:'\u2014';}
-  window.setPeriod=function(n,btn){period=n;document.querySelectorAll('.period-btn').forEach(function(b){b.classList.remove('on');});btn.classList.add('on');hIdx=-1;updateUI();draw();};
-  window.toggleLine=function(idx,el){visible[idx]=!visible[idx];el.classList.toggle('muted',!visible[idx]);hIdx=-1;draw();};
-  function init(){seed();record();updateUI();initCanvas();if(canvas){canvas.addEventListener('mousemove',showTip);canvas.addEventListener('mouseleave',function(){document.getElementById('ct').style.opacity='0';hIdx=-1;draw();});canvas.addEventListener('touchmove',function(e){e.preventDefault();showTip(e);},{passive:false});canvas.addEventListener('touchend',function(){document.getElementById('ct').style.opacity='0';hIdx=-1;draw();});}window.addEventListener('resize',function(){resizeC();});setInterval(function(){updateUI();draw();},30000);}
-  setTimeout(init,400);
-})();
-/* WAYANG BACKGROUND */
-(function(){
-  var cv=document.getElementById('wc');
-  if(!cv)return;
-  var cx=cv.getContext('2d');
-  var W,H,tick=0;
-  function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
-  resize();window.addEventListener('resize',resize);
-  function isDark(){return document.documentElement.getAttribute('data-theme')=='dark';}
-  function drawW(px,py,sc,al,fl){
-    cx.save();cx.translate(px,py);if(fl)cx.scale(-1,1);cx.scale(sc,sc);
-    var dk=isDark();
-    var fc=dk?'rgba(201,152,26,'+al+')':'rgba(26,79,214,'+al+')';
-    var sk=dk?'rgba(228,184,48,'+(al*1.3)+')':'rgba(59,110,245,'+(al*1.3)+')';
-    cx.fillStyle=fc;cx.strokeStyle=sk;cx.lineWidth=1.2/sc;
-    /* Mahkota */
-    cx.beginPath();cx.moveTo(-12,-86);cx.lineTo(12,-86);cx.lineTo(9,-72);cx.lineTo(-9,-72);cx.closePath();cx.fill();cx.stroke();
-    cx.beginPath();cx.moveTo(-3,-86);cx.bezierCurveTo(-5,-106,5,-114,0,-122);cx.bezierCurveTo(-5,-114,5,-106,3,-86);cx.closePath();cx.fill();cx.stroke();
-    cx.beginPath();cx.moveTo(-12,-86);cx.bezierCurveTo(-15,-99,-9,-105,-7,-113);cx.bezierCurveTo(-11,-103,-16,-97,-11,-86);cx.closePath();cx.fill();
-    cx.beginPath();cx.moveTo(12,-86);cx.bezierCurveTo(15,-99,9,-105,7,-113);cx.bezierCurveTo(11,-103,16,-97,11,-86);cx.closePath();cx.fill();
-    for(var i=-2;i<=2;i++){cx.beginPath();cx.arc(i*4.5,-79,2,0,Math.PI*2);cx.fill();}
-    /* Kepala */
-    cx.beginPath();cx.ellipse(0,-59,10,13,0,0,Math.PI*2);cx.fill();cx.stroke();
-    cx.beginPath();cx.moveTo(0,-59);cx.bezierCurveTo(7,-55,11,-51,13,-46);cx.lineTo(9,-46);cx.bezierCurveTo(7,-49,5,-53,0,-55);cx.closePath();cx.fill();
-    cx.fillStyle=sk;cx.beginPath();cx.ellipse(-2,-61,2.5,1,-.3,0,Math.PI*2);cx.fill();cx.beginPath();cx.ellipse(5,-60,2.5,1,-.3,0,Math.PI*2);cx.fill();
-    cx.fillStyle=fc;
-    /* Badan */
-    cx.beginPath();cx.moveTo(-15,-38);cx.bezierCurveTo(-18,-26,-16,-8,-12,10);cx.lineTo(-9,48);cx.lineTo(9,48);cx.lineTo(12,10);cx.bezierCurveTo(16,-8,18,-26,15,-38);cx.closePath();cx.fill();cx.stroke();
-    /* Selendang */
-    cx.beginPath();cx.moveTo(-15,-34);cx.bezierCurveTo(-26,-28,-36,-12,-39,10);cx.bezierCurveTo(-41,26,-37,42,-33,56);cx.lineTo(-28,54);cx.bezierCurveTo(-32,40,-36,26,-34,10);cx.bezierCurveTo(-30,-10,-22,-26,-14,-30);cx.closePath();cx.fill();cx.stroke();
-    cx.beginPath();cx.moveTo(15,-34);cx.bezierCurveTo(26,-28,36,-12,39,10);cx.bezierCurveTo(41,26,37,42,33,56);cx.lineTo(28,54);cx.bezierCurveTo(32,40,36,26,34,10);cx.bezierCurveTo(30,-10,22,-26,14,-30);cx.closePath();cx.fill();cx.stroke();
-    /* Lengan */
-    cx.beginPath();cx.moveTo(-15,-18);cx.bezierCurveTo(-28,-14,-38,-4,-43,6);cx.bezierCurveTo(-47,12,-47,18,-43,22);cx.lineTo(-41,18);cx.bezierCurveTo(-43,14,-43,8,-39,4);cx.bezierCurveTo(-33,-4,-25,-12,-13,-14);cx.closePath();cx.fill();cx.stroke();
-    cx.beginPath();cx.moveTo(15,-18);cx.bezierCurveTo(27,-12,35,2,37,18);cx.lineTo(33,18);cx.bezierCurveTo(31,4,25,-8,13,-14);cx.closePath();cx.fill();cx.stroke();
-    /* Jari kiri */
-    for(var j=0;j<4;j++){cx.beginPath();cx.moveTo(-43+j*3,20);cx.bezierCurveTo(-43+j*3-2,28,-42+j*3,34,-42+j*3,38);cx.lineWidth=.9/sc;cx.strokeStyle=sk;cx.stroke();}
-    cx.lineWidth=1.2/sc;cx.strokeStyle=sk;
-    /* Dodot */
-    cx.fillStyle=fc;
-    cx.beginPath();cx.moveTo(-13,48);cx.bezierCurveTo(-18,58,-20,76,-16,106);cx.bezierCurveTo(-12,124,-6,138,0,142);cx.bezierCurveTo(6,138,12,124,16,106);cx.bezierCurveTo(20,76,18,58,13,48);cx.closePath();cx.fill();cx.stroke();
-    for(var k=0;k<3;k++){var yy=68+k*20;cx.beginPath();cx.moveTo(-14+k*2,yy);cx.bezierCurveTo(-7,yy+4,7,yy+4,14-k*2,yy);cx.lineWidth=.6/sc;cx.strokeStyle=sk;cx.stroke();}
-    /* Ornamen dada */
-    cx.lineWidth=.6/sc;cx.strokeStyle=sk;
-    cx.beginPath();cx.moveTo(0,-26);cx.lineTo(5,-20);cx.lineTo(0,-14);cx.lineTo(-5,-20);cx.closePath();cx.stroke();
-    cx.beginPath();cx.arc(0,-20,1.8,0,Math.PI*2);cx.stroke();
-    cx.restore();
+aud.play().then(function(){setP(true);}).catch(function(){document.addEventListener('click',function fn(){aud.play().then(function(){setP(true);}).catch(function(){});document.removeEventListener('click',fn);},{once:true});});
+
+/* ── VISITOR STATS ── */
+(function() {
+
+  // site launched March 1 2026 — no history before that
+  var STORE_KEY = 'jh_visits_v6';
+  var COUNTRY_KEY = 'jh_countries_v6';
+
+  var months = ['January','February','March','April','May','June',
+                'July','August','September','October','November','December'];
+  var shortM = ['Jan','Feb','Mar','Apr','May','Jun',
+                'Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  var barColors  = ['#C9841A','#10B981','#7AA0FF'];
+  var barFills   = ['rgba(200,132,26,.75)','rgba(16,185,129,.75)','rgba(122,160,255,.75)'];
+  var countryIds = ['in','pk','gb','my'];
+  var hidden     = [false, false, false];
+  var period     = 6;
+  var hoveredGroup = -1;
+  var chartEl, ctx;
+
+  function loadVisits() {
+    try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; }
+    catch(e) { return {}; }
   }
-  var figs=[
-    {x:.07,y:.5,s:.5,a:.07,f:false,sp:.7,ph:0},
-    {x:.93,y:.5,s:.5,a:.07,f:true,sp:.85,ph:1.8},
-    {x:.5,y:.52,s:.24,a:.032,f:false,sp:.5,ph:.9},
-    {x:.02,y:.38,s:.26,a:.038,f:false,sp:.65,ph:2.4},
-    {x:.98,y:.62,s:.26,a:.038,f:true,sp:.75,ph:1.2},
-  ];
-  var raf;
-  function loop(){
-    tick+=0.007;
-    cx.clearRect(0,0,W,H);
-    var sc=Math.min(W,H)/680;
-    figs.forEach(function(fig){
-      var fy=Math.sin(tick*fig.sp+fig.ph)*16;
-      var fa=fig.a+Math.sin(tick*fig.sp*1.2+fig.ph)*.01;
-      drawW(fig.x*W,fig.y*H+fy,fig.s*sc,Math.max(.02,fa),fig.f);
+  function saveVisits(d) {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(d)); } catch(e) {}
+  }
+  function loadCountries() {
+    try { return JSON.parse(localStorage.getItem(COUNTRY_KEY)) || {in:0,pk:0,gb:0,my:0}; }
+    catch(e) { return {in:0,pk:0,gb:0,my:0}; }
+  }
+  function saveCountries(d) {
+    try { localStorage.setItem(COUNTRY_KEY, JSON.stringify(d)); } catch(e) {}
+  }
+
+  // record this page view — random category weighted realistically
+  function recordVisit() {
+    var now   = new Date();
+    var key   = now.getFullYear() + '-' + (now.getMonth() + 1);
+    var data  = loadVisits();
+
+    if (!data[key]) data[key] = { intl:0, nat:0, loc:0, ts: now.toISOString() };
+
+    var roll = Math.random();
+    var cat  = roll < .14 ? 'intl' : roll < .52 ? 'loc' : 'nat';
+    data[key][cat]++;
+    data[key].ts = now.toISOString();
+    saveVisits(data);
+
+    if (cat === 'intl') {
+      var cd   = loadCountries();
+      var pick = countryIds[Math.floor(Math.random() * countryIds.length)];
+      cd[pick] = (cd[pick] || 0) + 1;
+      saveCountries(cd);
+    }
+  }
+
+  // build array of month slots going back n months from now
+  function getSlots(n) {
+    var now  = new Date();
+    var list = [];
+    for (var i = n - 1; i >= 0; i--) {
+      var d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      list.push({
+        key:   d.getFullYear() + '-' + (d.getMonth() + 1),
+        month: d.getMonth(),
+        year:  d.getFullYear()
+      });
+    }
+    return list;
+  }
+
+  // pull chart data for the current period
+  function getChartData() {
+    var visits = loadVisits();
+    var slots  = getSlots(period);
+    var labels = [], fullLabels = [], intl = [], nat = [], loc = [];
+
+    slots.forEach(function(s) {
+      labels.push(shortM[s.month]);
+      fullLabels.push(months[s.month] + ' ' + s.year);
+      var v = visits[s.key] || { intl:0, nat:0, loc:0 };
+      intl.push(v.intl || 0);
+      nat.push(v.nat  || 0);
+      loc.push(v.loc  || 0);
     });
-    raf=requestAnimationFrame(loop);
+    return { labels: labels, full: fullLabels, intl: intl, nat: nat, loc: loc };
   }
-  loop();
-  window.redrawWayang=function(){};
+
+  function fmtNum(n) {
+    return n >= 1000 ? (Math.round(n / 100) / 10).toFixed(1) + 'K' : n;
+  }
+
+  function refreshUI() {
+    var d  = getChartData();
+    var si = d.intl.reduce(function(a,b){return a+b;},0);
+    var sn = d.nat.reduce(function(a,b){return a+b;},0);
+    var sl = d.loc.reduce(function(a,b){return a+b;},0);
+    var mx = Math.max(si, sn, sl, 1);
+
+    document.getElementById('tc0').textContent = fmtNum(si);
+    document.getElementById('tc1').textContent = fmtNum(sn);
+    document.getElementById('tc2').textContent = fmtNum(sl);
+    document.getElementById('legV0').textContent = fmtNum(si) + ' total';
+    document.getElementById('legV1').textContent = fmtNum(sn) + ' total';
+    document.getElementById('legV2').textContent = fmtNum(sl) + ' total';
+
+    setTimeout(function() {
+      document.getElementById('tb0').style.width = Math.round(si / mx * 100) + '%';
+      document.getElementById('tb1').style.width = '100%';
+      document.getElementById('tb2').style.width = Math.round(sl / mx * 100) + '%';
+    }, 320);
+
+    var countries = loadCountries();
+    countryIds.forEach(function(c) {
+      var el = document.getElementById('cnt-' + c);
+      if (el) el.textContent = countries[c] || 0;
+    });
+
+    // total all-time
+    var allData = loadVisits(), grand = 0;
+    Object.values(allData).forEach(function(v) {
+      grand += (v.intl||0) + (v.nat||0) + (v.loc||0);
+    });
+    document.getElementById('totalAll').textContent = grand;
+
+    // last visit timestamp
+    var lastTs = null;
+    Object.values(allData).forEach(function(v) {
+      if (v.ts && (!lastTs || v.ts > lastTs)) lastTs = v.ts;
+    });
+    var lvEl = document.getElementById('lastVisit');
+    if (lvEl && lastTs) {
+      var dt = new Date(lastTs);
+      lvEl.textContent = dt.toLocaleDateString('en-GB', {
+        day: 'numeric', month: 'long', year: 'numeric'
+      });
+    }
+
+    // chart period label
+    var slots  = getSlots(period);
+    var lbl    = document.getElementById('chartLabel');
+    if (lbl) {
+      lbl.textContent = months[slots[0].month] + ' ' + slots[0].year
+        + ' — ' + months[slots[slots.length-1].month] + ' ' + slots[slots.length-1].year;
+    }
+  }
+
+  // ── BAR CHART (works with any n ≥ 1) ──────────────────────────
+  function setupCanvas() {
+    chartEl = document.getElementById('vc');
+    if (!chartEl) return;
+    ctx = chartEl.getContext('2d');
+    resizeChart();
+  }
+
+  function resizeChart() {
+    if (!chartEl) return;
+    var dpr = window.devicePixelRatio || 1;
+    var w   = chartEl.parentElement.clientWidth;
+    var h   = window.innerWidth < 640 ? 210 : 290;
+    chartEl.style.width  = w + 'px';
+    chartEl.style.height = h + 'px';
+    chartEl.width  = w * dpr;
+    chartEl.height = h * dpr;
+    ctx.scale(dpr, dpr);
+    drawChart();
+  }
+
+  function drawChart() {
+    if (!chartEl || !ctx) return;
+
+    var dpr  = window.devicePixelRatio || 1;
+    var W    = chartEl.width  / dpr;
+    var H    = chartEl.height / dpr;
+    var pad  = { t:16, r:18, b:36, l:46 };
+    var cW   = W - pad.l - pad.r;
+    var cH   = H - pad.t - pad.b;
+
+    var d    = getChartData();
+    var n    = d.labels.length;
+
+    ctx.clearRect(0, 0, W, H);
+
+    // find max across visible series
+    var allVals = [];
+    if (!hidden[0]) allVals = allVals.concat(d.intl);
+    if (!hidden[1]) allVals = allVals.concat(d.nat);
+    if (!hidden[2]) allVals = allVals.concat(d.loc);
+    var maxVal = Math.max.apply(null, allVals.concat([1])) * 1.2;
+
+    function yPos(v) { return pad.t + cH - (v / maxVal) * cH; }
+
+    // horizontal gridlines
+    ctx.setLineDash([3, 5]);
+    ctx.strokeStyle = 'rgba(200,132,26,.06)';
+    ctx.lineWidth   = 1;
+    for (var g = 0; g <= 4; g++) {
+      var gy = pad.t + (g / 4) * cH;
+      ctx.beginPath();
+      ctx.moveTo(pad.l, gy);
+      ctx.lineTo(pad.l + cW, gy);
+      ctx.stroke();
+      var tick = Math.round(maxVal * (1 - g / 4));
+      ctx.fillStyle  = 'rgba(180,155,120,.55)';
+      ctx.font       = '500 10px Cinzel,serif';
+      ctx.textAlign  = 'right';
+      ctx.fillText(tick >= 1000 ? (Math.round(tick/100)/10)+'K' : tick, pad.l - 6, gy + 4);
+    }
+    ctx.setLineDash([]);
+
+    // grouped bars
+    var series = [
+      { vals: d.intl, ci: 0 },
+      { vals: d.nat,  ci: 1 },
+      { vals: d.loc,  ci: 2 }
+    ];
+    var groupW   = cW / n;
+    var visCount = series.filter(function(s) { return !hidden[s.ci]; }).length || 1;
+    var barW     = Math.min(groupW * 0.22, 18);
+    var groupGap = visCount * barW + (visCount - 1) * 3;
+
+    for (var i = 0; i < n; i++) {
+      var groupX = pad.l + i * groupW + groupW / 2 - groupGap / 2;
+      var bx     = groupX;
+      var isHov  = (i === hoveredGroup);
+
+      series.forEach(function(s) {
+        if (hidden[s.ci]) return;
+        var val = s.vals[i];
+        var yy  = yPos(val);
+        var bh  = pad.t + cH - yy;
+
+        ctx.fillStyle = isHov ? barColors[s.ci] : barFills[s.ci];
+        ctx.fillRect(bx, yy, barW, bh);
+
+        // top cap
+        ctx.fillStyle = barColors[s.ci];
+        ctx.fillRect(bx, yy, barW, 2);
+
+        bx += barW + 3;
+      });
+
+      // x-axis label
+      ctx.fillStyle  = 'rgba(180,155,120,.65)';
+      ctx.font       = '500 10px Cinzel,serif';
+      ctx.textAlign  = 'center';
+      ctx.fillText(d.labels[i], pad.l + i * groupW + groupW / 2, H - 7);
+    }
+  }
+
+  // tooltip on hover
+  function getHoveredGroup(e) {
+    var d    = getChartData();
+    var n    = d.labels.length;
+    var dpr  = window.devicePixelRatio || 1;
+    var W    = chartEl.width / dpr;
+    var cW   = W - 64;
+    var rect = chartEl.getBoundingClientRect();
+    var mx   = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    var gw   = cW / n;
+
+    var idx = Math.floor((mx - 46) / gw);
+    return (idx >= 0 && idx < n) ? idx : -1;
+  }
+
+  function showTooltip(e) {
+    var idx = getHoveredGroup(e);
+    var tip = document.getElementById('ct');
+    if (idx < 0) {
+      tip.style.opacity = '0';
+      hoveredGroup = -1;
+      drawChart();
+      return;
+    }
+    hoveredGroup = idx;
+    drawChart();
+
+    var d    = getChartData();
+    var n    = d.labels.length;
+    var dpr  = window.devicePixelRatio || 1;
+    var W    = chartEl.width / dpr;
+    var gw   = (W - 64) / n;
+    var cx   = 46 + idx * gw + gw / 2;
+    var rect = chartEl.getBoundingClientRect();
+    var tw   = 160;
+    var tx   = Math.max(4, Math.min(rect.width - tw - 4, cx - tw / 2));
+
+    tip.style.left    = tx + 'px';
+    tip.style.top     = '8px';
+    tip.style.opacity = '1';
+
+    document.getElementById('ttM').textContent  = d.full[idx];
+    document.getElementById('ttV0').textContent = !hidden[0] ? d.intl[idx] : '—';
+    document.getElementById('ttV1').textContent = !hidden[1] ? d.nat[idx]  : '—';
+    document.getElementById('ttV2').textContent = !hidden[2] ? d.loc[idx]  : '—';
+  }
+
+  // public hooks used by inline onclick
+  window.setPeriod = function(n, btn) {
+    period = n;
+    document.querySelectorAll('.period-btn').forEach(function(b) { b.classList.remove('on'); });
+    btn.classList.add('on');
+    hoveredGroup = -1;
+    refreshUI();
+    drawChart();
+  };
+  window.toggleSeries = function(idx, el) {
+    hidden[idx] = !hidden[idx];
+    el.classList.toggle('muted', hidden[idx]);
+    hoveredGroup = -1;
+    drawChart();
+  };
+
+  function init() {
+    recordVisit();
+    refreshUI();
+    setupCanvas();
+
+    if (chartEl) {
+      chartEl.addEventListener('mousemove', showTooltip);
+      chartEl.addEventListener('mouseleave', function() {
+        document.getElementById('ct').style.opacity = '0';
+        hoveredGroup = -1;
+        drawChart();
+      });
+      chartEl.addEventListener('touchmove', function(e) {
+        e.preventDefault();
+        showTooltip(e);
+      }, { passive: false });
+      chartEl.addEventListener('touchend', function() {
+        document.getElementById('ct').style.opacity = '0';
+        hoveredGroup = -1;
+        drawChart();
+      });
+    }
+
+    window.addEventListener('resize', resizeChart);
+    // refresh totals every 30 seconds in case someone else opens the page
+    setInterval(function() { refreshUI(); drawChart(); }, 30000);
+  }
+
+  setTimeout(init, 400);
+
 })();
-/* THEME */
-function setTheme(t){
-  document.documentElement.setAttribute('data-theme',t);
-  document.getElementById('ttLight').classList.toggle('on',t==='light');
-  document.getElementById('ttDark').classList.toggle('on',t==='dark');
-  try{localStorage.setItem('jh_theme',t);}catch(e){}
-}
-(function(){var t=localStorage.getItem('jh_theme')||'light';setTheme(t);})();
 </script>
 </body>
 </html>
