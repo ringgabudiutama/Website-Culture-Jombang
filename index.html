@@ -136,7 +136,6 @@ section.alt{background:var(--sec2)}
 .art-card::after{content:'';position:absolute;inset:0;border:1px solid transparent;border-radius:1px;transition:border-color .4s;pointer-events:none;z-index:3}
 .art-card:hover{transform:translateY(-6px);box-shadow:var(--sh2)}
 .art-card:hover::after{border-color:var(--acc)}
-/* Corner ornament */
 .art-card-c{position:absolute;z-index:4;pointer-events:none;width:18px;height:18px}
 .art-card-c::before,.art-card-c::after{content:'';position:absolute;background:var(--acc2);opacity:0;transition:opacity .35s}
 .art-card-c::before{width:100%;height:1.5px}
@@ -306,7 +305,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;back
 .footer-bottom{border-top:1px solid var(--bdr2);max-width:1280px;margin:0 auto;padding:1.2rem 5vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.6rem}
 .fb-txt{font-family:'Cinzel',serif;font-size:.48rem;color:var(--ink3);letter-spacing:.08em}
 
-/* ═══════════════ THEME SWITCHER 3 ═══════════════ */
+/* ═══════════════ THEME SWITCHER ═══════════════ */
 .tt-wrap{position:fixed;bottom:1.5rem;right:1.5rem;z-index:800}
 .tt-pill{display:flex;border:1px solid var(--bdr);background:var(--card2);overflow:hidden;box-shadow:var(--sh)}
 .tt-btn{display:flex;align-items:center;gap:.38rem;padding:.52rem .88rem;border:none;background:transparent;cursor:pointer;font-family:'Cinzel',serif;font-size:.42rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);transition:all .22s;white-space:nowrap}
@@ -741,7 +740,7 @@ audio{display:none}
   </div>
 </div>
 
-<audio id="bgAudio" loop><source src="lagu11.mp3" type="audio/mpeg"></audio>
+<audio id="bgAudio" loop><source src="lagufik.mp3" type="audio/mpeg"></audio>
 
 <script>
 /* ── LOADER ── */
@@ -763,14 +762,13 @@ document.querySelectorAll('a,button').forEach(function(el){
   el.addEventListener('mouseleave',function(){curR.style.width='24px';curR.style.height='24px';});
 });
 
-/* ── BACKGROUND CANVAS (Cultural Patterns per Theme) ── */
+/* ── BACKGROUND CANVAS ── */
 (function(){
   var cv=document.getElementById('bgcv');
   if(!cv)return;
   var cx=cv.getContext('2d'),W,H,tick=0,raf;
   function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
   resize();window.addEventListener('resize',resize);
-
   function theme(){return document.documentElement.getAttribute('data-theme')||'kencono';}
   function col(a){
     var t=theme();
@@ -778,32 +776,22 @@ document.querySelectorAll('a,button').forEach(function(el){
     if(t==='samudra')return'rgba(59,110,245,'+a+')';
     return'rgba(155,116,32,'+a+')';
   }
-
-  /* KENCONO: Wayang silhouettes floating */
   function drawWayang(px,py,sc,al,flip){
     cx.save();cx.translate(px,py);if(flip)cx.scale(-1,1);cx.scale(sc,sc);
     cx.fillStyle=col(al);cx.strokeStyle=col(al*1.4);cx.lineWidth=1.2/sc;
-    /* Mahkota */
     cx.beginPath();cx.moveTo(-10,-82);cx.lineTo(10,-82);cx.lineTo(8,-70);cx.lineTo(-8,-70);cx.closePath();cx.fill();
     cx.beginPath();cx.moveTo(-2,-82);cx.bezierCurveTo(-4,-100,4,-108,0,-116);cx.bezierCurveTo(-4,-108,4,-100,2,-82);cx.closePath();cx.fill();
     cx.beginPath();cx.moveTo(-10,-82);cx.bezierCurveTo(-13,-94,-8,-100,-6,-108);cx.bezierCurveTo(-10,-98,-14,-92,-10,-82);cx.closePath();cx.fill();
     cx.beginPath();cx.moveTo(10,-82);cx.bezierCurveTo(13,-94,8,-100,6,-108);cx.bezierCurveTo(10,-98,14,-92,10,-82);cx.closePath();cx.fill();
-    /* Kepala */
     cx.beginPath();cx.ellipse(0,-56,9,12,0,0,Math.PI*2);cx.fill();
     cx.beginPath();cx.moveTo(0,-56);cx.bezierCurveTo(6,-52,10,-48,12,-44);cx.lineTo(8,-44);cx.bezierCurveTo(6,-47,4,-50,0,-52);cx.closePath();cx.fill();
-    /* Badan */
     cx.beginPath();cx.moveTo(-13,-36);cx.bezierCurveTo(-16,-24,-14,-6,-10,12);cx.lineTo(-8,46);cx.lineTo(8,46);cx.lineTo(10,12);cx.bezierCurveTo(14,-6,16,-24,13,-36);cx.closePath();cx.fill();
-    /* Selendang kiri */
     cx.beginPath();cx.moveTo(-13,-32);cx.bezierCurveTo(-24,-26,-33,-10,-36,10);cx.bezierCurveTo(-38,26,-34,40,-30,54);cx.lineTo(-26,52);cx.bezierCurveTo(-30,38,-34,24,-32,10);cx.bezierCurveTo(-28,-8,-20,-24,-12,-28);cx.closePath();cx.fill();
-    /* Lengan */
     cx.beginPath();cx.moveTo(-13,-16);cx.bezierCurveTo(-26,-12,-35,-2,-40,8);cx.bezierCurveTo(-44,14,-44,20,-40,23);cx.lineTo(-38,19);cx.bezierCurveTo(-40,13,-40,7,-36,3);cx.bezierCurveTo(-30,-4,-22,-10,-12,-12);cx.closePath();cx.fill();
     cx.beginPath();cx.moveTo(13,-16);cx.bezierCurveTo(26,-10,34,4,35,18);cx.lineTo(31,18);cx.bezierCurveTo(30,4,24,-7,12,-12);cx.closePath();cx.fill();
-    /* Dodot */
     cx.beginPath();cx.moveTo(-11,46);cx.bezierCurveTo(-16,56,-18,74,-14,102);cx.bezierCurveTo(-10,120,-5,134,0,138);cx.bezierCurveTo(5,134,10,120,14,102);cx.bezierCurveTo(18,74,16,56,11,46);cx.closePath();cx.fill();
     cx.restore();
   }
-
-  /* SAMUDRA: Parang batik diagonal pattern */
   function drawParang(){
     var spacing=60,c=col(.04);
     cx.strokeStyle=c;cx.lineWidth=1.5;
@@ -811,24 +799,17 @@ document.querySelectorAll('a,button').forEach(function(el){
     var step=spacing*1.414;
     for(var x=-step;x<W*1.5;x+=step){
       for(var y=-step;y<H*1.5;y+=spacing/2){
-        cx.beginPath();
-        cx.moveTo(x,y);
-        cx.bezierCurveTo(x+step*.25,y-spacing*.3,x+step*.75,y+spacing*.3,x+step,y);
-        cx.stroke();
+        cx.beginPath();cx.moveTo(x,y);cx.bezierCurveTo(x+step*.25,y-spacing*.3,x+step*.75,y+spacing*.3,x+step,y);cx.stroke();
       }
     }
     cx.restore();
     cx.fillStyle=col(.028);
     for(var xi=-step;xi<W*1.5;xi+=step){
       for(var yi=-step;yi<H*1.5;yi+=spacing){
-        cx.save();cx.translate(xi,yi);cx.rotate(-Math.PI/4);
-        cx.beginPath();cx.arc(0,0,4,0,Math.PI*2);cx.fill();
-        cx.restore();
+        cx.save();cx.translate(xi,yi);cx.rotate(-Math.PI/4);cx.beginPath();cx.arc(0,0,4,0,Math.PI*2);cx.fill();cx.restore();
       }
     }
   }
-
-  /* RIMBA: Kawung floral pattern */
   function drawKawung(){
     var s=65,pal=col(.035),pal2=col(.015);
     for(var xi=0;xi<W+s;xi+=s){
@@ -845,12 +826,10 @@ document.querySelectorAll('a,button').forEach(function(el){
     for(var xi2=0;xi2<W+s;xi2+=s){
       for(var yi2=0;yi2<H+s;yi2+=s){
         var ox2=(yi2/s%2===0)?0:s/2;
-        cx.beginPath();cx.arc(xi2+ox2,yi2,5.5,0,Math.PI*2);
-        cx.fill();
+        cx.beginPath();cx.arc(xi2+ox2,yi2,5.5,0,Math.PI*2);cx.fill();
       }
     }
   }
-
   var figs=[
     {x:.07,y:.5,sc:.48,al:.065,fl:false,sp:.7,ph:0},
     {x:.93,y:.5,sc:.48,al:.065,fl:true,sp:.85,ph:1.8},
@@ -858,10 +837,8 @@ document.querySelectorAll('a,button').forEach(function(el){
     {x:.02,y:.38,sc:.25,al:.036,fl:false,sp:.65,ph:2.4},
     {x:.98,y:.62,sc:.25,al:.036,fl:true,sp:.75,ph:1.2},
   ];
-
   function loop(){
-    tick+=0.006;
-    cx.clearRect(0,0,W,H);
+    tick+=0.006;cx.clearRect(0,0,W,H);
     var t=theme();
     if(t==='kencono'){
       var sc=Math.min(W,H)/680;
@@ -870,11 +847,8 @@ document.querySelectorAll('a,button').forEach(function(el){
         var fa=f.al+Math.sin(tick*f.sp*1.2+f.ph)*.008;
         drawWayang(f.x*W,f.y*H+fy,f.sc*sc,Math.max(.018,fa),f.fl);
       });
-    } else if(t==='samudra'){
-      drawParang();
-    } else {
-      drawKawung();
-    }
+    } else if(t==='samudra'){drawParang();}
+    else{drawKawung();}
     raf=requestAnimationFrame(loop);
   }
   loop();
@@ -931,17 +905,28 @@ function setP(p){mb.innerHTML=p?'&#9646;&#9646;':'&#9658;';mw.classList.toggle('
 mb.addEventListener('click',function(e){e.stopPropagation();if(pl){aud.pause();setP(false);}else{aud.play().then(function(){setP(true);}).catch(function(){});}});
 aud.play().then(function(){setP(true);}).catch(function(){document.addEventListener('click',function fn(){aud.play().then(function(){setP(true);}).catch(function(){});document.removeEventListener('click',fn);},{once:true});});
 
-/* ── VISITOR STATS ── */
+/* ══════════════════════════════════════════════════════════════
+   VISITOR STATS — FIXED v2
+   Perbaikan:
+   1. Nilai awal tetap: Internasional=52, Nasional=83, Lokal=120
+   2. ensureSeed() → diterapkan sekali per device, tidak pernah overwrite data yg lebih besar
+   3. loadVisits() → selalu menjamin floor BASE untuk bulan Maret 2026
+   4. recordVisit() → hanya menambah, tidak pernah reset
+   5. localStorage key baru (v7) agar bersih dari data lama yg rusak
+   ══════════════════════════════════════════════════════════════ */
 (function() {
 
-  // site launched March 1 2026 — no history before that
-  var STORE_KEY = 'jh_visits_v6';
-  var COUNTRY_KEY = 'jh_countries_v6';
+  var STORE_KEY   = 'jh_visits_v7';
+  var COUNTRY_KEY = 'jh_countries_v7';
+  var SEED_KEY    = 'jh_seeded_v2';
 
-  var months = ['January','February','March','April','May','June',
-                'July','August','September','October','November','December'];
-  var shortM = ['Jan','Feb','Mar','Apr','May','Jun',
-                'Jul','Aug','Sep','Oct','Nov','Dec'];
+  /* Nilai awal yang SELALU ada di tiap device baru — tidak pernah berkurang */
+  var BASE = { '2026-3': { intl: 52, nat: 83, loc: 120 } };
+
+  var months  = ['January','February','March','April','May','June',
+                 'July','August','September','October','November','December'];
+  var shortM  = ['Jan','Feb','Mar','Apr','May','Jun',
+                 'Jul','Aug','Sep','Oct','Nov','Dec'];
 
   var barColors  = ['#C9841A','#10B981','#7AA0FF'];
   var barFills   = ['rgba(200,132,26,.75)','rgba(16,185,129,.75)','rgba(122,160,255,.75)'];
@@ -951,7 +936,8 @@ aud.play().then(function(){setP(true);}).catch(function(){document.addEventListe
   var hoveredGroup = -1;
   var chartEl, ctx;
 
-  function loadVisits() {
+  /* ── Raw load/save ── */
+  function loadVisitsRaw() {
     try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; }
     catch(e) { return {}; }
   }
@@ -966,20 +952,50 @@ aud.play().then(function(){setP(true);}).catch(function(){document.addEventListe
     try { localStorage.setItem(COUNTRY_KEY, JSON.stringify(d)); } catch(e) {}
   }
 
-  // record this page view — random category weighted realistically
-  function recordVisit() {
-    var now   = new Date();
-    var key   = now.getFullYear() + '-' + (now.getMonth() + 1);
-    var data  = loadVisits();
+  /* ── Seed: terapkan BASE ke device baru (hanya SEKALI) ── */
+  function ensureSeed() {
+    if (localStorage.getItem(SEED_KEY)) return;
+    var data = loadVisitsRaw();
+    Object.keys(BASE).forEach(function(k) {
+      if (!data[k]) {
+        data[k] = { intl: BASE[k].intl, nat: BASE[k].nat, loc: BASE[k].loc,
+                    ts: new Date().toISOString() };
+      } else {
+        /* Ambil nilai terbesar — tidak pernah mengurangi data yang sudah ada */
+        data[k].intl = Math.max(data[k].intl || 0, BASE[k].intl);
+        data[k].nat  = Math.max(data[k].nat  || 0, BASE[k].nat);
+        data[k].loc  = Math.max(data[k].loc  || 0, BASE[k].loc);
+      }
+    });
+    saveVisits(data);
+    try { localStorage.setItem(SEED_KEY, '1'); } catch(e) {}
+  }
 
+  /* ── Load visits dengan jaminan floor BASE ── */
+  function loadVisits() {
+    var data = loadVisitsRaw();
+    var now  = new Date();
+    var key  = now.getFullYear() + '-' + (now.getMonth() + 1);
     if (!data[key]) data[key] = { intl:0, nat:0, loc:0, ts: now.toISOString() };
+    /* Terapkan floor BASE jika bulan ini ada di BASE */
+    if (BASE[key]) {
+      data[key].intl = Math.max(data[key].intl || 0, BASE[key].intl);
+      data[key].nat  = Math.max(data[key].nat  || 0, BASE[key].nat);
+      data[key].loc  = Math.max(data[key].loc  || 0, BASE[key].loc);
+    }
+    return data;
+  }
 
+  /* ── Catat kunjungan ini (selalu +1, tidak pernah reset) ── */
+  function recordVisit() {
+    var now  = new Date();
+    var key  = now.getFullYear() + '-' + (now.getMonth() + 1);
+    var data = loadVisits();
     var roll = Math.random();
     var cat  = roll < .14 ? 'intl' : roll < .52 ? 'loc' : 'nat';
-    data[key][cat]++;
-    data[key].ts = now.toISOString();
+    data[key][cat] = (data[key][cat] || 0) + 1;
+    data[key].ts   = now.toISOString();
     saveVisits(data);
-
     if (cat === 'intl') {
       var cd   = loadCountries();
       var pick = countryIds[Math.floor(Math.random() * countryIds.length)];
@@ -988,27 +1004,22 @@ aud.play().then(function(){setP(true);}).catch(function(){document.addEventListe
     }
   }
 
-  // build array of month slots going back n months from now
+  /* ── Build month slots ── */
   function getSlots(n) {
     var now  = new Date();
     var list = [];
     for (var i = n - 1; i >= 0; i--) {
       var d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-      list.push({
-        key:   d.getFullYear() + '-' + (d.getMonth() + 1),
-        month: d.getMonth(),
-        year:  d.getFullYear()
-      });
+      list.push({ key: d.getFullYear()+'-'+(d.getMonth()+1),
+                  month: d.getMonth(), year: d.getFullYear() });
     }
     return list;
   }
 
-  // pull chart data for the current period
   function getChartData() {
     var visits = loadVisits();
     var slots  = getSlots(period);
     var labels = [], fullLabels = [], intl = [], nat = [], loc = [];
-
     slots.forEach(function(s) {
       labels.push(shortM[s.month]);
       fullLabels.push(months[s.month] + ' ' + s.year);
@@ -1017,11 +1028,11 @@ aud.play().then(function(){setP(true);}).catch(function(){document.addEventListe
       nat.push(v.nat  || 0);
       loc.push(v.loc  || 0);
     });
-    return { labels: labels, full: fullLabels, intl: intl, nat: nat, loc: loc };
+    return { labels:labels, full:fullLabels, intl:intl, nat:nat, loc:loc };
   }
 
   function fmtNum(n) {
-    return n >= 1000 ? (Math.round(n / 100) / 10).toFixed(1) + 'K' : n;
+    return n >= 1000 ? (Math.round(n/100)/10).toFixed(1)+'K' : n;
   }
 
   function refreshUI() {
@@ -1034,30 +1045,26 @@ aud.play().then(function(){setP(true);}).catch(function(){document.addEventListe
     document.getElementById('tc0').textContent = fmtNum(si);
     document.getElementById('tc1').textContent = fmtNum(sn);
     document.getElementById('tc2').textContent = fmtNum(sl);
-    document.getElementById('legV0').textContent = fmtNum(si) + ' total';
-    document.getElementById('legV1').textContent = fmtNum(sn) + ' total';
-    document.getElementById('legV2').textContent = fmtNum(sl) + ' total';
+    document.getElementById('legV0').textContent = fmtNum(si)+' total';
+    document.getElementById('legV1').textContent = fmtNum(sn)+' total';
+    document.getElementById('legV2').textContent = fmtNum(sl)+' total';
 
     setTimeout(function() {
-      document.getElementById('tb0').style.width = Math.round(si / mx * 100) + '%';
+      document.getElementById('tb0').style.width = Math.round(si/mx*100)+'%';
       document.getElementById('tb1').style.width = '100%';
-      document.getElementById('tb2').style.width = Math.round(sl / mx * 100) + '%';
+      document.getElementById('tb2').style.width = Math.round(sl/mx*100)+'%';
     }, 320);
 
     var countries = loadCountries();
     countryIds.forEach(function(c) {
-      var el = document.getElementById('cnt-' + c);
+      var el = document.getElementById('cnt-'+c);
       if (el) el.textContent = countries[c] || 0;
     });
 
-    // total all-time
-    var allData = loadVisits(), grand = 0;
-    Object.values(allData).forEach(function(v) {
-      grand += (v.intl||0) + (v.nat||0) + (v.loc||0);
-    });
+    var allData = loadVisitsRaw(), grand = 0;
+    Object.values(allData).forEach(function(v) { grand += (v.intl||0)+(v.nat||0)+(v.loc||0); });
     document.getElementById('totalAll').textContent = grand;
 
-    // last visit timestamp
     var lastTs = null;
     Object.values(allData).forEach(function(v) {
       if (v.ts && (!lastTs || v.ts > lastTs)) lastTs = v.ts;
@@ -1065,21 +1072,18 @@ aud.play().then(function(){setP(true);}).catch(function(){document.addEventListe
     var lvEl = document.getElementById('lastVisit');
     if (lvEl && lastTs) {
       var dt = new Date(lastTs);
-      lvEl.textContent = dt.toLocaleDateString('en-GB', {
-        day: 'numeric', month: 'long', year: 'numeric'
-      });
+      lvEl.textContent = dt.toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
     }
 
-    // chart period label
-    var slots  = getSlots(period);
-    var lbl    = document.getElementById('chartLabel');
+    var slots = getSlots(period);
+    var lbl   = document.getElementById('chartLabel');
     if (lbl) {
-      lbl.textContent = months[slots[0].month] + ' ' + slots[0].year
-        + ' — ' + months[slots[slots.length-1].month] + ' ' + slots[slots.length-1].year;
+      lbl.textContent = months[slots[0].month]+' '+slots[0].year+' — '
+        +months[slots[slots.length-1].month]+' '+slots[slots.length-1].year;
     }
   }
 
-  // ── BAR CHART (works with any n ≥ 1) ──────────────────────────
+  /* ── Bar Chart ── */
   function setupCanvas() {
     chartEl = document.getElementById('vc');
     if (!chartEl) return;
@@ -1092,188 +1096,117 @@ aud.play().then(function(){setP(true);}).catch(function(){document.addEventListe
     var dpr = window.devicePixelRatio || 1;
     var w   = chartEl.parentElement.clientWidth;
     var h   = window.innerWidth < 640 ? 210 : 290;
-    chartEl.style.width  = w + 'px';
-    chartEl.style.height = h + 'px';
-    chartEl.width  = w * dpr;
-    chartEl.height = h * dpr;
-    ctx.scale(dpr, dpr);
+    chartEl.style.width  = w+'px';
+    chartEl.style.height = h+'px';
+    chartEl.width  = w*dpr;
+    chartEl.height = h*dpr;
+    ctx.scale(dpr,dpr);
     drawChart();
   }
 
   function drawChart() {
     if (!chartEl || !ctx) return;
-
     var dpr  = window.devicePixelRatio || 1;
-    var W    = chartEl.width  / dpr;
-    var H    = chartEl.height / dpr;
-    var pad  = { t:16, r:18, b:36, l:46 };
-    var cW   = W - pad.l - pad.r;
-    var cH   = H - pad.t - pad.b;
-
+    var W    = chartEl.width/dpr;
+    var H    = chartEl.height/dpr;
+    var pad  = {t:16,r:18,b:36,l:46};
+    var cW   = W-pad.l-pad.r;
+    var cH   = H-pad.t-pad.b;
     var d    = getChartData();
     var n    = d.labels.length;
-
-    ctx.clearRect(0, 0, W, H);
-
-    // find max across visible series
+    ctx.clearRect(0,0,W,H);
     var allVals = [];
     if (!hidden[0]) allVals = allVals.concat(d.intl);
     if (!hidden[1]) allVals = allVals.concat(d.nat);
     if (!hidden[2]) allVals = allVals.concat(d.loc);
-    var maxVal = Math.max.apply(null, allVals.concat([1])) * 1.2;
-
-    function yPos(v) { return pad.t + cH - (v / maxVal) * cH; }
-
-    // horizontal gridlines
-    ctx.setLineDash([3, 5]);
-    ctx.strokeStyle = 'rgba(200,132,26,.06)';
-    ctx.lineWidth   = 1;
-    for (var g = 0; g <= 4; g++) {
-      var gy = pad.t + (g / 4) * cH;
-      ctx.beginPath();
-      ctx.moveTo(pad.l, gy);
-      ctx.lineTo(pad.l + cW, gy);
-      ctx.stroke();
-      var tick = Math.round(maxVal * (1 - g / 4));
-      ctx.fillStyle  = 'rgba(180,155,120,.55)';
-      ctx.font       = '500 10px Cinzel,serif';
-      ctx.textAlign  = 'right';
-      ctx.fillText(tick >= 1000 ? (Math.round(tick/100)/10)+'K' : tick, pad.l - 6, gy + 4);
+    var maxVal = Math.max.apply(null, allVals.concat([1]))*1.2;
+    function yPos(v){return pad.t+cH-(v/maxVal)*cH;}
+    ctx.setLineDash([3,5]);
+    ctx.strokeStyle='rgba(200,132,26,.06)';ctx.lineWidth=1;
+    for(var g=0;g<=4;g++){
+      var gy=pad.t+(g/4)*cH;
+      ctx.beginPath();ctx.moveTo(pad.l,gy);ctx.lineTo(pad.l+cW,gy);ctx.stroke();
+      var tick=Math.round(maxVal*(1-g/4));
+      ctx.fillStyle='rgba(180,155,120,.55)';ctx.font='500 10px Cinzel,serif';ctx.textAlign='right';
+      ctx.fillText(tick>=1000?(Math.round(tick/100)/10)+'K':tick,pad.l-6,gy+4);
     }
     ctx.setLineDash([]);
-
-    // grouped bars
-    var series = [
-      { vals: d.intl, ci: 0 },
-      { vals: d.nat,  ci: 1 },
-      { vals: d.loc,  ci: 2 }
-    ];
-    var groupW   = cW / n;
-    var visCount = series.filter(function(s) { return !hidden[s.ci]; }).length || 1;
-    var barW     = Math.min(groupW * 0.22, 18);
-    var groupGap = visCount * barW + (visCount - 1) * 3;
-
-    for (var i = 0; i < n; i++) {
-      var groupX = pad.l + i * groupW + groupW / 2 - groupGap / 2;
-      var bx     = groupX;
-      var isHov  = (i === hoveredGroup);
-
-      series.forEach(function(s) {
-        if (hidden[s.ci]) return;
-        var val = s.vals[i];
-        var yy  = yPos(val);
-        var bh  = pad.t + cH - yy;
-
-        ctx.fillStyle = isHov ? barColors[s.ci] : barFills[s.ci];
-        ctx.fillRect(bx, yy, barW, bh);
-
-        // top cap
-        ctx.fillStyle = barColors[s.ci];
-        ctx.fillRect(bx, yy, barW, 2);
-
-        bx += barW + 3;
+    var series=[{vals:d.intl,ci:0},{vals:d.nat,ci:1},{vals:d.loc,ci:2}];
+    var groupW=cW/n;
+    var visCount=series.filter(function(s){return !hidden[s.ci];}).length||1;
+    var barW=Math.min(groupW*0.22,18);
+    var groupGap=visCount*barW+(visCount-1)*3;
+    for(var i=0;i<n;i++){
+      var groupX=pad.l+i*groupW+groupW/2-groupGap/2;
+      var bx=groupX;
+      var isHov=(i===hoveredGroup);
+      series.forEach(function(s){
+        if(hidden[s.ci])return;
+        var val=s.vals[i],yy=yPos(val),bh=pad.t+cH-yy;
+        ctx.fillStyle=isHov?barColors[s.ci]:barFills[s.ci];
+        ctx.fillRect(bx,yy,barW,bh);
+        ctx.fillStyle=barColors[s.ci];ctx.fillRect(bx,yy,barW,2);
+        bx+=barW+3;
       });
-
-      // x-axis label
-      ctx.fillStyle  = 'rgba(180,155,120,.65)';
-      ctx.font       = '500 10px Cinzel,serif';
-      ctx.textAlign  = 'center';
-      ctx.fillText(d.labels[i], pad.l + i * groupW + groupW / 2, H - 7);
+      ctx.fillStyle='rgba(180,155,120,.65)';ctx.font='500 10px Cinzel,serif';ctx.textAlign='center';
+      ctx.fillText(d.labels[i],pad.l+i*groupW+groupW/2,H-7);
     }
   }
 
-  // tooltip on hover
-  function getHoveredGroup(e) {
-    var d    = getChartData();
-    var n    = d.labels.length;
-    var dpr  = window.devicePixelRatio || 1;
-    var W    = chartEl.width / dpr;
-    var cW   = W - 64;
-    var rect = chartEl.getBoundingClientRect();
-    var mx   = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-    var gw   = cW / n;
-
-    var idx = Math.floor((mx - 46) / gw);
-    return (idx >= 0 && idx < n) ? idx : -1;
+  function getHoveredGroup(e){
+    var d=getChartData(),n=d.labels.length;
+    var dpr=window.devicePixelRatio||1,W=chartEl.width/dpr,cW=W-64;
+    var rect=chartEl.getBoundingClientRect();
+    var mx=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
+    var idx=Math.floor((mx-46)/(cW/n));
+    return(idx>=0&&idx<n)?idx:-1;
   }
 
-  function showTooltip(e) {
-    var idx = getHoveredGroup(e);
-    var tip = document.getElementById('ct');
-    if (idx < 0) {
-      tip.style.opacity = '0';
-      hoveredGroup = -1;
-      drawChart();
-      return;
-    }
-    hoveredGroup = idx;
-    drawChart();
-
-    var d    = getChartData();
-    var n    = d.labels.length;
-    var dpr  = window.devicePixelRatio || 1;
-    var W    = chartEl.width / dpr;
-    var gw   = (W - 64) / n;
-    var cx   = 46 + idx * gw + gw / 2;
-    var rect = chartEl.getBoundingClientRect();
-    var tw   = 160;
-    var tx   = Math.max(4, Math.min(rect.width - tw - 4, cx - tw / 2));
-
-    tip.style.left    = tx + 'px';
-    tip.style.top     = '8px';
-    tip.style.opacity = '1';
-
-    document.getElementById('ttM').textContent  = d.full[idx];
-    document.getElementById('ttV0').textContent = !hidden[0] ? d.intl[idx] : '—';
-    document.getElementById('ttV1').textContent = !hidden[1] ? d.nat[idx]  : '—';
-    document.getElementById('ttV2').textContent = !hidden[2] ? d.loc[idx]  : '—';
+  function showTooltip(e){
+    var idx=getHoveredGroup(e),tip=document.getElementById('ct');
+    if(idx<0){tip.style.opacity='0';hoveredGroup=-1;drawChart();return;}
+    hoveredGroup=idx;drawChart();
+    var d=getChartData(),n=d.labels.length;
+    var dpr=window.devicePixelRatio||1,W=chartEl.width/dpr;
+    var gw=(W-64)/n,cxp=46+idx*gw+gw/2;
+    var rect=chartEl.getBoundingClientRect(),tw=160;
+    var tx=Math.max(4,Math.min(rect.width-tw-4,cxp-tw/2));
+    tip.style.left=tx+'px';tip.style.top='8px';tip.style.opacity='1';
+    document.getElementById('ttM').textContent=d.full[idx];
+    document.getElementById('ttV0').textContent=!hidden[0]?d.intl[idx]:'—';
+    document.getElementById('ttV1').textContent=!hidden[1]?d.nat[idx]:'—';
+    document.getElementById('ttV2').textContent=!hidden[2]?d.loc[idx]:'—';
   }
 
-  // public hooks used by inline onclick
-  window.setPeriod = function(n, btn) {
-    period = n;
-    document.querySelectorAll('.period-btn').forEach(function(b) { b.classList.remove('on'); });
-    btn.classList.add('on');
-    hoveredGroup = -1;
-    refreshUI();
-    drawChart();
+  window.setPeriod=function(n,btn){
+    period=n;
+    document.querySelectorAll('.period-btn').forEach(function(b){b.classList.remove('on');});
+    btn.classList.add('on');hoveredGroup=-1;refreshUI();drawChart();
   };
-  window.toggleSeries = function(idx, el) {
-    hidden[idx] = !hidden[idx];
-    el.classList.toggle('muted', hidden[idx]);
-    hoveredGroup = -1;
-    drawChart();
+  window.toggleSeries=function(idx,el){
+    hidden[idx]=!hidden[idx];el.classList.toggle('muted',hidden[idx]);hoveredGroup=-1;drawChart();
   };
 
-  function init() {
-    recordVisit();
+  function init(){
+    ensureSeed();    /* ← Langkah 1: tanam nilai awal 52/83/120 sekali di device ini */
+    recordVisit();   /* ← Langkah 2: catat kunjungan ini (+1, selalu naik) */
     refreshUI();
     setupCanvas();
-
-    if (chartEl) {
-      chartEl.addEventListener('mousemove', showTooltip);
-      chartEl.addEventListener('mouseleave', function() {
-        document.getElementById('ct').style.opacity = '0';
-        hoveredGroup = -1;
-        drawChart();
+    if(chartEl){
+      chartEl.addEventListener('mousemove',showTooltip);
+      chartEl.addEventListener('mouseleave',function(){
+        document.getElementById('ct').style.opacity='0';hoveredGroup=-1;drawChart();
       });
-      chartEl.addEventListener('touchmove', function(e) {
-        e.preventDefault();
-        showTooltip(e);
-      }, { passive: false });
-      chartEl.addEventListener('touchend', function() {
-        document.getElementById('ct').style.opacity = '0';
-        hoveredGroup = -1;
-        drawChart();
+      chartEl.addEventListener('touchmove',function(e){e.preventDefault();showTooltip(e);},{passive:false});
+      chartEl.addEventListener('touchend',function(){
+        document.getElementById('ct').style.opacity='0';hoveredGroup=-1;drawChart();
       });
     }
-
-    window.addEventListener('resize', resizeChart);
-    // refresh totals every 30 seconds in case someone else opens the page
-    setInterval(function() { refreshUI(); drawChart(); }, 30000);
+    window.addEventListener('resize',resizeChart);
+    setInterval(function(){refreshUI();drawChart();},30000);
   }
 
-  setTimeout(init, 400);
+  setTimeout(init,400);
 
 })();
 </script>
