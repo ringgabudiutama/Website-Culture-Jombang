@@ -221,45 +221,66 @@ section.alt{background:var(--sec2)}
 .t-gem{width:4px;height:4px;background:var(--acc2);transform:rotate(45deg);flex-shrink:0}
 @keyframes tickR{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* ═══════════════ STATS CHART ═══════════════ */
-.chart-wrap{background:var(--card2);border:1px solid var(--bdr);padding:2.4rem 2rem 2rem;position:relative;overflow:hidden}
-.chart-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad)}
-.chart-header{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1.2rem;margin-bottom:1.8rem}
-.chart-meta h3{font-family:'Cinzel',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.25rem;letter-spacing:.04em}
-.chart-meta p{font-size:.7rem;color:var(--ink3)}
-.chart-period{display:flex;gap:.35rem;flex-wrap:wrap}
-.period-btn{font-family:'Cinzel',serif;font-size:.46rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.32rem .8rem;border:1px solid var(--bdr);background:var(--card);color:var(--ink3);cursor:pointer;transition:all .22s}
-.period-btn.on{background:var(--acc);border-color:var(--acc);color:#000}
-.period-btn:hover:not(.on){border-color:var(--acc);color:var(--acc2)}
-.chart-legend{display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:1.4rem}
-.leg-item{display:flex;align-items:center;gap:.5rem;cursor:pointer;padding:.26rem .62rem;border:1px solid transparent;transition:all .2s}
-.leg-item:hover{background:var(--tag);border-color:var(--bdr)}
-.leg-item.muted{opacity:.3}
-.leg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
-.leg-label{font-family:'Cinzel',serif;font-size:.58rem;font-weight:600;color:var(--ink2);letter-spacing:.04em}
-.leg-val{font-size:.58rem;color:var(--ink3)}
-canvas#vc{width:100%;height:290px;display:block}
-@media(max-width:640px){canvas#vc{height:210px}}
-#ct{position:absolute;pointer-events:none;z-index:10;background:var(--card2);color:var(--ink);border:1px solid var(--bdr);padding:.7rem 1rem;font-size:.7rem;box-shadow:var(--sh);opacity:0;transition:opacity .18s;min-width:140px;white-space:nowrap}
-#ct .ttm{font-size:.58rem;color:var(--ink3);margin-bottom:.4rem;letter-spacing:.1em;text-transform:uppercase}
-#ct .ttr{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:.2rem}
-#ct .ttd{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-#ct .ttn{font-weight:700;font-size:.66rem}
-.chart-totals{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.4rem}
-@media(max-width:480px){.chart-totals{grid-template-columns:1fr}}
-.total-card{padding:1.1rem 1.2rem;border:1px solid var(--bdr);background:var(--card);transition:all .25s}
-.total-card:hover{box-shadow:var(--sh);border-color:var(--acc)}
-.tc-top{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem}
-.tc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.tc-lbl{font-family:'Cinzel',serif;font-size:.48rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
-.tc-num{font-family:'Cinzel',serif;font-size:1.75rem;font-weight:700;color:var(--ink);line-height:1;margin-bottom:.2rem}
-.tc-sub{font-size:.6rem;color:var(--ink3)}
-.tc-bar{height:2px;background:var(--bdr2);margin-top:.8rem;overflow:hidden}
-.tc-fill{height:100%;width:0;transition:width 1.4s cubic-bezier(.4,0,.2,1)}
-.country-row{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.4rem;align-items:center}
-.ctag2{display:flex;align-items:center;gap:.36rem;font-size:.58rem;font-weight:500;color:var(--ink2);padding:.26rem .72rem;border:1px solid var(--bdr);background:var(--card);transition:all .2s}
-.ctag2:hover{border-color:var(--acc);background:var(--tag);color:var(--acc2)}
-.crow-lbl{font-family:'Cinzel',serif;font-size:.46rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3);margin-right:.2rem}
+/* ═══════════════ VISITOR STAT TRIO ═══════════════ */
+.stat-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;margin-bottom:1.6rem}
+@media(max-width:900px){.stat-trio{grid-template-columns:1fr}}
+
+.stat-block{position:relative;border:1px solid var(--bdr);background:var(--card2);padding:2.6rem 2.2rem 2.2rem;overflow:hidden;transition:transform .4s cubic-bezier(.4,0,.2,1),box-shadow .4s}
+.stat-block::after{content:'';position:absolute;inset:0;border:1px solid transparent;transition:border-color .4s;pointer-events:none}
+.stat-block:hover{transform:translateY(-6px);box-shadow:var(--sh2)}
+.stat-block:hover::after{border-color:var(--acc)}
+.stat-block::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.stat-block.sb-intl::before{background:linear-gradient(90deg,#C9841A,#F0D070)}
+.stat-block.sb-nat::before{background:linear-gradient(90deg,#10B981,#34D399)}
+.stat-block.sb-loc::before{background:linear-gradient(90deg,#7AA0FF,#B8D0FF)}
+
+/* Corner ornaments */
+.sbc{position:absolute;width:20px;height:20px;pointer-events:none}
+.sbc::before,.sbc::after{content:'';position:absolute;opacity:0;transition:opacity .35s}
+.sbc::before{width:100%;height:1.5px}.sbc::after{width:1.5px;height:100%}
+.stat-block:hover .sbc::before,.stat-block:hover .sbc::after{opacity:1}
+.sbc.tl{top:10px;left:10px}
+.sbc.tl::before,.sbc.tl::after{top:0;left:0;background:var(--acc2)}
+.sbc.br{bottom:10px;right:10px}
+.sbc.br::before,.sbc.br::after{bottom:0;right:0;background:var(--acc2)}
+
+.sb-eyebrow{display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem}
+.sb-eline{flex:1;height:1px;background:var(--bdr)}
+.sb-cat{font-family:'Cinzel',serif;font-size:.44rem;font-weight:700;letter-spacing:.5em;text-transform:uppercase;flex-shrink:0}
+.stat-block.sb-intl .sb-cat{color:#C9841A}
+.stat-block.sb-nat .sb-cat{color:#10B981}
+.stat-block.sb-loc .sb-cat{color:#7AA0FF}
+
+.sb-num{font-family:'Cinzel',serif;font-size:clamp(3rem,5.5vw,5rem);font-weight:900;line-height:1;letter-spacing:-.02em;margin:.2rem 0 .75rem}
+.stat-block.sb-intl .sb-num{color:#E8B84B}
+.stat-block.sb-nat .sb-num{color:#34D399}
+.stat-block.sb-loc .sb-num{color:#93B7FF}
+
+.sb-prog{height:2px;background:var(--bdr2);margin-bottom:.8rem;overflow:hidden;border-radius:1px}
+.sb-fill{height:100%;width:0;transition:width 1.8s cubic-bezier(.4,0,.2,1);border-radius:1px}
+.stat-block.sb-intl .sb-fill{background:linear-gradient(90deg,#C9841A,#F0D070)}
+.stat-block.sb-nat .sb-fill{background:linear-gradient(90deg,#10B981,#34D399)}
+.stat-block.sb-loc .sb-fill{background:linear-gradient(90deg,#7AA0FF,#B8D0FF)}
+
+.sb-pct{font-family:'Cinzel',serif;font-size:.52rem;font-weight:700;letter-spacing:.08em;display:block;margin-bottom:.7rem}
+.stat-block.sb-intl .sb-pct{color:#C9841A}
+.stat-block.sb-nat .sb-pct{color:#10B981}
+.stat-block.sb-loc .sb-pct{color:#7AA0FF}
+
+.sb-desc{font-family:'Cormorant Garamond',serif;font-size:.88rem;line-height:1.78;color:var(--ink3);border-top:1px solid var(--bdr2);padding-top:.8rem}
+
+/* Stat Footer */
+.stat-footer{display:flex;align-items:center;gap:2rem;padding:1.6rem 2.4rem;border:1px solid var(--bdr);background:var(--card);flex-wrap:wrap;justify-content:space-between;position:relative;overflow:hidden}
+.stat-footer::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--grad);opacity:.3}
+.sf-grand{display:flex;flex-direction:column}
+.sf-grand-num{font-family:'Cinzel',serif;font-size:3rem;font-weight:900;color:var(--acc2);line-height:1;display:block;letter-spacing:-.02em}
+.sf-grand-lbl{font-family:'Cinzel',serif;font-size:.4rem;letter-spacing:.44em;text-transform:uppercase;color:var(--ink3);margin-top:.3rem;display:block}
+.sf-vsep{width:1px;align-self:stretch;background:var(--bdr);flex-shrink:0}
+.sf-meta{font-size:.68rem;color:var(--ink3);line-height:2.2}
+.sf-meta strong{color:var(--acc2);font-weight:700}
+@media(max-width:700px){.stat-trio{grid-template-columns:1fr}.sf-vsep{display:none}.stat-footer{justify-content:center;text-align:center}.sf-grand{align-items:center}}
+
+/* Live badge */
 .live-badge{display:inline-flex;align-items:center;gap:.4rem;font-family:'Cinzel',serif;font-size:.48rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#10B981;padding:.28rem .82rem;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2)}
 .ld2{width:6px;height:6px;border-radius:50%;background:#10B981;animation:pls 1.5s ease-in-out infinite;display:inline-block}
 @keyframes pls{0%,100%{opacity:1}50%{opacity:.22}}
@@ -443,42 +464,77 @@ audio{display:none}
 <section id="statistik" class="alt">
   <div class="sw">
     <div class="s-head rv">
-      <div class="s-chap"><div class="s-chap-line"></div><span class="s-chap-lbl">Real-Time Data · Analytics</span><div class="s-chap-line r"></div></div>
+      <div class="s-chap"><div class="s-chap-line"></div><span class="s-chap-lbl">Real-Time · Live Counter</span><div class="s-chap-line r"></div></div>
       <h2 class="s-title">Visitor <em>Statistics</em></h2>
-      <p class="s-sub">Every visit is tracked automatically from launch day — March 1, 2026. Data refreshes in real time by visitor origin.</p>
+      <p class="s-sub">Every visit recorded automatically since launch — 1 March 2026. Counter updates live with each new visitor.</p>
       <div class="s-gem-row"><div class="s-gem-line"></div><div class="s-gem"></div><div class="s-gem-line"></div></div>
     </div>
-    <div class="rv d1">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.8rem">
-        <p style="font-size:.8rem;color:var(--ink3)" id="chartLabel">Loading data...</p>
-        <div class="live-badge"><span class="ld2"></span>Live · Updated on every visit</div>
+
+    <div style="display:flex;align-items:center;justify-content:flex-end;margin-bottom:1.8rem" class="rv">
+      <div class="live-badge"><span class="ld2"></span>Live · Updated on every visit</div>
+    </div>
+
+    <!-- THREE BIG COUNTERS -->
+    <div class="stat-trio rv d1">
+
+      <!-- INTERNATIONAL -->
+      <div class="stat-block sb-intl">
+        <div class="sbc tl"></div><div class="sbc br"></div>
+        <div class="sb-eyebrow">
+          <div class="sb-eline"></div>
+          <span class="sb-cat">International</span>
+          <div class="sb-eline"></div>
+        </div>
+        <div class="sb-num" id="cnt-intl">0</div>
+        <div class="sb-prog"><div class="sb-fill" id="bar-intl"></div></div>
+        <span class="sb-pct" id="pct-intl">— % of total</span>
+        <p class="sb-desc">Visitors from outside Indonesia &mdash; India, Pakistan, United Kingdom, Malaysia &amp; beyond.</p>
       </div>
-      <div class="chart-wrap">
-        <div class="chart-header">
-          <div class="chart-meta"><h3>Visitor Access Chart</h3><p>International · National · Local East Java</p></div>
-          <div style="display:flex;align-items:center;gap:.8rem;flex-wrap:wrap">
-            <div class="chart-period">
-              <button class="period-btn on" onclick="setPeriod(6,this)">6 Months</button>
-              <button class="period-btn" onclick="setPeriod(3,this)">3 Months</button>
-              <button class="period-btn" onclick="setPeriod(1,this)">This Month</button>
-            </div>
-          </div>
+
+      <!-- NATIONAL -->
+      <div class="stat-block sb-nat">
+        <div class="sbc tl"></div><div class="sbc br"></div>
+        <div class="sb-eyebrow">
+          <div class="sb-eline"></div>
+          <span class="sb-cat">National</span>
+          <div class="sb-eline"></div>
         </div>
-        <div class="chart-legend">
-          <div class="leg-item" onclick="toggleSeries(0,this)" id="leg0"><div class="leg-dot" style="background:#C9841A"></div><span class="leg-label">International</span><span class="leg-val" id="legV0">0 total</span></div>
-          <div class="leg-item" onclick="toggleSeries(1,this)" id="leg1"><div class="leg-dot" style="background:#10B981"></div><span class="leg-label">National</span><span class="leg-val" id="legV1">0 total</span></div>
-          <div class="leg-item" onclick="toggleSeries(2,this)" id="leg2"><div class="leg-dot" style="background:#7AA0FF"></div><span class="leg-label">Local East Java</span><span class="leg-val" id="legV2">0 total</span></div>
+        <div class="sb-num" id="cnt-nat">0</div>
+        <div class="sb-prog"><div class="sb-fill" id="bar-nat"></div></div>
+        <span class="sb-pct" id="pct-nat">— % of total</span>
+        <p class="sb-desc">Visitors from across Indonesia &mdash; all provinces beyond East Java.</p>
+      </div>
+
+      <!-- LOCAL -->
+      <div class="stat-block sb-loc">
+        <div class="sbc tl"></div><div class="sbc br"></div>
+        <div class="sb-eyebrow">
+          <div class="sb-eline"></div>
+          <span class="sb-cat">Local East Java</span>
+          <div class="sb-eline"></div>
         </div>
-        <div style="position:relative"><canvas id="vc"></canvas><div id="ct"><div class="ttm" id="ttM">—</div><div class="ttr"><div class="ttd" style="background:#C9841A"></div><span>International</span><span class="ttn" id="ttV0">—</span></div><div class="ttr"><div class="ttd" style="background:#10B981"></div><span>National</span><span class="ttn" id="ttV1">—</span></div><div class="ttr"><div class="ttd" style="background:#7AA0FF"></div><span>Local</span><span class="ttn" id="ttV2">—</span></div></div></div>
-        <div class="chart-totals">
-          <div class="total-card"><div class="tc-top"><div class="tc-dot" style="background:#C9841A"></div><span class="tc-lbl">International</span></div><div class="tc-num" id="tc0">0</div><div class="tc-sub">India · Pakistan · UK · Malaysia</div><div class="tc-bar"><div class="tc-fill" id="tb0" style="background:#C9841A"></div></div></div>
-          <div class="total-card"><div class="tc-top"><div class="tc-dot" style="background:#10B981"></div><span class="tc-lbl">National</span></div><div class="tc-num" id="tc1">0</div><div class="tc-sub">from across Indonesia</div><div class="tc-bar"><div class="tc-fill" id="tb1" style="background:#10B981"></div></div></div>
-          <div class="total-card"><div class="tc-top"><div class="tc-dot" style="background:#7AA0FF"></div><span class="tc-lbl">Local (East Java)</span></div><div class="tc-num" id="tc2">0</div><div class="tc-sub">from East Java province</div><div class="tc-bar"><div class="tc-fill" id="tb2" style="background:#7AA0FF"></div></div></div>
-        </div>
-       
-        <div style="margin-top:1.1rem;font-size:.62rem;color:var(--ink3);display:flex;align-items:center;gap:.5rem">⏱ Last visit: <span id="lastVisit" style="color:var(--acc2);font-weight:600">—</span> &nbsp;·&nbsp; Total: <span id="totalAll" style="color:var(--acc2);font-weight:700">0</span> visits</div>
+        <div class="sb-num" id="cnt-loc">0</div>
+        <div class="sb-prog"><div class="sb-fill" id="bar-loc"></div></div>
+        <span class="sb-pct" id="pct-loc">— % of total</span>
+        <p class="sb-desc">Visitors from East Java province &mdash; Jombang's proud home audience.</p>
+      </div>
+
+    </div>
+
+    <!-- FOOTER BAR -->
+    <div class="stat-footer rv d2">
+      <div class="sf-grand">
+        <span class="sf-grand-num" id="totalAll">0</span>
+        <span class="sf-grand-lbl">Total Visits Since Launch</span>
+      </div>
+      <div class="sf-vsep"></div>
+      <div class="sf-meta">
+        <div>Last visit &nbsp;&middot;&nbsp; <strong><span id="lastVisit">—</span></strong></div>
+        <div>Tracking since &nbsp;&middot;&nbsp; <strong>1 March 2026</strong></div>
+        <div>Coverage &nbsp;&middot;&nbsp; <strong>International · National · East Java</strong></div>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -766,7 +822,7 @@ document.querySelectorAll('a,button').forEach(function(el){
 (function(){
   var cv=document.getElementById('bgcv');
   if(!cv)return;
-  var cx=cv.getContext('2d'),W,H,tick=0,raf;
+  var cx=cv.getContext('2d'),W,H,tick=0;
   function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
   resize();window.addEventListener('resize',resize);
   function theme(){return document.documentElement.getAttribute('data-theme')||'kencono';}
@@ -849,7 +905,7 @@ document.querySelectorAll('a,button').forEach(function(el){
       });
     } else if(t==='samudra'){drawParang();}
     else{drawKawung();}
-    raf=requestAnimationFrame(loop);
+    requestAnimationFrame(loop);
   }
   loop();
 })();
@@ -906,307 +962,146 @@ mb.addEventListener('click',function(e){e.stopPropagation();if(pl){aud.pause();s
 aud.play().then(function(){setP(true);}).catch(function(){document.addEventListener('click',function fn(){aud.play().then(function(){setP(true);}).catch(function(){});document.removeEventListener('click',fn);},{once:true});});
 
 /* ══════════════════════════════════════════════════════════════
-   VISITOR STATS — FIXED v2
-   Perbaikan:
-   1. Nilai awal tetap: Internasional=52, Nasional=83, Lokal=120
-   2. ensureSeed() → diterapkan sekali per device, tidak pernah overwrite data yg lebih besar
-   3. loadVisits() → selalu menjamin floor BASE untuk bulan Maret 2026
-   4. recordVisit() → hanya menambah, tidak pernah reset
-   5. localStorage key baru (v7) agar bersih dari data lama yg rusak
+   VISITOR STATS — Simple Counter v3
+   Total per category (no monthly breakdown).
+   Nilai awal: International=52, National=83, Local=120
+   Setiap kunjungan +1 secara acak, tidak pernah reset.
    ══════════════════════════════════════════════════════════════ */
 (function() {
 
-  var STORE_KEY   = 'jh_visits_v7';
-  var COUNTRY_KEY = 'jh_countries_v7';
-  var SEED_KEY    = 'jh_seeded_v2';
+  var STORE_KEY = 'jh_visits_v7';
+  var SEED_KEY  = 'jh_seeded_v2';
 
-  /* Nilai awal yang SELALU ada di tiap device baru — tidak pernah berkurang */
-  var BASE = { '2026-3': { intl: 52, nat: 83, loc: 120 } };
+  /* Nilai dasar yang SELALU ada — tidak pernah berkurang */
+  var BASE = { intl: 52, nat: 83, loc: 120 };
 
-  var months  = ['January','February','March','April','May','June',
-                 'July','August','September','October','November','December'];
-  var shortM  = ['Jan','Feb','Mar','Apr','May','Jun',
-                 'Jul','Aug','Sep','Oct','Nov','Dec'];
-
-  var barColors  = ['#C9841A','#10B981','#7AA0FF'];
-  var barFills   = ['rgba(200,132,26,.75)','rgba(16,185,129,.75)','rgba(122,160,255,.75)'];
-  var countryIds = ['in','pk','gb','my'];
-  var hidden     = [false, false, false];
-  var period     = 6;
-  var hoveredGroup = -1;
-  var chartEl, ctx;
-
-  /* ── Raw load/save ── */
-  function loadVisitsRaw() {
+  /* ── Storage helpers ── */
+  function loadRaw() {
     try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; }
     catch(e) { return {}; }
   }
-  function saveVisits(d) {
+  function saveRaw(d) {
     try { localStorage.setItem(STORE_KEY, JSON.stringify(d)); } catch(e) {}
   }
-  function loadCountries() {
-    try { return JSON.parse(localStorage.getItem(COUNTRY_KEY)) || {in:0,pk:0,gb:0,my:0}; }
-    catch(e) { return {in:0,pk:0,gb:0,my:0}; }
-  }
-  function saveCountries(d) {
-    try { localStorage.setItem(COUNTRY_KEY, JSON.stringify(d)); } catch(e) {}
+
+  /* ── Sum semua bulan jadi satu total ── */
+  function getTotals(data) {
+    var t = { intl: 0, nat: 0, loc: 0, lastTs: null };
+    Object.keys(data).forEach(function(k) {
+      var v = data[k];
+      t.intl += (v.intl || 0);
+      t.nat  += (v.nat  || 0);
+      t.loc  += (v.loc  || 0);
+      if (v.ts && (!t.lastTs || v.ts > t.lastTs)) t.lastTs = v.ts;
+    });
+    return t;
   }
 
-  /* ── Seed: terapkan BASE ke device baru (hanya SEKALI) ── */
+  /* ── Seed: terapkan BASE SEKALI per device (tidak pernah overwrite nilai lebih besar) ── */
   function ensureSeed() {
     if (localStorage.getItem(SEED_KEY)) return;
-    var data = loadVisitsRaw();
-    Object.keys(BASE).forEach(function(k) {
-      if (!data[k]) {
-        data[k] = { intl: BASE[k].intl, nat: BASE[k].nat, loc: BASE[k].loc,
-                    ts: new Date().toISOString() };
-      } else {
-        /* Ambil nilai terbesar — tidak pernah mengurangi data yang sudah ada */
-        data[k].intl = Math.max(data[k].intl || 0, BASE[k].intl);
-        data[k].nat  = Math.max(data[k].nat  || 0, BASE[k].nat);
-        data[k].loc  = Math.max(data[k].loc  || 0, BASE[k].loc);
-      }
-    });
-    saveVisits(data);
+    var data    = loadRaw();
+    var seedKey = '2026-3'; /* Maret 2026 — bulan launch */
+    if (!data[seedKey]) {
+      data[seedKey] = {
+        intl: BASE.intl, nat: BASE.nat, loc: BASE.loc,
+        ts: new Date('2026-03-01T08:00:00').toISOString()
+      };
+    } else {
+      data[seedKey].intl = Math.max(data[seedKey].intl || 0, BASE.intl);
+      data[seedKey].nat  = Math.max(data[seedKey].nat  || 0, BASE.nat);
+      data[seedKey].loc  = Math.max(data[seedKey].loc  || 0, BASE.loc);
+    }
+    saveRaw(data);
     try { localStorage.setItem(SEED_KEY, '1'); } catch(e) {}
   }
 
-  /* ── Load visits dengan jaminan floor BASE ── */
-  function loadVisits() {
-    var data = loadVisitsRaw();
-    var now  = new Date();
-    var key  = now.getFullYear() + '-' + (now.getMonth() + 1);
-    if (!data[key]) data[key] = { intl:0, nat:0, loc:0, ts: now.toISOString() };
-    /* Terapkan floor BASE jika bulan ini ada di BASE */
-    if (BASE[key]) {
-      data[key].intl = Math.max(data[key].intl || 0, BASE[key].intl);
-      data[key].nat  = Math.max(data[key].nat  || 0, BASE[key].nat);
-      data[key].loc  = Math.max(data[key].loc  || 0, BASE[key].loc);
-    }
-    return data;
-  }
-
-  /* ── Catat kunjungan ini (selalu +1, tidak pernah reset) ── */
+  /* ── Catat kunjungan ini (+1, selalu naik) ── */
   function recordVisit() {
     var now  = new Date();
     var key  = now.getFullYear() + '-' + (now.getMonth() + 1);
-    var data = loadVisits();
+    var data = loadRaw();
+    if (!data[key]) data[key] = { intl: 0, nat: 0, loc: 0 };
     var roll = Math.random();
-    var cat  = roll < .14 ? 'intl' : roll < .52 ? 'loc' : 'nat';
+    var cat  = roll < 0.14 ? 'intl' : roll < 0.52 ? 'loc' : 'nat';
     data[key][cat] = (data[key][cat] || 0) + 1;
     data[key].ts   = now.toISOString();
-    saveVisits(data);
-    if (cat === 'intl') {
-      var cd   = loadCountries();
-      var pick = countryIds[Math.floor(Math.random() * countryIds.length)];
-      cd[pick] = (cd[pick] || 0) + 1;
-      saveCountries(cd);
+    saveRaw(data);
+  }
+
+  /* ── Format angka ── */
+  function fmt(n) {
+    if (n >= 1000000) return (Math.round(n / 100000) / 10).toFixed(1) + 'M';
+    if (n >= 1000)    return (Math.round(n / 100) / 10).toFixed(1) + 'K';
+    return String(n);
+  }
+
+  /* ── Animated count-up (ease-out cubic) ── */
+  function animCount(el, target, ms) {
+    if (!el) return;
+    var start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      var p   = Math.min((ts - start) / ms, 1);
+      var ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmt(Math.round(ease * target));
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = fmt(target);
     }
+    requestAnimationFrame(step);
   }
 
-  /* ── Build month slots ── */
-  function getSlots(n) {
-    var now  = new Date();
-    var list = [];
-    for (var i = n - 1; i >= 0; i--) {
-      var d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-      list.push({ key: d.getFullYear()+'-'+(d.getMonth()+1),
-                  month: d.getMonth(), year: d.getFullYear() });
-    }
-    return list;
-  }
-
-  function getChartData() {
-    var visits = loadVisits();
-    var slots  = getSlots(period);
-    var labels = [], fullLabels = [], intl = [], nat = [], loc = [];
-    slots.forEach(function(s) {
-      labels.push(shortM[s.month]);
-      fullLabels.push(months[s.month] + ' ' + s.year);
-      var v = visits[s.key] || { intl:0, nat:0, loc:0 };
-      intl.push(v.intl || 0);
-      nat.push(v.nat  || 0);
-      loc.push(v.loc  || 0);
-    });
-    return { labels:labels, full:fullLabels, intl:intl, nat:nat, loc:loc };
-  }
-
-  function fmtNum(n) {
-    return n >= 1000 ? (Math.round(n/100)/10).toFixed(1)+'K' : n;
-  }
-
+  /* ── Refresh semua UI ── */
   function refreshUI() {
-    var d  = getChartData();
-    var si = d.intl.reduce(function(a,b){return a+b;},0);
-    var sn = d.nat.reduce(function(a,b){return a+b;},0);
-    var sl = d.loc.reduce(function(a,b){return a+b;},0);
-    var mx = Math.max(si, sn, sl, 1);
+    var data   = loadRaw();
+    var tot    = getTotals(data);
+    var grand  = tot.intl + tot.nat + tot.loc;
+    var denom  = grand || 1;
 
-    document.getElementById('tc0').textContent = fmtNum(si);
-    document.getElementById('tc1').textContent = fmtNum(sn);
-    document.getElementById('tc2').textContent = fmtNum(sl);
-    document.getElementById('legV0').textContent = fmtNum(si)+' total';
-    document.getElementById('legV1').textContent = fmtNum(sn)+' total';
-    document.getElementById('legV2').textContent = fmtNum(sl)+' total';
+    /* Count-up numbers */
+    animCount(document.getElementById('cnt-intl'), tot.intl, 1800);
+    animCount(document.getElementById('cnt-nat'),  tot.nat,  1800);
+    animCount(document.getElementById('cnt-loc'),  tot.loc,  1800);
+    animCount(document.getElementById('totalAll'), grand,    2200);
 
+    /* Progress bars (relative to largest category) */
     setTimeout(function() {
-      document.getElementById('tb0').style.width = Math.round(si/mx*100)+'%';
-      document.getElementById('tb1').style.width = '100%';
-      document.getElementById('tb2').style.width = Math.round(sl/mx*100)+'%';
-    }, 320);
+      var mx = Math.max(tot.intl, tot.nat, tot.loc, 1);
+      var bi = document.getElementById('bar-intl');
+      var bn = document.getElementById('bar-nat');
+      var bl = document.getElementById('bar-loc');
+      if (bi) bi.style.width = Math.round(tot.intl / mx * 100) + '%';
+      if (bn) bn.style.width = '100%'; /* largest — always full */
+      if (bl) bl.style.width = Math.round(tot.loc  / mx * 100) + '%';
+    }, 400);
 
-    var countries = loadCountries();
-    countryIds.forEach(function(c) {
-      var el = document.getElementById('cnt-'+c);
-      if (el) el.textContent = countries[c] || 0;
-    });
+    /* Percentages */
+    function setPct(id, val) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = Math.round(val / denom * 100) + '% of total';
+    }
+    setPct('pct-intl', tot.intl);
+    setPct('pct-nat',  tot.nat);
+    setPct('pct-loc',  tot.loc);
 
-    var allData = loadVisitsRaw(), grand = 0;
-    Object.values(allData).forEach(function(v) { grand += (v.intl||0)+(v.nat||0)+(v.loc||0); });
-    document.getElementById('totalAll').textContent = grand;
-
-    var lastTs = null;
-    Object.values(allData).forEach(function(v) {
-      if (v.ts && (!lastTs || v.ts > lastTs)) lastTs = v.ts;
-    });
+    /* Last visit date */
     var lvEl = document.getElementById('lastVisit');
-    if (lvEl && lastTs) {
-      var dt = new Date(lastTs);
-      lvEl.textContent = dt.toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
-    }
-
-    var slots = getSlots(period);
-    var lbl   = document.getElementById('chartLabel');
-    if (lbl) {
-      lbl.textContent = months[slots[0].month]+' '+slots[0].year+' — '
-        +months[slots[slots.length-1].month]+' '+slots[slots.length-1].year;
+    if (lvEl && tot.lastTs) {
+      var dt = new Date(tot.lastTs);
+      lvEl.textContent = dt.toLocaleDateString('en-GB',
+        { day: 'numeric', month: 'long', year: 'numeric' });
     }
   }
 
-  /* ── Bar Chart ── */
-  function setupCanvas() {
-    chartEl = document.getElementById('vc');
-    if (!chartEl) return;
-    ctx = chartEl.getContext('2d');
-    resizeChart();
+  /* ── Bootstrap ── */
+  function init() {
+    ensureSeed();   /* tanam 52/83/120 sekali di device baru */
+    recordVisit();  /* catat kunjungan ini */
+    refreshUI();    /* tampilkan angka */
+    setInterval(refreshUI, 30000); /* refresh tiap 30 detik */
   }
 
-  function resizeChart() {
-    if (!chartEl) return;
-    var dpr = window.devicePixelRatio || 1;
-    var w   = chartEl.parentElement.clientWidth;
-    var h   = window.innerWidth < 640 ? 210 : 290;
-    chartEl.style.width  = w+'px';
-    chartEl.style.height = h+'px';
-    chartEl.width  = w*dpr;
-    chartEl.height = h*dpr;
-    ctx.scale(dpr,dpr);
-    drawChart();
-  }
-
-  function drawChart() {
-    if (!chartEl || !ctx) return;
-    var dpr  = window.devicePixelRatio || 1;
-    var W    = chartEl.width/dpr;
-    var H    = chartEl.height/dpr;
-    var pad  = {t:16,r:18,b:36,l:46};
-    var cW   = W-pad.l-pad.r;
-    var cH   = H-pad.t-pad.b;
-    var d    = getChartData();
-    var n    = d.labels.length;
-    ctx.clearRect(0,0,W,H);
-    var allVals = [];
-    if (!hidden[0]) allVals = allVals.concat(d.intl);
-    if (!hidden[1]) allVals = allVals.concat(d.nat);
-    if (!hidden[2]) allVals = allVals.concat(d.loc);
-    var maxVal = Math.max.apply(null, allVals.concat([1]))*1.2;
-    function yPos(v){return pad.t+cH-(v/maxVal)*cH;}
-    ctx.setLineDash([3,5]);
-    ctx.strokeStyle='rgba(200,132,26,.06)';ctx.lineWidth=1;
-    for(var g=0;g<=4;g++){
-      var gy=pad.t+(g/4)*cH;
-      ctx.beginPath();ctx.moveTo(pad.l,gy);ctx.lineTo(pad.l+cW,gy);ctx.stroke();
-      var tick=Math.round(maxVal*(1-g/4));
-      ctx.fillStyle='rgba(180,155,120,.55)';ctx.font='500 10px Cinzel,serif';ctx.textAlign='right';
-      ctx.fillText(tick>=1000?(Math.round(tick/100)/10)+'K':tick,pad.l-6,gy+4);
-    }
-    ctx.setLineDash([]);
-    var series=[{vals:d.intl,ci:0},{vals:d.nat,ci:1},{vals:d.loc,ci:2}];
-    var groupW=cW/n;
-    var visCount=series.filter(function(s){return !hidden[s.ci];}).length||1;
-    var barW=Math.min(groupW*0.22,18);
-    var groupGap=visCount*barW+(visCount-1)*3;
-    for(var i=0;i<n;i++){
-      var groupX=pad.l+i*groupW+groupW/2-groupGap/2;
-      var bx=groupX;
-      var isHov=(i===hoveredGroup);
-      series.forEach(function(s){
-        if(hidden[s.ci])return;
-        var val=s.vals[i],yy=yPos(val),bh=pad.t+cH-yy;
-        ctx.fillStyle=isHov?barColors[s.ci]:barFills[s.ci];
-        ctx.fillRect(bx,yy,barW,bh);
-        ctx.fillStyle=barColors[s.ci];ctx.fillRect(bx,yy,barW,2);
-        bx+=barW+3;
-      });
-      ctx.fillStyle='rgba(180,155,120,.65)';ctx.font='500 10px Cinzel,serif';ctx.textAlign='center';
-      ctx.fillText(d.labels[i],pad.l+i*groupW+groupW/2,H-7);
-    }
-  }
-
-  function getHoveredGroup(e){
-    var d=getChartData(),n=d.labels.length;
-    var dpr=window.devicePixelRatio||1,W=chartEl.width/dpr,cW=W-64;
-    var rect=chartEl.getBoundingClientRect();
-    var mx=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
-    var idx=Math.floor((mx-46)/(cW/n));
-    return(idx>=0&&idx<n)?idx:-1;
-  }
-
-  function showTooltip(e){
-    var idx=getHoveredGroup(e),tip=document.getElementById('ct');
-    if(idx<0){tip.style.opacity='0';hoveredGroup=-1;drawChart();return;}
-    hoveredGroup=idx;drawChart();
-    var d=getChartData(),n=d.labels.length;
-    var dpr=window.devicePixelRatio||1,W=chartEl.width/dpr;
-    var gw=(W-64)/n,cxp=46+idx*gw+gw/2;
-    var rect=chartEl.getBoundingClientRect(),tw=160;
-    var tx=Math.max(4,Math.min(rect.width-tw-4,cxp-tw/2));
-    tip.style.left=tx+'px';tip.style.top='8px';tip.style.opacity='1';
-    document.getElementById('ttM').textContent=d.full[idx];
-    document.getElementById('ttV0').textContent=!hidden[0]?d.intl[idx]:'—';
-    document.getElementById('ttV1').textContent=!hidden[1]?d.nat[idx]:'—';
-    document.getElementById('ttV2').textContent=!hidden[2]?d.loc[idx]:'—';
-  }
-
-  window.setPeriod=function(n,btn){
-    period=n;
-    document.querySelectorAll('.period-btn').forEach(function(b){b.classList.remove('on');});
-    btn.classList.add('on');hoveredGroup=-1;refreshUI();drawChart();
-  };
-  window.toggleSeries=function(idx,el){
-    hidden[idx]=!hidden[idx];el.classList.toggle('muted',hidden[idx]);hoveredGroup=-1;drawChart();
-  };
-
-  function init(){
-    ensureSeed();    /* ← Langkah 1: tanam nilai awal 52/83/120 sekali di device ini */
-    recordVisit();   /* ← Langkah 2: catat kunjungan ini (+1, selalu naik) */
-    refreshUI();
-    setupCanvas();
-    if(chartEl){
-      chartEl.addEventListener('mousemove',showTooltip);
-      chartEl.addEventListener('mouseleave',function(){
-        document.getElementById('ct').style.opacity='0';hoveredGroup=-1;drawChart();
-      });
-      chartEl.addEventListener('touchmove',function(e){e.preventDefault();showTooltip(e);},{passive:false});
-      chartEl.addEventListener('touchend',function(){
-        document.getElementById('ct').style.opacity='0';hoveredGroup=-1;drawChart();
-      });
-    }
-    window.addEventListener('resize',resizeChart);
-    setInterval(function(){refreshUI();drawChart();},30000);
-  }
-
-  setTimeout(init,400);
+  setTimeout(init, 400);
 
 })();
 </script>
